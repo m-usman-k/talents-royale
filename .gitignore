@@ -1,0 +1,10 @@
+# Files
+.env
+
+# Folders
+/documents
+/__pycache__
+*/__pycache__
+
+
+# Others
