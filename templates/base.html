@@ -4,14 +4,28 @@
     <meta charset="UTF-8">
     <title>{% block title %}My Website{% endblock %}</title>
     {% load static %}
-    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/base.css' %}">
 </head>
 <body>
     <!-- Navbar -->
     <nav>
-        <a href="/">Home</a>
-        <a href="/about/">About</a>
-        <a href="/login/">Login</a>
+        <div class="nav-logo">
+            <a href="#">
+                <img src="/static/images/tr-blue-crown.png" alt="Talents Royale Blue Crown"/>
+            </a>
+        </div>
+        <div class="nav-links">
+            <a href="/">Home</a>
+            <a href="/arenas">Arenas</a>
+            <a href="/contestants">Contestants</a>
+            <a href="/how-it-works">How It Works</a>
+            <a href="/finale-royale">Finale Royale</a>
+        </div>
+        <div class="nav-profile">
+            <a href="#">
+                <img src="/static/images/tr-profile-icon.png" alt="Talents Royale Blue Crown"/>
+            </a>
+        </div>
     </nav>
 
     <!-- Main content -->
@@ -22,7 +36,38 @@
 
     <!-- Footer -->
     <footer>
-        <p>&copy; 2025 My Website</p>
+        <div class="footer-logo">
+            <img src="/static/images/tr-blue-crown.png" alt="Talents Royale Blue Crown"/>
+        </div>
+        <div class="footer-copyright">
+            <center>
+                <p>Talents Royale™ is a trademarked competition platform<br> under U.S copyright &amp; trademark law<br>
+                Infringement may trigger DMCA take downs, cease and<br> desist notices, and fines up to $150,000</p>
+        </center>
+        </div>
+        <div class="footer-links">
+            <a href="#">
+                <img src="/static/images/tr-yt-icon.png" alt="Talents Royale Blue Crown"/>
+            </a>
+            <a href="#">
+                <img src="/static/images/tr-tr-icon.png" alt="Talents Royale Blue Crown"/>
+            </a>
+            <a href="#">
+                <img src="/static/images/tr-tw-icon.png" alt="Talents Royale Blue Crown"/>
+            </a>
+            <a href="#">
+                <img src="/static/images/tr-dc-icon.png" alt="Talents Royale Blue Crown"/>
+            </a>
+            <a href="#">
+                <img src="/static/images/tr-fb-icon.png" alt="Talents Royale Blue Crown"/>
+            </a>
+            <a href="#">
+                <img src="/static/images/tr-ig-icon.png" alt="Talents Royale Blue Crown"/>
+            </a>
+        </div>
+        <div class="footer-trademark">
+            Copyright &copy; 2025 Talents Royale™
+        </div>
     </footer>
 </body>
 </html>

@@ -1,0 +1,92 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Protest+Strike&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    font-family: 'Poppins';
+    color: white;
+    white-space: nowrap;
+}
+
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 2rem;
+    background-image: url("/static/images/tr-navbar-bg.png");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    border-bottom: 1px solid white;
+}
+
+nav > div.nav-logo > a > img {
+    width: 12vw;
+    height: auto;
+}
+
+nav > div.nav-profile > a > img {
+    width: 5vw;
+    height: auto;
+}
+
+nav > div.nav-logo > * img {
+    filter: drop-shadow(0 1px 1px rgba(241, 0, 247, 0.9));
+}
+
+nav > div.nav-links {
+    display: flex;
+    gap: 2vw;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 1.1vw;
+    font-weight: 500;
+}
+
+nav > div.nav-links > a {
+    color: #FFA200;
+    text-decoration: none;
+}
+nav > div.nav-links > a:hover {
+    color: #FFA200 !important;
+    text-decoration: underline !important;
+}
+
+
+footer {
+    position: relative;              /* make footer the containing block */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-image: url('/static/images/tr-footer-bg.png');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    border-top: 1px solid white;
+    z-index: 0;                      /* ensures footer sits above its overlay */
+}
+
+footer::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: url("/static/images/tr-navbar-bg.png");
+    background-repeat: no-repeat;
+    background-size: cover;
+    opacity: 0.3;
+    z-index: -1;
+}
+
+
+footer > div.footer-links > * img {
+    width: 50px;
+    height: auto;
+}
+
+div.footer-logo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}

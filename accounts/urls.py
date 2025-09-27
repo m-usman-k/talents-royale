@@ -1,6 +1,14 @@
 from django.urls import path
-from .views import home_view
+from .views import contestants_view
+from .views import home_view, arenas_view
+from .views import howitworks_view, finaleroyale_view
 
 urlpatterns = [
-    path("", home_view, name="home")
+    path("", home_view, name="home"),
+    path("arenas", arenas_view, name="arenas"),
+    path("contestants", contestants_view, name="contestants"),
+    path("how-it-works", howitworks_view, name="howitworks"),
+    path("finale-royale", finaleroyale_view, name="finaleroyale"),
+    path("login", home_view, name="login"),
+    path("signup", home_view, name="signup")
 ]
