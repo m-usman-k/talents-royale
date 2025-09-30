@@ -12,7 +12,7 @@ h2 {
     color: #FFA200;
     font-family: 'Protest Strike';
     filter: drop-shadow(0 0 5px #FFA200);
-    font-size: 3vw;
+    font-size: 5vw;
     margin: 3% 0;
 }
 
@@ -67,6 +67,35 @@ section.secondary-info {
     background-repeat: no-repeat;
     background-size: cover;
     padding: 2%;
+}
+
+div.arena-cards {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+div.arena-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+}
+
+div.reason-cards {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+
+div.reason-card {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-family: 'Poppins';
+}
+
+div.reason-card > img {
+    width: 10vw;
 }
 
 
