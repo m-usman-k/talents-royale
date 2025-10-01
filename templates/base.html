@@ -5,15 +5,18 @@
     <title>{% block title %}My Website{% endblock %}</title>
     {% load static %}
     <link rel="stylesheet" href="{% static 'css/base.css' %}">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 <body>
-    <!-- Navbar -->
+    <!-- NAVBAR -->
     <nav>
         <div class="nav-logo">
             <a href="/">
-                <img src="/static/images/tr-blue-crown.png" alt="Talents Royale Blue Crown"/>
+                <img src="{% static 'images/tr-blue-crown.png' %}" alt="Talents Royale Blue Crown">
             </a>
         </div>
+
+        <!-- Desktop links (hidden on small screens) -->
         <div class="nav-links">
             <a href="/">Home</a>
             <a href="/arenas">Arenas</a>
@@ -21,53 +24,119 @@
             <a href="/how-it-works">How It Works</a>
             <a href="/finale-royale">Finale Royale</a>
         </div>
+
+        <!-- Desktop profile (visible on desktop) -->
         <div class="nav-profile">
-            <a href="#">
-                <img src="/static/images/tr-profile-icon.png" alt="Talents Royale Blue Crown"/>
+            <a href="/account">
+                <img src="{% static 'images/tr-profile-icon.png' %}" alt="Profile">
             </a>
+        </div>
+
+        <!-- Hamburger (mobile) -->
+        <div id="hamburger" class="hamburger" role="button" aria-label="Menu" aria-expanded="false" aria-controls="mobileMenu">
+            <span class="bar"></span>
+            <span class="bar"></span>
+            <span class="bar"></span>
+        </div>
+
+        <!-- Mobile menu (inside nav for correct absolute positioning) -->
+        <div id="mobileMenu" class="mobile-menu" aria-hidden="true">
+            <div class="mobile-profile">
+                <a href="/account">
+                    <img src="{% static 'images/tr-profile-icon.png' %}" alt="Profile">
+                </a>
+                <div class="mobile-profile-text">
+                    <a href="/account" class="mobile-account-link">My Account</a>
+                    <div class="mobile-username">@username</div>
+                </div>
+            </div>
+
+            <a href="/">Home</a>
+            <a href="/arenas">Arenas</a>
+            <a href="/contestants">Contestants</a>
+            <a href="/how-it-works">How It Works</a>
+            <a href="/finale-royale">Finale Royale</a>
         </div>
     </nav>
 
-    <!-- Main content -->
-    <div class="container">
-        {% block content %}
-        {% endblock %}
-    </div>
+    <!-- MAIN -->
+    <!-- NOTE: no padding/margin here — left pristine as you asked -->
+    <main class="container">
+        {% block content %}{% endblock %}
+    </main>
 
-    <!-- Footer -->
+    <!-- FOOTER -->
     <footer>
         <div class="footer-logo">
-            <img src="/static/images/tr-blue-crown.png" alt="Talents Royale Blue Crown"/>
+            <img src="{% static 'images/tr-blue-crown.png' %}" alt="Talents Royale Crown">
         </div>
+
         <div class="footer-copyright">
-            <center>
-                <p>Talents Royale™ is a trademarked competition platform<br> under U.S copyright &amp; trademark law<br>
-                Infringement may trigger DMCA take downs, cease and<br> desist notices, and fines up to $150,000</p>
-        </center>
+            <p>
+                Talents Royale™ is a trademarked competition platform under U.S. copyright &amp; trademark law.
+                Infringement may trigger DMCA take downs, cease and desist notices, and fines up to $150,000.
+            </p>
         </div>
-        <div class="footer-links">
-            <a href="#">
-                <img src="/static/images/tr-yt-icon.png" alt="Talents Royale Blue Crown"/>
-            </a>
-            <a href="#">
-                <img src="/static/images/tr-tr-icon.png" alt="Talents Royale Blue Crown"/>
-            </a>
-            <a href="#">
-                <img src="/static/images/tr-tw-icon.png" alt="Talents Royale Blue Crown"/>
-            </a>
-            <a href="#">
-                <img src="/static/images/tr-dc-icon.png" alt="Talents Royale Blue Crown"/>
-            </a>
-            <a href="#">
-                <img src="/static/images/tr-fb-icon.png" alt="Talents Royale Blue Crown"/>
-            </a>
-            <a href="#">
-                <img src="/static/images/tr-ig-icon.png" alt="Talents Royale Blue Crown"/>
-            </a>
+
+        <div class="footer-links" aria-label="social links">
+            <a href="#"><img src="{% static 'images/tr-yt-icon.png' %}" alt="YouTube"></a>
+            <a href="#"><img src="{% static 'images/tr-tr-icon.png' %}" alt="Talents Royale"></a>
+            <a href="#"><img src="{% static 'images/tr-tw-icon.png' %}" alt="Twitter"></a>
+            <a href="#"><img src="{% static 'images/tr-dc-icon.png' %}" alt="Discord"></a>
+            <a href="#"><img src="{% static 'images/tr-fb-icon.png' %}" alt="Facebook"></a>
+            <a href="#"><img src="{% static 'images/tr-ig-icon.png' %}" alt="Instagram"></a>
         </div>
+
         <div class="footer-trademark">
             Copyright &copy; 2025 Talents Royale™
         </div>
     </footer>
+
+<script>
+/* Mobile hamburger/menu logic (keeps same IDs as in template) */
+(function () {
+    const hamburger = document.getElementById('hamburger');
+    const mobileMenu = document.getElementById('mobileMenu');
+
+    function closeMenu() {
+        hamburger.classList.remove('open');
+        mobileMenu.classList.remove('open');
+        hamburger.setAttribute('aria-expanded', 'false');
+        mobileMenu.setAttribute('aria-hidden', 'true');
+    }
+    function openMenu() {
+        hamburger.classList.add('open');
+        mobileMenu.classList.add('open');
+        hamburger.setAttribute('aria-expanded', 'true');
+        mobileMenu.setAttribute('aria-hidden', 'false');
+    }
+
+    hamburger.addEventListener('click', function (e) {
+        const isOpen = hamburger.classList.contains('open');
+        if (isOpen) closeMenu(); else openMenu();
+    });
+
+    // Close menu when clicking a link inside it (good UX)
+    mobileMenu.addEventListener('click', function (e) {
+        if (e.target.tagName === 'A' || e.target.closest('a')) {
+            closeMenu();
+        }
+    });
+
+    // Close mobile menu if window resized to desktop view
+    window.addEventListener('resize', function () {
+        if (window.innerWidth > 920) {
+            closeMenu();
+        }
+    });
+
+    // Optional: close menu when clicking outside of it
+    document.addEventListener('click', function (e) {
+        if (!mobileMenu.contains(e.target) && !hamburger.contains(e.target) && mobileMenu.classList.contains('open')) {
+            closeMenu();
+        }
+    });
+})();
+</script>
 </body>
 </html>

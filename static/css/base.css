@@ -1,90 +1,279 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Prosto+One&family=Protest+Strike&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap');
 
-* {
+:root {
+    --bg-color: #000;
+    --text-color: #fff;
+    --link-color: #FFA200;    /* desktop nav color */
+    --link-hover: #ffb84d;    /* desktop nav hover color */
+}
+
+/* reset + base */
+* { box-sizing: border-box; }
+html, body {
+    height: 100%;
     margin: 0;
     padding: 0;
-    font-family: 'Poppins';
-    color: white;
-    white-space: nowrap;
+    font-family: 'Poppins', sans-serif;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }
 
+/* ---------------- NAVBAR ---------------- */
 nav {
+    position: relative;
     display: flex;
-    justify-content: space-between;
     align-items: center;
-    padding: 1rem 4rem;
-    background-image: url("/static/images/tr-navbar-bg.png");
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-position: center;
-    border-bottom: 1px solid white;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 1rem 2rem;
+    /* navbar background (image) with subtle overlay */
+    background: linear-gradient(rgba(0,0,0,0.2), rgba(0,0,0,0.2)),
+                url("/static/images/tr-navbar-bg.png") top center / cover no-repeat;
+    border-bottom: 1px solid rgba(255,255,255,0.12);
+    z-index: 1000;
 }
 
-nav > div.nav-logo > a > img {
-    width: 7vw;
+/* Logo (navbar crown) — made slightly bigger as requested */
+.nav-logo img {
+    width: 112px; /* increased size (a little bigger) */
     height: auto;
+    filter: drop-shadow(0 1px 6px rgba(241,0,247,0.85));
+    display: block;
 }
 
-nav > div.nav-profile > a > img {
-    width: 4vw;
-    height: auto;
-}
-
-nav > div.nav-logo > * img {
-    filter: drop-shadow(0 1px 1px rgba(241, 0, 247, 0.9));
-}
-
-nav > div.nav-links {
+/* Desktop links */
+.nav-links {
     display: flex;
-    gap: 2vw;
-    justify-content: space-between;
+    gap: 2rem;
     align-items: center;
-    font-size: 1.1vw;
-    font-weight: 500;
+    justify-content: center;
+    font-weight: 600;
+    font-size: clamp(14px, 1.1vw, 16px);
+}
+.nav-links a {
+    color: var(--link-color);
+    text-decoration: none;
+    transition: all 0.18s ease;
+}
+.nav-links a:hover {
+    text-decoration: underline;
+    color: var(--link-hover);
 }
 
-nav > div.nav-links > a {
-    color: #FFA200;
+/* Desktop profile (visible on desktop) */
+.nav-profile {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+}
+.nav-profile a {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    text-decoration: none;
+    color: var(--text-color);
+}
+.nav-profile img {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #FFA200;
+    background: rgba(255,255,255,0.02);
+    box-shadow: 0 4px 14px rgba(0,0,0,0.4);
+}
+
+/* Hamburger (hidden on desktop) */
+.hamburger {
+    display: none;
+    width: 44px;
+    height: 44px;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    border-radius: 8px;
+    border: 1px solid rgba(255,255,255,0.06);
+    background: rgba(0,0,0,0.15);
+}
+.hamburger .bar {
+    display: block;
+    width: 20px;
+    height: 2px;
+    background: #fff;
+    margin: 3px 0;
+    transition: transform 200ms ease, opacity 200ms ease;
+}
+
+/* Hamburger -> X animation */
+.hamburger.open .bar:nth-child(1) { transform: translateY(6px) rotate(45deg); }
+.hamburger.open .bar:nth-child(2) { opacity: 0; transform: scaleX(0); }
+.hamburger.open .bar:nth-child(3) { transform: translateY(-6px) rotate(-45deg); }
+
+/* ---------------- MOBILE MENU ---------------- */
+/* mobile menu is inside nav (absolute) — quick animation via scaleY */
+.mobile-menu {
+    position: absolute;
+    top: calc(100% + 8px);
+    left: 0;
+    width: 100%;
+    transform-origin: top;
+    transform: scaleY(0);
+    opacity: 0;
+    pointer-events: none;
+    transition: transform 220ms cubic-bezier(.2,.9,.2,1), opacity 180ms ease;
+    background: rgba(0,0,0,0.95);
+    padding: 1.25rem 1.25rem 1.75rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.9rem;
+    z-index: 1100;
+    border-top: 1px solid rgba(255,255,255,0.06);
+}
+.mobile-menu.open {
+    transform: scaleY(1);
+    opacity: 1;
+    pointer-events: auto;
+}
+
+/* mobile menu items — same colors & hover as desktop nav */
+.mobile-menu a {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 0.6rem 0.4rem;
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: var(--link-color);        /* MATCH desktop nav color */
+    text-decoration: none;
+    transition: color 0.18s ease;
+}
+.mobile-menu a:hover {
+    color: var(--link-hover);        /* MATCH desktop nav hover color */
+    text-decoration: underline;
+}
+
+/* profile inside mobile menu (bigger) */
+.mobile-profile {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 0.6rem 0.4rem;
+    border-bottom: 1px solid rgba(255,255,255,0.04);
+    margin-bottom: 0.5rem;
+}
+.mobile-profile img {
+    width: 84px;
+    height: 84px;
+    border-radius: 12px;
+    object-fit: cover;
+    border: 2px solid #FFA200;
+}
+.mobile-profile-text { text-align: left; }
+.mobile-account-link {
+    color: #fff; /* Account label in mobile profile stays white & bold */
+    font-weight: 700;
     text-decoration: none;
 }
-nav > div.nav-links > a:hover {
-    text-decoration: underline !important;
+.mobile-username { font-size: 0.9rem; color: #FFA200; margin-top: 3px; }
+
+/* ---------------- MAIN ---------------- */
+/* No padding/margin — left as you requested (content must be placed exactly) */
+.container {
+    min-height: 50vh;
+    margin: 0;
+    padding: 0;
 }
 
-
+/* ---------------- FOOTER ---------------- */
 footer {
     position: relative;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    background-image: url('/static/images/tr-footer-bg.png');
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-position: center;
-    border-top: 1px solid white;
-    z-index: 0;
+    gap: 1.5rem;
+    padding: 2.4rem 1rem 3rem;
+    text-align: center;
+    background: url('/static/images/tr-footer-bg.png') top center / cover no-repeat;
+    border-top: 1px solid rgba(255,255,255,0.08);
+    color: #fff;
+    overflow: hidden;
 }
 
-footer::after {
+/* 20% black overlay for footer */
+footer::before {
     content: "";
     position: absolute;
-    inset: 0;
-    background-image: url("/static/images/tr-navbar-bg.png");
-    background-repeat: no-repeat;
-    background-size: cover;
-    opacity: 0.3;
-    z-index: -1;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: rgba(0,0,0,0.2); /* 20% black overlay */
+    z-index: 0;
+}
+footer > * {
+    position: relative;
+    z-index: 1;
 }
 
-
-footer > div.footer-links > * img {
-    width: 50px;
+/* footer crown (large) */
+.footer-logo img {
+    display: block;
+    width: clamp(220px, 46vw, 760px);
     height: auto;
+    margin: 0 auto;
+    filter: drop-shadow(0 8px 30px rgba(0,0,0,0.7));
 }
 
-div.footer-logo {
+/* social icons bigger */
+.footer-links {
     display: flex;
     align-items: center;
     justify-content: center;
+    gap: clamp(10px, 2.8vw, 26px);
+    margin-top: 0.4rem;
+    flex-wrap: wrap;
 }
+.footer-links a img {
+    width: clamp(56px, 8.5vw, 120px);
+    height: auto;
+    display: block;
+    transition: transform 170ms ease;
+}
+.footer-links a img:hover { transform: scale(1.12); }
+
+/* infringement text */
+.footer-copyright p {
+    max-width: 980px;
+    margin: 0 auto;
+    font-size: clamp(15px, 1.5vw, 18px);
+    line-height: 1.45;
+    color: #fff;
+    opacity: 0.95;
+}
+
+/* trademark */
+.footer-trademark {
+    font-size: clamp(14px, 1.2vw, 16px);
+    font-weight: 600;
+    margin-top: 0.6rem;
+}
+
+/* ---------------- RESPONSIVE ---------------- */
+@media (max-width: 920px) {
+    .nav-links { display: none; }
+    .nav-profile { display: none; } /* profile inside mobile menu */
+    .hamburger { display: flex; align-items: center; justify-content: center; }
+}
+
+@media (max-width: 520px) {
+    nav { padding: 0.85rem 0.9rem; }
+    .nav-logo img { width: 88px; } /* slightly smaller on small screens */
+    .mobile-profile img { width: 72px; height: 72px; border-radius: 10px; }
+    .footer-logo img { width: clamp(180px, 54vw, 420px); }
+    .footer-links a img { width: clamp(44px, 12vw, 72px); }
+    .footer-copyright p { font-size: clamp(13px, 2.6vw, 15.5px); }
+}
+
+/* small visual helpers */
+a { cursor: pointer; }
