@@ -15,3 +15,6 @@ def howitworks_view(request):
 
 def finaleroyale_view(request):
     return render(request, "finale-royale.html")
+
+def profile_view(request):
+    return render(request, "profile.html")
