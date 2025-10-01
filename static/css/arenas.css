@@ -1,77 +1,150 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Prosto+One&family=Protest+Strike&display=swap');
 
+/* MAIN ARENA SECTION */
 section.main-arena {
     background-image: url('/static/images/tr-blue-bg.png');
     background-repeat: no-repeat;
     background-size: cover;
     text-align: center;
-    padding: 1vw 2vw;
-}
-
-section.main-arena > p {
-    font-family: 'Poppins';
-    font-size: 3vw;
-    font-weight: 300;
-    line-height: 1.5cap;
+    padding: 3vw 5vw;
 }
 
 section.main-arena > h2 {
-    font-family: 'Protest Strike';
+    font-family: 'Protest Strike', sans-serif;
     color: #FFA200;
-    filter: drop-shadow(0 0 3px #FFA200);
-    font-size: 5vw;
+    filter: drop-shadow(0 0 6px #FFA200);
+    font-size: clamp(36px, 5vw, 72px);
+    margin-bottom: 1vw;
 }
 
+section.main-arena > p {
+    font-family: 'Poppins', sans-serif;
+    font-size: clamp(18px, 2.5vw, 28px);
+    font-weight: 300;
+    line-height: 1.5;
+    margin-bottom: 3vw;
+}
+
+/* ARENA CARDS */
 div.arena-cards {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 3vw;
-    margin: 2vw 15vw;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2vw;
+    justify-items: center;
+    margin-bottom: 3vw;
 }
 
 div.arena-cards > div.each-card {
     border: 3px solid #FF00F6;
-    border-radius: 20px;
-    background-color: rgba(255, 0, 246, 0.2);
-    padding: 30px 20px;
+    border-radius: 25px;
+    background-color: rgba(255, 0, 246, 0.15);
+    padding: 2vw; /* general padding for the whole card */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    box-shadow: 0 0 15px rgba(255, 0, 246, 0.5);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-div.arena-cards > div.each-card > p {
-    text-wrap: break-word;
-    overflow-wrap: break-word;
-    white-space: normal;
-    font-size: 25px;
-    margin: 20px 0;
+div.arena-cards > div.each-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 0 25px rgba(255, 0, 246, 0.8), 0 0 35px rgba(0, 229, 255, 0.5);
 }
 
+/* CARD HEADINGS */
 div.arena-cards > div.each-card > h4 {
-    line-height: 1.3cap;
-    font-size: 3vw;
+    font-family: 'Protest Strike', sans-serif;
+    font-size: clamp(40px, 5vw, 60px);
+    color: #00E5FF;
+    filter: drop-shadow(0 0 8px #00E5FF);
+    margin: 0;   /* remove any top/bottom margin */
+    padding: 0;  /* remove padding that adds space */
 }
 
 div.arena-cards > div.each-card > h3 {
-    line-height: 1.5cap;
-    font-size: 4vw;
+    font-family: 'Protest Strike', sans-serif;
+    font-size: clamp(60px, 6vw, 80px);
+    color: #FFA200;
+    filter: drop-shadow(0 0 12px #FFA200);
+    margin: 0;   /* remove any top/bottom margin */
+    padding: 0;  /* remove padding */
 }
 
-div.arena-cards > div.each-card > h4, h3 {
-    color: #00E5FF;
-    filter: drop-shadow(0 0 4px #00E5FF);
+div.arena-cards > div.each-card > p {
+    font-family: 'Poppins', sans-serif;
+    font-size: clamp(16px, 1.2vw, 20px);
+    color: white;
+    line-height: 1.6;
+    margin: 1.5vw 0 2vw 0; /* small margin for spacing below h3 */
 }
 
 div.arena-cards > div.each-card > button {
-    color: #00E5FF;
-    padding: 10px 20px;
-    font-size: 25px;
+    font-family: 'Protest Strike', sans-serif;
+    font-size: clamp(20px, 2.5vw, 28px);
+    color: white;
+    padding: 14px 30px;
     border-radius: 15px;
-    background: linear-gradient(90deg, #1803FF, #0E0299);
-    filter: drop-shadow(0 0 4px #00E5FF);
-    transition: transform 0.2s ease;
     border: none;
+    cursor: pointer;
+    background: linear-gradient(90deg, #1803FF, #0E0299);
+    box-shadow: 0 0 8px #00E5FF, 0 0 14px #1803FF;
+    transition: transform 0.2s ease, box-shadow 0.3s ease;
 }
 
 div.arena-cards > div.each-card > button:hover {
-    cursor: pointer;
     transform: scale(1.1);
+    box-shadow: 0 0 14px #00E5FF, 0 0 28px #FF00F6, 0 0 40px #FFA200;
+}
+
+/* LAST HEADLINE */
+section.main-arena > h2:last-of-type {
+    font-size: clamp(28px, 4vw, 48px);
+    margin-top: 3vw;
+}
+
+/* RESPONSIVE */
+@media (max-width: 1024px) {
+    div.arena-cards {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 3vw;
+        margin: 0 5vw;
+    }
+}
+
+@media (max-width: 768px) {
+    div.arena-cards {
+        grid-template-columns: 1fr;
+        gap: 4vw;
+        margin: 0 3vw;
+    }
+
+    section.main-arena > h2 {
+        font-size: clamp(28px, 6vw, 48px);
+    }
+
+    section.main-arena > p {
+        font-size: clamp(16px, 3vw, 22px);
+    }
+
+    div.arena-cards > div.each-card > h4 {
+        font-size: clamp(36px, 8vw, 54px);
+        margin: 0;
+        padding: 0;
+    }
+
+    div.arena-cards > div.each-card > h3 {
+        font-size: clamp(50px, 10vw, 70px);
+        margin: 0;
+        padding: 0;
+    }
+
+    div.arena-cards > div.each-card > p {
+        margin: 1.2vw 0 2vw 0;
+    }
+
+    div.arena-cards > div.each-card > button {
+        font-size: clamp(18px, 4vw, 24px);
+        padding: 12px 25px;
+    }
 }
