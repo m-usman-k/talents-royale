@@ -1,3 +1,4 @@
+<!-- contestants.html -->
 {% extends "base.html" %}
 
 {% block title %} {% endblock %}
@@ -6,6 +7,108 @@
 
 {% block content %}
     <link rel="stylesheet" href="{% static 'css/contestants.css' %}">
+    <section class="main-contestants">
+        <div class="header-section">
+            <div class="logo-container">
+                <img src="{% static 'images/tr-blue-crown.png' %}" alt="Talents Royale Logo" class="logo-image">
+                <h1 class="logo-text">TALENTS ROYALE</h1>
+            </div>
+            
+            <div class="month-selector">
+                <select id="monthDropdown" class="month-dropdown">
+                    <option value="january">January</option>
+                    <option value="february">February</option>
+                    <option value="march">March</option>
+                    <option value="april">April</option>
+                    <option value="may">May</option>
+                    <option value="june">June</option>
+                    <option value="july" selected>July</option>
+                    <option value="august">August</option>
+                    <option value="september">September</option>
+                    <option value="october">October</option>
+                    <option value="november">November</option>
+                    <option value="december">December</option>
+                </select>
+                <p class="arena-rankings">Arena Rankings</p>
+            </div>
+        </div>
 
+        <div class="ranking-section">
+            <div class="top-contestants">
+                <div class="contestant-card">
+                    <div class="contestant-image">
+                        <img src="{% static 'images/contestant1.jpg' %}" alt="Contestant 1">
+                    </div>
+                    <h3>Stage Name</h3>
+                    <p class="votes">12.987 votes</p>
+                </div>
+                <div class="contestant-card champion">
+                    <div class="contestant-image">
+                        <img src="{% static 'images/contestant2.jpg' %}" alt="Contestant 2">
+                        <div class="champion-badge">CHAMPION</div>
+                    </div>
+                    <h3>Champion Tier</h3>
+                    <p class="votes">15.432 votes</p>
+                </div>
+                <div class="contestant-card">
+                    <div class="contestant-image">
+                        <img src="{% static 'images/contestant3.jpg' %}" alt="Contestant 3">
+                    </div>
+                    <h3>Stage Name</h3>
+                    <p class="votes">10.753 votes</p>
+                </div>
+            </div>
 
+            <div class="ranking-list">
+                <div class="rank-item">
+                    <span class="rank-number">1</span>
+                    <div class="contestant-image-small">
+                        <img src="{% static 'images/contestant4.jpg' %}" alt="Contestant 4">
+                    </div>
+                    <div class="rank-details">
+                        <h3>Stage Name</h3>
+                        <p class="votes">9.948 votes</p>
+                    </div>
+                    <button class="vote-button">Free Vote</button>
+                </div>
+                <div class="rank-item">
+                    <span class="rank-number">2</span>
+                    <div class="contestant-image-small">
+                        <img src="{% static 'images/contestant5.jpg' %}" alt="Contestant 5">
+                    </div>
+                    <div class="rank-details">
+                        <h3>Champion Tier</h3>
+                        <p class="votes">9.948 votes</p>
+                    </div>
+                    <button class="vote-button">Free Vote</button>
+                </div>
+                <div class="rank-item">
+                    <span class="rank-number">3</span>
+                    <div class="contestant-image-small">
+                        <img src="{% static 'images/contestant6.jpg' %}" alt="Contestant 6">
+                    </div>
+                    <div class="rank-details">
+                        <h3>Stage Name</h3>
+                        <p class="votes">9.984 votes</p>
+                    </div>
+                    <button class="vote-button">Free Vote</button>
+                </div>
+                <div class="rank-item">
+                    <span class="rank-number">4</span>
+                    <div class="contestant-image-small">
+                        <img src="{% static 'images/contestant7.jpg' %}" alt="Contestant 7">
+                    </div>
+                    <div class="rank-details">
+                        <h3>Stage Name</h3>
+                        <p class="votes">8.969 votes</p>
+                    </div>
+                    <button class="vote-button">Free Vote</button>
+                </div>
+            </div>
+        </div>
+
+        <p class="cta-text">Have what it takes? Choose your<br> arena and upload your talent for a<br>chance to rise</p>
+        
+        <button class="enter-arena-button">Enter an Arena</button>
+    </section>
 {% endblock %}

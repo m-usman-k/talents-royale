@@ -1,0 +1,359 @@
+/* contestants.css */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Prosto+One&family=Protest+Strike&display=swap');
+
+/* MAIN CONTESTANTS SECTION */
+section.main-contestants {
+    background-image: url('/static/images/tr-blue-bg.png');
+    background-repeat: no-repeat;
+    background-size: cover;
+    text-align: center;
+    padding: 3vw 5vw;
+    min-height: 100vh;
+}
+
+/* HEADER SECTION */
+.header-section {
+    margin-bottom: 3vw;
+}
+
+.logo-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 2vw;
+}
+
+.logo-image {
+    width: 80px;
+    height: 80px;
+    margin-right: 20px;
+    border-radius: 50%;
+    border: 2px solid #FF00F6;
+    box-shadow: 0 0 15px rgba(255, 0, 246, 0.7);
+}
+
+.logo-text {
+    font-family: 'Prosto One', cursive;
+    color: #FF00F6;
+    filter: drop-shadow(0 0 8px #FF00F6);
+    font-size: clamp(36px, 5vw, 64px);
+    margin: 0;
+}
+
+.month-selector {
+    margin-top: 1vw;
+}
+
+.month-dropdown {
+    font-family: 'Poppins', sans-serif;
+    font-size: clamp(16px, 2vw, 22px);
+    padding: 10px 20px;
+    border-radius: 10px;
+    border: 2px solid #00E5FF;
+    background-color: rgba(0, 0, 0, 0.6);
+    color: white;
+    cursor: pointer;
+    box-shadow: 0 0 10px rgba(0, 229, 255, 0.5);
+    margin-bottom: 1vw;
+}
+
+.arena-rankings {
+    font-family: 'Poppins', sans-serif;
+    font-size: clamp(18px, 2.5vw, 28px);
+    font-weight: 300;
+    color: white;
+    margin: 0;
+}
+
+/* TOP CONTESTANTS */
+.top-contestants {
+    display: flex;
+    justify-content: center;
+    gap: 2vw;
+    margin-bottom: 3vw;
+}
+
+.contestant-card {
+    border: 3px solid #FF00F6;
+    border-radius: 25px;
+    background-color: rgba(255, 0, 246, 0.15);
+    padding: 2vw;
+    width: 30%;
+    box-shadow: 0 0 15px rgba(255, 0, 246, 0.5);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.contestant-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 0 25px rgba(255, 0, 246, 0.8), 0 0 35px rgba(0, 229, 255, 0.5);
+}
+
+.contestant-card.champion {
+    border-color: #FFA200;
+    background-color: rgba(255, 162, 0, 0.15);
+    box-shadow: 0 0 15px rgba(255, 162, 0, 0.5);
+}
+
+.contestant-card.champion:hover {
+    box-shadow: 0 0 25px rgba(255, 162, 0, 0.8), 0 0 35px rgba(0, 229, 255, 0.5);
+}
+
+.contestant-image {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    overflow: hidden;
+    margin-bottom: 1.5vw;
+    border: 3px solid #00E5FF;
+    box-shadow: 0 0 15px rgba(0, 229, 255, 0.7);
+    position: relative;
+}
+
+.contestant-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.champion-badge {
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: linear-gradient(90deg, #FFA200, #FF5E00);
+    color: black;
+    padding: 5px 15px;
+    border-radius: 15px;
+    font-family: 'Protest Strike', sans-serif;
+    font-size: 14px;
+    font-weight: bold;
+    box-shadow: 0 0 10px rgba(255, 162, 0, 0.8);
+}
+
+.contestant-card h3 {
+    font-family: 'Protest Strike', sans-serif;
+    font-size: clamp(24px, 3vw, 36px);
+    color: #00E5FF;
+    filter: drop-shadow(0 0 6px #00E5FF);
+    margin: 0 0 1vw 0;
+}
+
+.contestant-card.champion h3 {
+    color: #FFA200;
+    filter: drop-shadow(0 0 6px #FFA200);
+}
+
+.contestant-card .votes {
+    font-family: 'Poppins', sans-serif;
+    font-size: clamp(16px, 1.5vw, 22px);
+    color: white;
+    margin: 0;
+}
+
+/* RANKING LIST */
+.ranking-list {
+    max-width: 800px;
+    margin: 0 auto 3vw;
+}
+
+.rank-item {
+    display: flex;
+    align-items: center;
+    border: 2px solid #00E5FF;
+    border-radius: 15px;
+    background-color: rgba(0, 229, 255, 0.1);
+    padding: 1.5vw 2vw;
+    margin-bottom: 1.5vw;
+    box-shadow: 0 0 10px rgba(0, 229, 255, 0.3);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.rank-item:hover {
+    transform: translateX(10px);
+    box-shadow: 0 0 15px rgba(0, 229, 255, 0.5);
+}
+
+.rank-number {
+    font-family: 'Protest Strike', sans-serif;
+    font-size: clamp(24px, 3vw, 32px);
+    color: #FFA200;
+    filter: drop-shadow(0 0 4px #FFA200);
+    margin-right: 2vw;
+    min-width: 40px;
+}
+
+.contestant-image-small {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    overflow: hidden;
+    margin-right: 2vw;
+    border: 2px solid #FF00F6;
+    box-shadow: 0 0 10px rgba(255, 0, 246, 0.5);
+}
+
+.contestant-image-small img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.rank-details {
+    flex-grow: 1;
+    text-align: left;
+}
+
+.rank-details h3 {
+    font-family: 'Protest Strike', sans-serif;
+    font-size: clamp(20px, 2.5vw, 28px);
+    color: #00E5FF;
+    filter: drop-shadow(0 0 4px #00E5FF);
+    margin: 0 0 0.5vw 0;
+}
+
+.rank-details .votes {
+    font-family: 'Poppins', sans-serif;
+    font-size: clamp(14px, 1.2vw, 18px);
+    color: white;
+    margin: 0;
+}
+
+.vote-button {
+    font-family: 'Poppins', sans-serif;
+    font-size: clamp(14px, 1.2vw, 18px);
+    color: white;
+    background: linear-gradient(90deg, #FF00F6, #B200B2);
+    border: none;
+    border-radius: 10px;
+    padding: 10px 20px;
+    cursor: pointer;
+    box-shadow: 0 0 8px rgba(255, 0, 246, 0.7);
+    transition: transform 0.2s ease, box-shadow 0.3s ease;
+}
+
+.vote-button:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 15px rgba(255, 0, 246, 0.9);
+}
+
+/* CTA SECTION */
+.cta-text {
+    font-family: 'Poppins', sans-serif;
+    font-size: clamp(18px, 2vw, 24px);
+    color: white;
+    margin-bottom: 2vw;
+    line-height: 1.5;
+}
+
+.enter-arena-button {
+    font-family: 'Protest Strike', sans-serif;
+    font-size: clamp(20px, 2.5vw, 28px);
+    color: white;
+    padding: 14px 30px;
+    border-radius: 15px;
+    border: none;
+    cursor: pointer;
+    background: linear-gradient(90deg, #FF00F6, #B200B2);
+    box-shadow: 0 0 8px #FF00F6, 0 0 14px #FF00F6;
+    transition: transform 0.2s ease, box-shadow 0.3s ease;
+    margin-bottom: 2vw;
+}
+
+.enter-arena-button:hover {
+    transform: scale(1.1);
+    box-shadow: 0 0 14px #FF00F6, 0 0 28px #FF00F6, 0 0 40px #FFA200;
+}
+
+/* RESPONSIVE */
+@media (max-width: 1024px) {
+    .top-contestants {
+        gap: 3vw;
+    }
+    
+    .contestant-card {
+        width: 28%;
+    }
+    
+    .contestant-image {
+        width: 100px;
+        height: 100px;
+    }
+}
+
+@media (max-width: 768px) {
+    .top-contestants {
+        flex-direction: column;
+        align-items: center;
+        gap: 4vw;
+    }
+    
+    .contestant-card {
+        width: 80%;
+    }
+    
+    .rank-item {
+        padding: 3vw 4vw;
+    }
+    
+    .logo-container {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .logo-image {
+        margin-right: 0;
+        margin-bottom: 15px;
+    }
+    
+    .contestant-image {
+        width: 80px;
+        height: 80px;
+    }
+    
+    .contestant-image-small {
+        width: 50px;
+        height: 50px;
+        margin-right: 4vw;
+    }
+    
+    .rank-number {
+        margin-right: 4vw;
+    }
+    
+    .logo-text {
+        font-size: clamp(28px, 6vw, 48px);
+    }
+    
+    .contestant-card h3 {
+        font-size: clamp(20px, 4vw, 30px);
+    }
+    
+    .contestant-card .votes {
+        font-size: clamp(14px, 2.5vw, 20px);
+    }
+    
+    .rank-number {
+        font-size: clamp(20px, 4vw, 28px);
+    }
+    
+    .rank-details h3 {
+        font-size: clamp(18px, 3vw, 24px);
+    }
+    
+    .rank-details .votes,
+    .vote-button {
+        font-size: clamp(12px, 2vw, 16px);
+    }
+    
+    .cta-text {
+        font-size: clamp(16px, 2.5vw, 20px);
+    }
+    
+    .enter-arena-button {
+        font-size: clamp(18px, 3vw, 24px);
+        padding: 12px 25px;
+    }
+}
