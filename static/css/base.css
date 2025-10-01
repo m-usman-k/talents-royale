@@ -37,7 +37,7 @@ nav {
 
 /* Logo (navbar crown) — made slightly bigger as requested */
 .nav-logo img {
-    width: 112px; /* increased size (a little bigger) */
+    width: 130px; /* increased size (a little bigger) */
     height: auto;
     filter: drop-shadow(0 1px 6px rgba(241,0,247,0.85));
     display: block;
@@ -76,8 +76,8 @@ nav {
     color: var(--text-color);
 }
 .nav-profile img {
-    width: 44px;
-    height: 44px;
+    width: 65px;
+    height: 65px;
     border-radius: 50%;
     object-fit: cover;
     border: 2px solid #FFA200;
