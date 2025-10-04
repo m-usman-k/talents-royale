@@ -1,0 +1,368 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Prosto+One&family=Protest+Strike&display=swap');
+
+* {
+    padding: 0;
+    margin: 0;
+    border: none;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+body {
+    background-color: #0b0b0b;
+    color: white;
+    overflow-x: hidden;
+}
+
+/* SIGNUP HERO SECTION */
+.signup-hero {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    background: linear-gradient(135deg, #1a0a2e 0%, #16213e 50%, #0f3460 100%);
+}
+
+.hero-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+}
+
+.hero-background img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0.3;
+}
+
+/* DYNAMIC BACKGROUND EFFECTS */
+.signup-hero::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: 
+        radial-gradient(circle at 20% 20%, rgba(241, 0, 247, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 80% 80%, rgba(0, 229, 255, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 40% 60%, rgba(255, 162, 0, 0.1) 0%, transparent 50%);
+    pointer-events: none;
+    z-index: 0;
+}
+
+/* GLOWING DIAGONAL LINES */
+.signup-hero::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: 
+        linear-gradient(45deg, transparent 30%, rgba(241, 0, 247, 0.1) 50%, transparent 70%),
+        linear-gradient(-45deg, transparent 30%, rgba(0, 229, 255, 0.1) 50%, transparent 70%),
+        linear-gradient(135deg, transparent 30%, rgba(255, 162, 0, 0.1) 50%, transparent 70%);
+    pointer-events: none;
+    z-index: 0;
+    animation: moveLines 10s ease-in-out infinite;
+}
+
+@keyframes moveLines {
+    0%, 100% {
+        transform: translateX(0) translateY(0);
+    }
+    25% {
+        transform: translateX(10px) translateY(-10px);
+    }
+    50% {
+        transform: translateX(-10px) translateY(10px);
+    }
+    75% {
+        transform: translateX(5px) translateY(-5px);
+    }
+}
+
+.signup-container {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    max-width: 500px;
+    padding: 2rem;
+}
+
+.signup-content {
+    background: rgba(0, 0, 0, 0.4);
+    border: 2px solid rgba(255, 162, 0, 0.3);
+    border-radius: 25px;
+    padding: 3rem 2rem;
+    text-align: center;
+    box-shadow: 0 0 40px rgba(255, 162, 0, 0.2);
+    backdrop-filter: blur(10px);
+}
+
+.crown-icon {
+    margin-bottom: 2rem;
+}
+
+.crown-icon img {
+    width: 100px;
+    height: auto;
+    filter: drop-shadow(0 0 25px rgba(0, 229, 255, 0.8));
+    transition: transform 0.3s ease;
+}
+
+.crown-icon img:hover {
+    transform: scale(1.1);
+    filter: drop-shadow(0 0 35px rgba(0, 229, 255, 1));
+}
+
+.signup-content h1 {
+    font-family: 'Protest Strike', sans-serif;
+    font-size: clamp(32px, 5vw, 48px);
+    color: #FFA200;
+    text-shadow: 0 0 20px rgba(255, 162, 0, 0.8);
+    margin-bottom: 3rem;
+    font-weight: 900;
+    letter-spacing: 2px;
+}
+
+.signup-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.form-group {
+    position: relative;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 1.2rem 1.5rem;
+    background: rgba(0, 0, 0, 0.6);
+    border: 2px solid #F100F7;
+    border-radius: 15px;
+    color: white;
+    font-size: clamp(16px, 2vw, 18px);
+    transition: all 0.3s ease;
+    outline: none;
+}
+
+.form-group input::placeholder {
+    color: rgba(255, 255, 255, 0.6);
+    font-size: clamp(14px, 1.8vw, 16px);
+}
+
+.form-group input:focus {
+    border-color: #00E5FF;
+    box-shadow: 0 0 20px rgba(0, 229, 255, 0.5);
+    background: rgba(0, 0, 0, 0.8);
+}
+
+.form-group input:hover {
+    border-color: #FFA200;
+    box-shadow: 0 0 15px rgba(255, 162, 0, 0.3);
+}
+
+.signup-button {
+    width: 100%;
+    padding: 1.2rem 2rem;
+    background: #FFA200;
+    color: white;
+    border: none;
+    border-radius: 15px;
+    font-family: 'Protest Strike', sans-serif;
+    font-size: clamp(18px, 2.5vw, 24px);
+    font-weight: 900;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    box-shadow: 0 0 20px rgba(255, 162, 0, 0.4);
+    margin-top: 1rem;
+}
+
+.signup-button:hover {
+    background: #FFD700;
+    transform: translateY(-2px);
+    box-shadow: 0 10px 30px rgba(255, 162, 0, 0.6);
+}
+
+.signup-button:active {
+    transform: translateY(0);
+}
+
+.login-link {
+    margin-top: 2rem;
+}
+
+.login-link p {
+    color: white;
+    font-size: clamp(14px, 1.8vw, 16px);
+    opacity: 0.8;
+}
+
+.login-link-text {
+    color: #F100F7;
+    text-decoration: underline;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    text-shadow: 0 0 10px rgba(241, 0, 247, 0.5);
+}
+
+.login-link-text:hover {
+    color: #FFA200;
+    text-shadow: 0 0 15px rgba(255, 162, 0, 0.8);
+    text-decoration: none;
+}
+
+/* RESPONSIVE DESIGN */
+@media (max-width: 768px) {
+    .signup-container {
+        padding: 1rem;
+    }
+
+    .signup-content {
+        padding: 2rem 1.5rem;
+    }
+
+    .crown-icon img {
+        width: 80px;
+    }
+
+    .signup-content h1 {
+        font-size: clamp(28px, 6vw, 40px);
+        margin-bottom: 2rem;
+    }
+
+    .signup-form {
+        gap: 1.2rem;
+    }
+
+    .form-group input {
+        padding: 1rem 1.2rem;
+    }
+
+    .signup-button {
+        padding: 1rem 1.5rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .signup-content {
+        padding: 1.5rem 1rem;
+    }
+
+    .crown-icon img {
+        width: 60px;
+    }
+
+    .signup-content h1 {
+        font-size: clamp(24px, 8vw, 32px);
+        margin-bottom: 1.5rem;
+    }
+
+    .signup-form {
+        gap: 1rem;
+    }
+
+    .form-group input {
+        padding: 0.8rem 1rem;
+    }
+
+    .signup-button {
+        padding: 0.8rem 1rem;
+    }
+}
+
+/* ANIMATION EFFECTS */
+@keyframes glow {
+    0%, 100% {
+        text-shadow: 0 0 20px rgba(255, 162, 0, 0.8);
+    }
+    50% {
+        text-shadow: 0 0 30px rgba(255, 162, 0, 1);
+    }
+}
+
+.signup-content h1 {
+    animation: glow 3s ease-in-out infinite;
+}
+
+@keyframes float {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-10px);
+    }
+}
+
+.crown-icon img {
+    animation: float 4s ease-in-out infinite;
+}
+
+/* FORM VALIDATION STYLES */
+.form-group input:invalid {
+    border-color: #ff4444;
+    box-shadow: 0 0 15px rgba(255, 68, 68, 0.3);
+}
+
+.form-group input:valid {
+    border-color: #00ff44;
+    box-shadow: 0 0 15px rgba(0, 255, 68, 0.3);
+}
+
+/* PASSWORD MATCH VALIDATION */
+.form-group input.password-mismatch {
+    border-color: #ff4444;
+    box-shadow: 0 0 15px rgba(255, 68, 68, 0.3);
+}
+
+.form-group input.password-match {
+    border-color: #00ff44;
+    box-shadow: 0 0 15px rgba(0, 255, 68, 0.3);
+}
+
+/* LOADING STATE */
+.signup-button:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none;
+}
+
+.signup-button:disabled:hover {
+    transform: none;
+    box-shadow: 0 0 20px rgba(255, 162, 0, 0.4);
+}
+
+/* SUCCESS MESSAGE */
+.success-message {
+    background: rgba(0, 255, 68, 0.2);
+    border: 2px solid #00ff44;
+    border-radius: 10px;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    color: #00ff44;
+    text-align: center;
+    font-weight: 600;
+}
+
+/* ERROR MESSAGE */
+.error-message {
+    background: rgba(255, 68, 68, 0.2);
+    border: 2px solid #ff4444;
+    border-radius: 10px;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    color: #ff4444;
+    text-align: center;
+    font-weight: 600;
+}

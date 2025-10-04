@@ -18,3 +18,9 @@ def finaleroyale_view(request):
 
 def profile_view(request):
     return render(request, "profile.html")
+
+def signin_view(request):
+    return render(request, "signin.html")
+
+def signup_view(request):
+    return render(request, "signup.html")

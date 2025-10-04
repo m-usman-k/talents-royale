@@ -1,11 +1,111 @@
 {% extends "base.html" %}
 
-{% block title %} {% endblock %}
+{% block title %}How It Works - Talents Royale{% endblock %}
 
 {% load static %}
 
 {% block content %}
     <link rel="stylesheet" href="{% static 'css/how-it-works.css' %}">
+    
+    <section class="how-it-works-hero">
+        <div class="hero-background">
+            <img src="/static/images/tr-blue-bg.png" alt="How It Works Background"/>
+        </div>
+        
+        <div class="hero-content">
+            <div class="crown-icon">
+                <img src="/static/images/tr-blue-crown.png" alt="Crown Icon">
+            </div>
+            <h1>HOW TALENT ROYALE WORKS</h1>
+        </div>
+    </section>
 
+    <section class="steps-section">
+        <div class="steps-container">
+            <div class="step-item">
+                <div class="step-number">
+                    <span>1</span>
+                </div>
+                <div class="step-content">
+                    <h2>CHOOSE YOUR ARENA</h2>
+                    <ul>
+                        <li>Pick your tier</li>
+                        <li>Submit a 1-5 min video</li>
+                        <li>Show your best talent</li>
+                        <li>Each arena has 100 spots</li>
+                    </ul>
+                </div>
+            </div>
 
+            <div class="step-divider"></div>
+
+            <div class="step-item">
+                <div class="step-number">
+                    <span>2</span>
+                </div>
+                <div class="step-content">
+                    <h2>UPGRADE YOUR TIER</h2>
+                    <ul>
+                        <li>Access monthly perks</li>
+                        <li>Start at Recruit (75$/year)</li>
+                        <li>Elite tier grants all access</li>
+                        <li>• entry to 'Finale Royale'</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="step-divider"></div>
+
+            <div class="step-item">
+                <div class="step-number">
+                    <span>3</span>
+                </div>
+                <div class="step-content">
+                    <h2>SUBMIT YOUR TALENT</h2>
+                    <ul>
+                        <li>Upload an original talent video</li>
+                        <li>Viewers vote for free</li>
+                        <li>Purchase votes to boost rank</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="step-divider"></div>
+
+            <div class="step-item">
+                <div class="step-number">
+                    <span>4</span>
+                </div>
+                <div class="step-content">
+                    <h2>GET VOTES & RISE</h2>
+                    <ul>
+                        <li>Viewers vote for free</li>
+                        <li>Purchase votes to boost rank</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="step-divider"></div>
+
+            <div class="step-item">
+                <div class="step-number">
+                    <span>5</span>
+                </div>
+                <div class="step-content">
+                    <h2>REACH FINALE ROYALE</h2>
+                    <ul>
+                        <li>Place in the top 3</li>
+                        <li>Enter the year-end tournament</li>
+                        <li>Top 3 compete for the title of "The Victor"</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="cta-section">
+        <button class="cta-button" onclick="window.location.href='/arenas'">
+            Submit Your Talent
+        </button>
+    </section>
 {% endblock %}

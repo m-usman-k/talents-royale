@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block title %}Sign In - Talents Royale{% endblock %}
+
+{% load static %}
+
+{% block content %}
+    <link rel="stylesheet" href="{% static 'css/signin.css' %}">
+    
+    <section class="signin-hero">
+        <div class="hero-background">
+            <img src="/static/images/tr-blue-bg.png" alt="Sign In Background"/>
+        </div>
+        
+        <div class="signin-container">
+            <div class="signin-content">
+                <div class="crown-icon">
+                    <img src="/static/images/tr-blue-crown.png" alt="Crown Icon">
+                </div>
+                <h1>Signin</h1>
+                
+                <form class="signin-form">
+                    <div class="form-group">
+                        <input type="text" id="username" name="username" placeholder="Username" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <input type="password" id="password" name="password" placeholder="Password" required>
+                    </div>
+                    
+                    <button type="submit" class="login-button">Login</button>
+                    
+                    <div class="forgot-password">
+                        <a href="#" class="forgot-link">Forgot Password?</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+{% endblock %}

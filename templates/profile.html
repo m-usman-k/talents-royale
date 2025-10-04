@@ -1,11 +1,211 @@
 {% extends "base.html" %}
 
-{% block title %} {% endblock %}
+{% block title %}Profile - Talents Royale{% endblock %}
 
 {% load static %}
 
 {% block content %}
     <link rel="stylesheet" href="{% static 'css/profile.css' %}">
+    
+    <section class="profile-hero">
+        <div class="profile-background">
+            <img src="/static/images/tr-blue-bg.png" alt="Profile Background"/>
+        </div>
+        
+        <div class="profile-content">
+            <div class="profile-header">
+                <div class="profile-avatar">
+                    <img src="/static/images/tr-profile-icon.png" alt="Profile Avatar">
+                </div>
+                <div class="profile-info">
+                    <h1>@username</h1>
+                    <h2>ELITE TIER</h2>
+                    <p>Member since 2025</p>
+                </div>
+            </div>
+            
+            <div class="profile-stats">
+                <div class="stat-card">
+                    <h3>210</h3>
+                    <p>Total Votes</p>
+                </div>
+                <div class="stat-card">
+                    <h3>15</h3>
+                    <p>Competitions</p>
+                </div>
+                <div class="stat-card">
+                    <h3>3</h3>
+                    <p>Wins</p>
+                </div>
+                <div class="stat-card">
+                    <h3>Rank #8</h3>
+                    <p>Leaderboard</p>
+                </div>
+            </div>
+        </div>
+    </section>
 
+    <section class="profile-main">
+        <div class="profile-tabs">
+            <button class="tab-button active" data-tab="overview">Overview</button>
+            <button class="tab-button" data-tab="submissions">My Submissions</button>
+            <button class="tab-button" data-tab="achievements">Achievements</button>
+            <button class="tab-button" data-tab="settings">Settings</button>
+        </div>
 
+        <div class="tab-content">
+            <div class="tab-panel active" id="overview">
+                <div class="overview-grid">
+                    <div class="overview-card">
+                        <h3>Current Arena</h3>
+                        <div class="arena-info">
+                            <img src="/static/images/tr-elite-tier.png" alt="Elite Tier">
+                            <div>
+                                <h4>ELITE ARENA</h4>
+                                <p>Top 3% of all competitors</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="overview-card">
+                        <h3>Recent Activity</h3>
+                        <div class="activity-list">
+                            <div class="activity-item">
+                                <span class="activity-icon">🏆</span>
+                                <div>
+                                    <p>Won Elite Arena Competition</p>
+                                    <small>2 days ago</small>
+                                </div>
+                            </div>
+                            <div class="activity-item">
+                                <span class="activity-icon">📹</span>
+                                <div>
+                                    <p>Submitted new talent video</p>
+                                    <small>1 week ago</small>
+                                </div>
+                            </div>
+                            <div class="activity-item">
+                                <span class="activity-icon">⭐</span>
+                                <div>
+                                    <p>Reached Elite tier</p>
+                                    <small>2 weeks ago</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="overview-card">
+                        <h3>Next Goal</h3>
+                        <div class="goal-info">
+                            <h4>Reach Finale Royale</h4>
+                            <p>Place in top 3 to enter the year-end tournament</p>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 75%"></div>
+                            </div>
+                            <small>75% complete</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tab-panel" id="submissions">
+                <div class="submissions-grid">
+                    <div class="submission-card">
+                        <div class="submission-thumbnail">
+                            <img src="/static/images/tr-hero-bg.png" alt="Submission Thumbnail">
+                            <div class="play-button">▶</div>
+                        </div>
+                        <div class="submission-info">
+                            <h4>My Amazing Talent</h4>
+                            <p>Music Performance</p>
+                            <div class="submission-stats">
+                                <span>210 votes</span>
+                                <span>Rank #8</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="submission-card">
+                        <div class="submission-thumbnail">
+                            <img src="/static/images/tr-hero-bg.png" alt="Submission Thumbnail">
+                            <div class="play-button">▶</div>
+                        </div>
+                        <div class="submission-info">
+                            <h4>Dance Routine</h4>
+                            <p>Dance Performance</p>
+                            <div class="submission-stats">
+                                <span>165 votes</span>
+                                <span>Rank #12</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tab-panel" id="achievements">
+                <div class="achievements-grid">
+                    <div class="achievement-card earned">
+                        <div class="achievement-icon">🏆</div>
+                        <h4>Elite Competitor</h4>
+                        <p>Reached Elite tier</p>
+                    </div>
+                    
+                    <div class="achievement-card earned">
+                        <div class="achievement-icon">⭐</div>
+                        <h4>Top Performer</h4>
+                        <p>Placed in top 10</p>
+                    </div>
+                    
+                    <div class="achievement-card">
+                        <div class="achievement-icon">👑</div>
+                        <h4>Finale Royale</h4>
+                        <p>Enter year-end tournament</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tab-panel" id="settings">
+                <div class="settings-form">
+                    <h3>Account Settings</h3>
+                    <form>
+                        <div class="form-group">
+                            <label>Username</label>
+                            <input type="text" value="username" readonly>
+                        </div>
+                        <div class="form-group">
+                            <label>Email</label>
+                            <input type="email" value="user@example.com">
+                        </div>
+                        <div class="form-group">
+                            <label>Bio</label>
+                            <textarea placeholder="Tell us about yourself...">Talented performer ready to compete!</textarea>
+                        </div>
+                        <button type="submit" class="save-button">Save Changes</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // Tab functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const tabButtons = document.querySelectorAll('.tab-button');
+            const tabPanels = document.querySelectorAll('.tab-panel');
+
+            tabButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const targetTab = this.getAttribute('data-tab');
+                    
+                    // Remove active class from all buttons and panels
+                    tabButtons.forEach(btn => btn.classList.remove('active'));
+                    tabPanels.forEach(panel => panel.classList.remove('active'));
+                    
+                    // Add active class to clicked button and corresponding panel
+                    this.classList.add('active');
+                    document.getElementById(targetTab).classList.add('active');
+                });
+            });
+        });
+    </script>
 {% endblock %}

@@ -1,11 +1,209 @@
 {% extends "base.html" %}
 
-{% block title %} {% endblock %}
+{% block title %}Finale Royale - Talents Royale{% endblock %}
 
 {% load static %}
 
 {% block content %}
     <link rel="stylesheet" href="{% static 'css/finale-royale.css' %}">
+    
+    <section class="finale-hero">
+        <div class="hero-background">
+            <img src="/static/images/tr-blue-bg.png" alt="Finale Royale Background"/>
+        </div>
+        
+        <div class="hero-content">
+            <div class="crown-icon">
+                <img src="/static/images/tr-blue-crown.png" alt="Crown Icon">
+            </div>
+            <h1>FINALE ROYALE</h1>
+        </div>
+    </section>
 
+    <section class="top-contestants">
+        <div class="contestants-container">
+            <h2>TOP CONTESTANTS</h2>
+            <div class="contestants-grid">
+                <div class="contestant-card first-place">
+                    <div class="contestant-image">
+                        <img src="/static/images/tr-hero-bg.png" alt="Holla">
+                    </div>
+                    <h3>HOLLA</h3>
+                    <p>210 votes</p>
+                </div>
+                
+                <div class="contestant-card second-place">
+                    <div class="contestant-image">
+                        <img src="/static/images/tr-hero-bg.png" alt="Molly">
+                    </div>
+                    <h3>MOLLY</h3>
+                    <p>165 votes</p>
+                </div>
+                
+                <div class="contestant-card third-place">
+                    <div class="contestant-image">
+                        <img src="/static/images/tr-hero-bg.png" alt="Drake">
+                    </div>
+                    <h3>DRAKE</h3>
+                    <p>105 votes</p>
+                </div>
+            </div>
+        </div>
+    </section>
 
+    <section class="leaderboard-section">
+        <div class="leaderboard-container">
+            <div class="leaderboard-table">
+                <div class="table-header">
+                    <div class="header-cell">Rank</div>
+                    <div class="header-cell">Contestant</div>
+                    <div class="header-cell">Category</div>
+                    <div class="header-cell">Contact</div>
+                    <div class="header-cell">Test</div>
+                    <div class="header-cell">Progress</div>
+                </div>
+                
+                <div class="table-row rank-1">
+                    <div class="cell rank-cell">
+                        <div class="rank-number">1</div>
+                    </div>
+                    <div class="cell contestant-cell">
+                        <img src="/static/images/tr-hero-bg.png" alt="Holla">
+                        <span>Holla</span>
+                        <span class="arrow">↑</span>
+                    </div>
+                    <div class="cell">Music</div>
+                    <div class="cell">Remiuth</div>
+                    <div class="cell">189</div>
+                    <div class="cell">
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 85%"></div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="table-row rank-2">
+                    <div class="cell rank-cell">
+                        <div class="rank-number">2</div>
+                    </div>
+                    <div class="cell contestant-cell">
+                        <img src="/static/images/tr-hero-bg.png" alt="Molly">
+                        <span>Molly</span>
+                        <span class="bell">🔔</span>
+                    </div>
+                    <div class="cell">Arts</div>
+                    <div class="cell">Vvcicch</div>
+                    <div class="cell">189</div>
+                    <div class="cell">
+                        <button class="free-vote-btn">Free Vote</button>
+                    </div>
+                </div>
+                
+                <div class="table-row rank-3">
+                    <div class="cell rank-cell">
+                        <div class="rank-number">3</div>
+                    </div>
+                    <div class="cell contestant-cell">
+                        <img src="/static/images/tr-hero-bg.png" alt="Drake">
+                        <span>Drake</span>
+                        <span class="square">■</span>
+                    </div>
+                    <div class="cell">Film</div>
+                    <div class="cell">Chancess</div>
+                    <div class="cell">160</div>
+                    <div class="cell">
+                        <button class="free-vote-btn">Free Vote</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="top-200-leaderboard">
+        <div class="leaderboard-container">
+            <h2>TOP 200 LEADERBOARD</h2>
+            <div class="leaderboard-grid">
+                <div class="leaderboard-item">
+                    <span class="rank">1</span>
+                    <span class="name">FOLAKE</span>
+                    <span class="score">18 Stuck</span>
+                </div>
+                <div class="leaderboard-item">
+                    <span class="rank">2</span>
+                    <span class="name">Remault</span>
+                    <span class="score">189 Music</span>
+                </div>
+                <div class="leaderboard-item">
+                    <span class="rank">3</span>
+                    <span class="name">Voixech</span>
+                    <span class="score">189 Votes</span>
+                </div>
+                <div class="leaderboard-item">
+                    <span class="rank">4</span>
+                    <span class="name">Molly</span>
+                    <span class="score">160 Arts</span>
+                </div>
+                <div class="leaderboard-item">
+                    <span class="rank">6</span>
+                    <span class="name">Holla</span>
+                    <span class="score">165 Comedy</span>
+                </div>
+                <div class="leaderboard-item">
+                    <span class="rank">6</span>
+                    <span class="name">Molly</span>
+                    <span class="score">165 Votes</span>
+                </div>
+                <div class="leaderboard-item">
+                    <span class="rank">8</span>
+                    <span class="name">Holla</span>
+                    <span class="score">180 Music</span>
+                </div>
+                <div class="leaderboard-item">
+                    <span class="rank">9</span>
+                    <span class="name">Holla</span>
+                    <span class="score">180 Votes</span>
+                </div>
+                <div class="leaderboard-item">
+                    <span class="rank">10</span>
+                    <span class="name">Holla</span>
+                    <span class="score">Arts</span>
+                </div>
+                <div class="leaderboard-item">
+                    <span class="rank">11</span>
+                    <span class="name">Drake</span>
+                    <span class="score">105 Turn Music</span>
+                </div>
+                <div class="leaderboard-item">
+                    <span class="rank">12</span>
+                    <span class="name">Drake</span>
+                    <span class="score">99 Votes</span>
+                </div>
+                <div class="leaderboard-item">
+                    <span class="rank">14</span>
+                    <span class="name">Drake</span>
+                    <span class="score">Film</span>
+                </div>
+                <div class="leaderboard-item">
+                    <span class="rank">15</span>
+                    <span class="name">Buck</span>
+                    <span class="score">Music</span>
+                </div>
+                <div class="leaderboard-item">
+                    <span class="rank">16</span>
+                    <span class="name">Music</span>
+                    <span class="score">Arts</span>
+                </div>
+                <div class="leaderboard-item">
+                    <span class="rank">17</span>
+                    <span class="name">Film</span>
+                    <span class="score">Buck</span>
+                </div>
+                <div class="leaderboard-item">
+                    <span class="rank">18</span>
+                    <span class="name">Arts</span>
+                    <span class="score">Film</span>
+                </div>
+            </div>
+        </div>
+    </section>
 {% endblock %}
