@@ -324,3 +324,59 @@ body {
     transform: none;
     box-shadow: 0 0 20px rgba(255, 162, 0, 0.4);
 }
+
+/* RESEND CONFIRMATION STYLES */
+.resend-confirmation-link {
+    text-align: center;
+    margin-top: 1rem;
+}
+
+.resend-confirmation-link p {
+    color: #FFA200;
+    font-size: 14px;
+}
+
+.resend-link-text {
+    color: #00E5FF;
+    text-decoration: none;
+    font-weight: 600;
+    transition: color 0.3s ease, text-shadow 0.3s ease;
+}
+
+.resend-link-text:hover {
+    color: #FFA200;
+    text-shadow: 0 0 10px rgba(255, 162, 0, 0.8);
+}
+
+.resend-info {
+    text-align: center;
+    margin-bottom: 1.5rem;
+}
+
+.resend-info p {
+    color: #FFA200;
+    font-size: 14px;
+    opacity: 0.9;
+}
+
+.back-to-login {
+    text-align: center;
+    margin-top: 1rem;
+}
+
+.back-to-login p {
+    color: #FFA200;
+    font-size: 14px;
+}
+
+.back-link {
+    color: #00E5FF;
+    text-decoration: none;
+    font-weight: 600;
+    transition: color 0.3s ease, text-shadow 0.3s ease;
+}
+
+.back-link:hover {
+    color: #FFA200;
+    text-shadow: 0 0 10px rgba(255, 162, 0, 0.8);
+}

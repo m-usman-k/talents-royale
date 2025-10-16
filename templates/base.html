@@ -27,9 +27,15 @@
 
         <!-- Desktop profile (visible on desktop) -->
         <div class="nav-profile">
-            <a href="/profile">
-                <img src="{% static 'images/tr-profile-icon.png' %}" alt="Profile">
-            </a>
+            {% if user.is_authenticated %}
+                <a href="/profile">
+                    <img src="{% static 'images/tr-profile-icon.png' %}" alt="Profile">
+                </a>
+            {% else %}
+                <a href="/login">
+                    <img src="{% static 'images/tr-profile-icon.png' %}" alt="Login">
+                </a>
+            {% endif %}
         </div>
 
         <!-- Hamburger (mobile) -->
@@ -41,27 +47,54 @@
 
         <!-- Mobile menu (inside nav for correct absolute positioning) -->
         <div id="mobileMenu" class="mobile-menu" aria-hidden="true">
-            <div class="mobile-profile">
-                <a href="/profile">
-                    <img src="{% static 'images/tr-profile-icon.png' %}" alt="Profile">
-                </a>
-                <div class="mobile-profile-text">
-                    <a href="/profile" class="mobile-profile-link">My Account</a>
-                    <div class="mobile-username">@username</div>
+            {% if user.is_authenticated %}
+                <div class="mobile-profile">
+                    <a href="/profile">
+                        <img src="{% static 'images/tr-profile-icon.png' %}" alt="Profile">
+                    </a>
+                    <div class="mobile-profile-text">
+                        <a href="/profile" class="mobile-profile-link">My Account</a>
+                        <div class="mobile-username">@{{ user.username }}</div>
+                    </div>
                 </div>
-            </div>
+            {% else %}
+                <div class="mobile-profile">
+                    <a href="/login">
+                        <img src="{% static 'images/tr-profile-icon.png' %}" alt="Login">
+                    </a>
+                    <div class="mobile-profile-text">
+                        <a href="/login" class="mobile-profile-link">Login</a>
+                        <div class="mobile-username">Not logged in</div>
+                    </div>
+                </div>
+            {% endif %}
 
             <a href="/">Home</a>
             <a href="/arenas">Arenas</a>
             <a href="/contestants">Contestants</a>
             <a href="/how-it-works">How It Works</a>
             <a href="/finale-royale">Finale Royale</a>
+            
+            {% if user.is_authenticated %}
+                <a href="/logout">Logout</a>
+            {% endif %}
         </div>
     </nav>
 
     <!-- MAIN -->
     <!-- NOTE: no padding/margin here — left pristine as you asked -->
     <main class="container">
+        <!-- Messages -->
+        {% if messages %}
+            <div class="messages">
+                {% for message in messages %}
+                    <div class="alert alert-{{ message.tags }}">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+        
         {% block content %}{% endblock %}
     </main>
 

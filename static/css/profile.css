@@ -435,13 +435,25 @@ body {
 }
 
 /* SETTINGS TAB */
-.settings-form {
-    max-width: 600px;
+.settings-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+    gap: 2rem;
+    max-width: 1200px;
     margin: 0 auto;
+}
+
+.settings-form {
     background: rgba(0, 0, 0, 0.6);
     border: 2px solid #00E5FF;
     border-radius: 20px;
     padding: 2rem;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.settings-form:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(0, 229, 255, 0.4);
 }
 
 .settings-form h3 {
@@ -511,6 +523,95 @@ body {
     box-shadow: 0 5px 15px rgba(255, 162, 0, 0.5);
 }
 
+/* DELETE ACCOUNT FORM STYLES */
+.delete-account-form {
+    border-color: #ff6b6b !important;
+    background: rgba(255, 107, 107, 0.05) !important;
+}
+
+.delete-account-form:hover {
+    box-shadow: 0 10px 25px rgba(255, 107, 107, 0.3) !important;
+}
+
+.delete-account-form h3 {
+    color: #ff6b6b !important;
+    text-shadow: 0 0 10px rgba(255, 107, 107, 0.8) !important;
+}
+
+.warning-message {
+    background: rgba(255, 107, 107, 0.1);
+    border: 2px solid #ff6b6b;
+    border-radius: 15px;
+    padding: 1rem;
+    margin-bottom: 1.5rem;
+    text-align: center;
+}
+
+.warning-message p {
+    color: #ff6b6b;
+    font-weight: 600;
+    margin: 0;
+    font-size: 14px;
+}
+
+.checkbox-group {
+    margin-bottom: 1.5rem;
+}
+
+.checkbox-label {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+    cursor: pointer;
+    color: #FFA200;
+    font-weight: 500;
+}
+
+.delete-checkbox {
+    margin-top: 0.25rem;
+    transform: scale(1.2);
+    accent-color: #ff6b6b;
+}
+
+.checkbox-text {
+    font-size: 14px;
+    line-height: 1.4;
+}
+
+.delete-button {
+    width: 100%;
+    padding: 1rem 2rem;
+    background: linear-gradient(135deg, #ff6b6b, #ff5252);
+    color: white;
+    border: none;
+    border-radius: 15px;
+    font-family: 'Protest Strike', sans-serif;
+    font-size: clamp(18px, 2vw, 24px);
+    cursor: pointer;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
+    box-shadow: 0 4px 15px rgba(255, 107, 107, 0.4);
+}
+
+.delete-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(255, 107, 107, 0.6);
+    background: linear-gradient(135deg, #ff5252, #ff4444);
+}
+
+.delete-button:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 10px rgba(255, 107, 107, 0.4);
+}
+
+.help-text {
+    color: #FFA200;
+    font-size: 12px;
+    margin-top: 0.5rem;
+    display: block;
+    opacity: 0.8;
+}
+
 /* RESPONSIVE DESIGN */
 @media (max-width: 768px) {
     .profile-stats {
@@ -571,5 +672,9 @@ body {
     .achievement-card,
     .settings-form {
         padding: 1.5rem;
+    }
+    
+    .settings-container {
+        grid-template-columns: 1fr;
     }
 }
