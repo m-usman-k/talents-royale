@@ -20,24 +20,25 @@ section.main-contestants {
     display: flex;
     align-items: center;
     justify-content: center;
+    flex-direction: column;
     margin-bottom: 2vw;
 }
 
 .logo-image {
-    width: 80px;
-    height: 80px;
+    width: 500px;
+    height: auto;
     margin-right: 20px;
-    border-radius: 50%;
-    border: 2px solid #FF00F6;
-    box-shadow: 0 0 15px rgba(255, 0, 246, 0.7);
+    filter: drop-shadow(0 1px 6px rgba(241,0,247,0.85));
 }
 
 .logo-text {
     font-family: 'Prosto One', cursive;
-    color: #FF00F6;
+    color: transparent;
     filter: drop-shadow(0 0 8px #FF00F6);
-    font-size: clamp(36px, 5vw, 64px);
+    font-size: clamp(48px, 7vw, 150px);
     margin: 0;
+    line-height: 0.85;
+    -webkit-text-stroke: 0.1px #FF00F6;
 }
 
 .month-selector {
@@ -74,16 +75,15 @@ section.main-contestants {
 }
 
 .contestant-card {
-    border: 3px solid #FF00F6;
-    border-radius: 25px;
-    background-color: rgba(255, 0, 246, 0.15);
-    padding: 2vw;
-    width: 30%;
-    box-shadow: 0 0 15px rgba(255, 0, 246, 0.5);
+    border: 3px solid rgba(255, 165, 0, 0.8);
+    border-radius: 12px;
+    background-color: transparent;
+    width: 28%;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     display: flex;
     flex-direction: column;
-    align-items: center;
+    overflow: hidden;
 }
 
 .contestant-card:hover {
@@ -92,23 +92,44 @@ section.main-contestants {
 }
 
 .contestant-card.champion {
-    border-color: #FFA200;
-    background-color: rgba(255, 162, 0, 0.15);
-    box-shadow: 0 0 15px rgba(255, 162, 0, 0.5);
+    border-color: rgba(255, 215, 0, 1);
+    background-color: rgba(40, 20, 60, 0.9);
+    box-shadow: 0 6px 25px rgba(255, 215, 0, 0.6), 0 0 35px rgba(255, 215, 0, 0.4);
+    transform: scale(1.05);
 }
 
 .contestant-card.champion:hover {
-    box-shadow: 0 0 25px rgba(255, 162, 0, 0.8), 0 0 35px rgba(0, 229, 255, 0.5);
+    transform: scale(1.08) translateY(-5px);
+    box-shadow: 0 8px 30px rgba(255, 215, 0, 0.8), 0 0 45px rgba(255, 215, 0, 0.6);
+}
+
+/* Gold border for first place (left card) */
+.contestant-card:first-child {
+    border-color: rgba(255, 165, 0, 0.9);
+    box-shadow: 0 4px 20px rgba(255, 165, 0, 0.5), 0 0 30px rgba(255, 165, 0, 0.3);
+}
+
+.contestant-card:first-child:hover {
+    box-shadow: 0 6px 25px rgba(255, 165, 0, 0.7), 0 0 35px rgba(255, 165, 0, 0.5);
+}
+
+/* Silver border for third place (right card) */
+.contestant-card:last-child {
+    border-color: rgba(192, 192, 192, 0.9);
+    box-shadow: 0 4px 20px rgba(192, 192, 192, 0.5), 0 0 30px rgba(192, 192, 192, 0.3);
+}
+
+.contestant-card:last-child:hover {
+    box-shadow: 0 6px 25px rgba(192, 192, 192, 0.7), 0 0 35px rgba(192, 192, 192, 0.5);
 }
 
 .contestant-image {
-    width: 120px;
-    height: 120px;
-    border-radius: 50%;
+    width: 100%;
+    height: 60%;
+    border-radius: 0;
     overflow: hidden;
-    margin-bottom: 1.5vw;
-    border: 3px solid #00E5FF;
-    box-shadow: 0 0 15px rgba(0, 229, 255, 0.7);
+    border: none;
+    box-shadow: none;
     position: relative;
 }
 
@@ -118,9 +139,20 @@ section.main-contestants {
     object-fit: cover;
 }
 
+.contestant-info {
+    height: 40%;
+    background-color: rgba(40, 20, 60, 0.9);
+    padding: 1.5vw;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
 .champion-badge {
     position: absolute;
-    bottom: -10px;
+    bottom: 10px;
     left: 50%;
     transform: translateX(-50%);
     background: linear-gradient(90deg, #FFA200, #FF5E00);
@@ -133,62 +165,57 @@ section.main-contestants {
     box-shadow: 0 0 10px rgba(255, 162, 0, 0.8);
 }
 
-.contestant-card h3 {
+.contestant-info h3 {
     font-family: 'Protest Strike', sans-serif;
-    font-size: clamp(24px, 3vw, 36px);
-    color: #00E5FF;
-    filter: drop-shadow(0 0 6px #00E5FF);
-    margin: 0 0 1vw 0;
-}
-
-.contestant-card.champion h3 {
-    color: #FFA200;
-    filter: drop-shadow(0 0 6px #FFA200);
-}
-
-.contestant-card .votes {
-    font-family: 'Poppins', sans-serif;
-    font-size: clamp(16px, 1.5vw, 22px);
+    font-size: clamp(20px, 2.5vw, 28px);
     color: white;
+    margin: 0 0 0.5vw 0;
+}
+
+.contestant-info .votes {
+    font-family: 'Poppins', sans-serif;
+    font-size: clamp(14px, 1.2vw, 18px);
+    color: rgba(255, 255, 255, 0.8);
     margin: 0;
 }
 
 /* RANKING LIST */
 .ranking-list {
-    max-width: 800px;
+    max-width: 900px;
     margin: 0 auto 3vw;
+    background-color: rgba(20, 10, 30, 0.9);
+    border-radius: 8px;
+    padding: 1.5vw;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
 }
 
 .rank-item {
     display: flex;
     align-items: center;
-    border: 2px solid #00E5FF;
-    border-radius: 15px;
-    background-color: rgba(0, 229, 255, 0.1);
-    padding: 1.5vw 2vw;
-    margin-bottom: 1.5vw;
-    box-shadow: 0 0 10px rgba(0, 229, 255, 0.3);
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 6px;
+    background-color: transparent;
+    padding: 1vw 1.5vw;
+    margin-bottom: 0.5vw;
+    transition: background-color 0.2s ease;
 }
 
 .rank-item:hover {
-    transform: translateX(10px);
-    box-shadow: 0 0 15px rgba(0, 229, 255, 0.5);
+    background-color: rgba(255, 255, 255, 0.05);
 }
 
 .rank-number {
     font-family: 'Protest Strike', sans-serif;
     font-size: clamp(24px, 3vw, 32px);
-    color: #FFA200;
-    filter: drop-shadow(0 0 4px #FFA200);
+    color: white;
     margin-right: 2vw;
     min-width: 40px;
 }
 
 .contestant-image-small {
-    width: 60px;
-    height: 60px;
-    border-radius: 50%;
+    width: 80px;
+    height: 80px;
+    border-radius: 8px;
     overflow: hidden;
     margin-right: 2vw;
     border: 2px solid #FF00F6;
@@ -209,8 +236,7 @@ section.main-contestants {
 .rank-details h3 {
     font-family: 'Protest Strike', sans-serif;
     font-size: clamp(20px, 2.5vw, 28px);
-    color: #00E5FF;
-    filter: drop-shadow(0 0 4px #00E5FF);
+    color: white;
     margin: 0 0 0.5vw 0;
 }
 
@@ -242,10 +268,11 @@ section.main-contestants {
 /* CTA SECTION */
 .cta-text {
     font-family: 'Poppins', sans-serif;
-    font-size: clamp(18px, 2vw, 24px);
+    font-size: clamp(28px, 4vw, 48px);
     color: white;
     margin-bottom: 2vw;
     line-height: 1.5;
+    font-weight: 600;
 }
 
 .enter-arena-button {
@@ -257,29 +284,59 @@ section.main-contestants {
     border: none;
     cursor: pointer;
     background: linear-gradient(90deg, #FF00F6, #B200B2);
-    box-shadow: 0 0 8px #FF00F6, 0 0 14px #FF00F6;
+    box-shadow: 0 0 4px #FF00F6;
     transition: transform 0.2s ease, box-shadow 0.3s ease;
     margin-bottom: 2vw;
 }
 
 .enter-arena-button:hover {
-    transform: scale(1.1);
-    box-shadow: 0 0 14px #FF00F6, 0 0 28px #FF00F6, 0 0 40px #FFA200;
+    transform: scale(1.05);
+    box-shadow: 0 0 8px #FF00F6, 0 0 12px #FF00F6;
 }
 
 /* RESPONSIVE */
+@media (max-width: 1200px) {
+    .top-contestants {
+        gap: 2.5vw;
+    }
+    
+    .contestant-card {
+        width: 30%;
+        padding: 1.8vw 1.2vw;
+    }
+    
+    .contestant-image {
+        width: 110px;
+        height: 110px;
+    }
+    
+    .contestant-image-small {
+        width: 70px;
+        height: 70px;
+    }
+}
+
 @media (max-width: 1024px) {
     .top-contestants {
         gap: 3vw;
     }
     
     .contestant-card {
-        width: 28%;
+        width: 30%;
     }
     
     .contestant-image {
-        width: 100px;
-        height: 100px;
+        height: 60%;
+    }
+    
+    .contestant-info {
+        height: 40%;
+        padding: 2vw 1vw;
+    }
+    
+    .contestant-image-small {
+        width: 65px;
+        height: 65px;
     }
 }
 
@@ -291,7 +348,16 @@ section.main-contestants {
     }
     
     .contestant-card {
-        width: 80%;
+        width: 85%;
+        padding: 3vw 2vw;
+    }
+    
+    .contestant-card.champion {
+        transform: scale(1.02);
+    }
+    
+    .contestant-card.champion:hover {
+        transform: scale(1.05) translateY(-3px);
     }
     
     .rank-item {
@@ -306,16 +372,21 @@ section.main-contestants {
     .logo-image {
         margin-right: 0;
         margin-bottom: 15px;
+        width: 300px;
     }
     
     .contestant-image {
-        width: 80px;
-        height: 80px;
+        height: 60%;
+    }
+    
+    .contestant-info {
+        height: 40%;
+        padding: 2.5vw 1.5vw;
     }
     
     .contestant-image-small {
-        width: 50px;
-        height: 50px;
+        width: 60px;
+        height: 60px;
         margin-right: 4vw;
     }
     
@@ -324,7 +395,7 @@ section.main-contestants {
     }
     
     .logo-text {
-        font-size: clamp(28px, 6vw, 48px);
+        font-size: clamp(36px, 8vw, 70px);
     }
     
     .contestant-card h3 {
@@ -349,11 +420,25 @@ section.main-contestants {
     }
     
     .cta-text {
-        font-size: clamp(16px, 2.5vw, 20px);
+        font-size: clamp(24px, 3.5vw, 36px);
     }
     
     .enter-arena-button {
         font-size: clamp(18px, 3vw, 24px);
         padding: 12px 25px;
+    }
+    
+    .ranking-list {
+        padding: 3vw;
+        margin: 0 auto 4vw;
+    }
+    
+    .month-dropdown {
+        font-size: clamp(14px, 2vw, 18px);
+        padding: 8px 15px;
+    }
+    
+    .arena-rankings {
+        font-size: clamp(16px, 2.5vw, 24px);
     }
 }
