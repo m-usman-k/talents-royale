@@ -14,36 +14,35 @@ body {
     overflow-x: hidden;
 }
 
-/* HERO SECTION */
-.how-it-works-hero {
+/* UNIFIED HOW IT WORKS SECTION */
+.how-it-works-section {
     position: relative;
-    min-height: 50vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    min-height: 100vh;
     overflow: hidden;
+    background-repeat: no-repeat !important;
+    background-size: cover !important;
+    background-position: center center !important;
+    background-attachment: scroll;
+    padding: 4rem 2rem;
 }
 
-.hero-background {
+.how-it-works-section::before {
+    content: '';
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    z-index: -1;
-}
-
-.hero-background img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    opacity: 0.8;
+    background-color: rgba(0, 0, 0, 0.3);
+    z-index: 0;
 }
 
 .hero-content {
     text-align: center;
     z-index: 1;
-    padding: 2rem;
+    padding: 2rem 0;
+    position: relative;
+    margin-bottom: 4rem;
 }
 
 .crown-icon {
@@ -63,40 +62,25 @@ body {
 }
 
 .hero-content h1 {
-    font-family: 'Protest Strike', sans-serif;
-    font-size: clamp(36px, 6vw, 72px);
-    color: #F100F7;
-    text-shadow: 0 0 20px rgba(241, 0, 247, 0.8);
-    font-weight: 900;
-    letter-spacing: 2px;
+    font-family: 'Prosto One', cursive;
+    color: transparent;
+    filter: drop-shadow(0 0 8px #FF00F6);
+    font-size: clamp(48px, 7vw, 150px);
+    margin: 0;
+    line-height: 0.85;
+    -webkit-text-stroke: 2.5px #FF00F6;
+    font-weight: normal;
+    letter-spacing: 0;
 }
 
-/* STEPS SECTION */
-.steps-section {
-    background: linear-gradient(135deg, #1a0a2e 0%, #16213e 50%, #0f3460 100%);
-    padding: 4rem 2rem;
-    position: relative;
-}
-
-.steps-section::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: 
-        radial-gradient(circle at 20% 20%, rgba(241, 0, 247, 0.1) 0%, transparent 50%),
-        radial-gradient(circle at 80% 80%, rgba(0, 229, 255, 0.1) 0%, transparent 50%),
-        radial-gradient(circle at 40% 60%, rgba(255, 162, 0, 0.1) 0%, transparent 50%);
-    pointer-events: none;
-}
-
+/* STEPS CONTAINER */
 .steps-container {
     max-width: 1000px;
     margin: 0 auto;
     position: relative;
     z-index: 1;
+    padding: 2rem 0;
+    margin-bottom: 4rem;
 }
 
 .step-item {
@@ -186,11 +170,15 @@ body {
     opacity: 0.6;
 }
 
-/* CTA SECTION */
-.cta-section {
-    background: linear-gradient(135deg, #0b0b0b 0%, #1a0a2e 100%);
-    padding: 4rem 2rem;
+/* CTA CONTAINER */
+.cta-container {
     text-align: center;
+    position: relative;
+    z-index: 1;
+    padding: 2rem 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .cta-button {
@@ -220,7 +208,22 @@ body {
 }
 
 /* RESPONSIVE DESIGN */
+@media (max-width: 1024px) {
+    .how-it-works-section {
+        padding: 3rem 1.5rem;
+    }
+
+    .step-item {
+        gap: 1.5rem;
+        padding: 1.5rem;
+    }
+}
+
 @media (max-width: 768px) {
+    .how-it-works-section {
+        padding: 3rem 1rem;
+    }
+
     .step-item {
         flex-direction: column;
         text-align: center;
@@ -248,12 +251,20 @@ body {
         margin-bottom: 0.6rem;
     }
 
-    .hero-content h1 {
-        font-size: clamp(28px, 8vw, 48px);
+    .hero-content {
+        margin-bottom: 3rem;
     }
 
-    .crown-icon img {
-        width: 80px;
+    .hero-content h1 {
+        font-size: clamp(36px, 8vw, 70px);
+    }
+
+    .steps-container {
+        margin-bottom: 3rem;
+    }
+
+    .cta-container {
+        padding: 1.5rem 0;
     }
 
     .cta-button {
@@ -263,11 +274,7 @@ body {
 }
 
 @media (max-width: 480px) {
-    .steps-section {
-        padding: 3rem 1rem;
-    }
-
-    .cta-section {
+    .how-it-works-section {
         padding: 3rem 1rem;
     }
 
@@ -293,8 +300,16 @@ body {
         font-size: clamp(12px, 2.5vw, 16px);
     }
 
+    .hero-content {
+        margin-bottom: 2rem;
+    }
+
     .hero-content h1 {
-        font-size: clamp(24px, 10vw, 36px);
+        font-size: clamp(32px, 10vw, 60px);
+    }
+
+    .steps-container {
+        margin-bottom: 2rem;
     }
 
     .crown-icon img {

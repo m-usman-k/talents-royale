@@ -14,37 +14,34 @@ body {
     overflow-x: hidden;
 }
 
-/* HERO SECTION */
-.finale-hero {
+/* UNIFIED FINALE SECTION */
+.finale-section {
     position: relative;
-    min-height: 50vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    min-height: 100vh;
     overflow: hidden;
-    background: linear-gradient(135deg, #2c1810 0%, #1a0a0a 50%, #0b0b0b 100%);
+    background-repeat: no-repeat !important;
+    background-size: cover !important;
+    background-position: center center !important;
+    padding: 4rem 2rem;
 }
 
-.hero-background {
+.finale-section::before {
+    content: '';
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    z-index: -1;
-}
-
-.hero-background img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    opacity: 0.3;
+    background-color: rgba(0, 0, 0, 0.3);
+    z-index: 0;
 }
 
 .hero-content {
     text-align: center;
     z-index: 1;
-    padding: 2rem;
+    padding: 2rem 0;
+    position: relative;
+    margin-bottom: 4rem;
 }
 
 .crown-icon {
@@ -52,8 +49,9 @@ body {
 }
 
 .crown-icon img {
-    width: 120px;
+    width: 600px;
     height: auto;
+    max-width: 100%;
     filter: drop-shadow(0 0 30px rgba(255, 162, 0, 0.8));
     transition: transform 0.3s ease;
 }
@@ -64,75 +62,55 @@ body {
 }
 
 .hero-content h1 {
-    font-family: 'Protest Strike', sans-serif;
-    font-size: clamp(36px, 6vw, 72px);
-    color: #FFA200;
-    text-shadow: 0 0 20px rgba(255, 162, 0, 0.8);
-    font-weight: 900;
-    letter-spacing: 3px;
+    font-family: 'Prosto One', cursive;
+    color: transparent;
+    filter: drop-shadow(0 0 8px #FFA200);
+    font-size: clamp(48px, 7vw, 150px);
+    margin: 0;
+    line-height: 0.85;
+    -webkit-text-stroke: 2.5px #FFA200;
+    font-weight: normal;
+    letter-spacing: 0;
 }
 
 /* TOP CONTESTANTS SECTION */
-.top-contestants {
-    background: linear-gradient(135deg, #2c1810 0%, #1a0a0a 100%);
-    padding: 4rem 2rem;
-    text-align: center;
-}
-
-.contestants-container h2 {
-    font-family: 'Protest Strike', sans-serif;
-    font-size: clamp(28px, 4vw, 48px);
-    color: #FFA200;
-    text-shadow: 0 0 15px rgba(255, 162, 0, 0.8);
-    margin-bottom: 3rem;
-    font-weight: 900;
+.contestants-container {
+    position: relative;
+    z-index: 1;
+    max-width: 1200px;
+    margin: 0 auto 4rem auto;
 }
 
 .contestants-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 3rem;
-    max-width: 1000px;
     margin: 0 auto;
 }
 
 .contestant-card {
     background: rgba(0, 0, 0, 0.6);
     border: 3px solid #FFA200;
-    border-radius: 25px;
-    padding: 2rem;
+    border-radius: 15px;
+    padding: 0;
     text-align: center;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     position: relative;
+    overflow: hidden;
+    box-shadow: 0 0 20px rgba(255, 162, 0, 0.4);
 }
 
 .contestant-card:hover {
     transform: translateY(-10px);
-    box-shadow: 0 20px 40px rgba(255, 162, 0, 0.4);
-}
-
-.contestant-card.first-place {
+    box-shadow: 0 20px 40px rgba(255, 162, 0, 0.6);
     border-color: #FFD700;
-    box-shadow: 0 0 30px rgba(255, 215, 0, 0.5);
-}
-
-.contestant-card.second-place {
-    border-color: #C0C0C0;
-    box-shadow: 0 0 30px rgba(192, 192, 192, 0.5);
-}
-
-.contestant-card.third-place {
-    border-color: #CD7F32;
-    box-shadow: 0 0 30px rgba(205, 127, 50, 0.5);
 }
 
 .contestant-image {
-    width: 150px;
-    height: 150px;
-    border-radius: 50%;
+    width: 100%;
+    height: 300px;
     overflow: hidden;
-    margin: 0 auto 1.5rem;
-    border: 3px solid #FFA200;
+    border-radius: 12px 12px 0 0;
 }
 
 .contestant-image img {
@@ -146,30 +124,30 @@ body {
     font-size: clamp(24px, 3vw, 32px);
     color: #FFA200;
     text-shadow: 0 0 10px rgba(255, 162, 0, 0.8);
-    margin-bottom: 0.5rem;
+    margin: 1rem 0 0.5rem 0;
     font-weight: 900;
+    padding: 0 1rem;
 }
 
 .contestant-card p {
     font-size: clamp(16px, 2vw, 20px);
-    color: white;
+    color: #FFA200;
     opacity: 0.9;
+    margin-bottom: 1rem;
+    padding: 0 1rem;
 }
 
 /* LEADERBOARD SECTION */
-.leaderboard-section {
-    background: linear-gradient(135deg, #1a0a0a 0%, #0b0b0b 100%);
-    padding: 4rem 2rem;
-}
-
 .leaderboard-container {
     max-width: 1200px;
-    margin: 0 auto;
+    margin: 0 auto 4rem auto;
+    position: relative;
+    z-index: 1;
 }
 
 .leaderboard-table {
     background: rgba(0, 0, 0, 0.6);
-    border: 2px solid #FFA200;
+    border: 3px solid #FFA200;
     border-radius: 20px;
     overflow: hidden;
     box-shadow: 0 0 30px rgba(255, 162, 0, 0.3);
@@ -195,7 +173,7 @@ body {
 .table-row {
     display: grid;
     grid-template-columns: 80px 1fr 120px 120px 80px 120px;
-    border-bottom: 1px solid rgba(255, 162, 0, 0.3);
+    border-bottom: 2px solid rgba(255, 162, 0, 0.3);
     transition: background 0.3s ease;
 }
 
@@ -221,8 +199,8 @@ body {
 }
 
 .rank-number {
-    width: 40px;
-    height: 40px;
+    width: 50px;
+    height: 50px;
     background: #FFA200;
     color: #0b0b0b;
     border-radius: 50%;
@@ -231,7 +209,7 @@ body {
     justify-content: center;
     font-family: 'Protest Strike', sans-serif;
     font-weight: 900;
-    font-size: clamp(16px, 2vw, 20px);
+    font-size: clamp(18px, 2vw, 24px);
     box-shadow: 0 0 15px rgba(255, 162, 0, 0.6);
 }
 
@@ -243,50 +221,145 @@ body {
 }
 
 .contestant-cell img {
-    width: 40px;
-    height: 40px;
+    width: 50px;
+    height: 50px;
     border-radius: 50%;
     object-fit: cover;
+    border: 2px solid #FFA200;
 }
 
-.contestant-cell span {
-    font-weight: 600;
-}
-
-.arrow {
-    color: #00E5FF;
-    font-size: 1.2em;
-    margin-left: auto;
-}
-
-.bell {
+.contestant-cell .icon {
     color: #FFA200;
-    font-size: 1.2em;
-    margin-left: auto;
-}
-
-.square {
-    color: #F100F7;
-    font-size: 1.2em;
+    font-size: 1.5em;
     margin-left: auto;
 }
 
 .progress-bar {
     width: 100%;
-    height: 8px;
+    height: 12px;
     background: rgba(0, 0, 0, 0.5);
-    border-radius: 4px;
+    border-radius: 6px;
     overflow: hidden;
+    border: 1px solid #FFA200;
 }
 
 .progress-fill {
     height: 100%;
     background: linear-gradient(90deg, #FFA200, #FFD700);
-    border-radius: 4px;
+    border-radius: 6px;
     transition: width 0.3s ease;
 }
 
 .free-vote-btn {
+    background: #FFA200;
+    color: #0b0b0b;
+    border: none;
+    border-radius: 8px;
+    padding: 0.6rem 1.2rem;
+    font-family: 'Protest Strike', sans-serif;
+    font-size: clamp(12px, 1.5vw, 16px);
+    font-weight: 900;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 0 10px rgba(255, 162, 0, 0.5);
+}
+
+.free-vote-btn:hover {
+    background: #FFD700;
+    transform: scale(1.05);
+    box-shadow: 0 5px 15px rgba(255, 162, 0, 0.7);
+}
+
+/* TOP 200 LEADERBOARD */
+.leaderboard-container h2 {
+    font-family: 'Prosto One', cursive;
+    color: transparent;
+    filter: drop-shadow(0 0 8px #FFA200);
+    font-size: clamp(48px, 7vw, 120px);
+    margin: 0 0 3rem 0;
+    line-height: 0.85;
+    -webkit-text-stroke: 2.5px #FFA200;
+    font-weight: normal;
+    letter-spacing: 0;
+    text-align: center;
+    position: relative;
+    z-index: 1;
+}
+
+.leaderboard-table-large {
+    background: rgba(0, 0, 0, 0.6);
+    border: 3px solid #FFA200;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 0 30px rgba(255, 162, 0, 0.3);
+}
+
+.table-header-large {
+    display: grid;
+    grid-template-columns: 80px 1fr 1fr 1fr 120px;
+    background: rgba(255, 162, 0, 0.2);
+    border-bottom: 2px solid #FFA200;
+}
+
+.header-cell-large {
+    padding: 1.5rem 1rem;
+    font-family: 'Protest Strike', sans-serif;
+    font-size: clamp(16px, 2vw, 20px);
+    color: #FFA200;
+    text-shadow: 0 0 10px rgba(255, 162, 0, 0.8);
+    font-weight: 900;
+    text-align: center;
+}
+
+.table-body-large {
+    display: flex;
+    flex-direction: column;
+}
+
+.table-row-large {
+    display: grid;
+    grid-template-columns: 80px 1fr 1fr 1fr 120px;
+    border-bottom: 2px solid rgba(255, 162, 0, 0.3);
+    transition: background 0.3s ease;
+}
+
+.table-row-large:hover {
+    background: rgba(255, 162, 0, 0.1);
+}
+
+.table-row-large:last-child {
+    border-bottom: none;
+}
+
+.cell-large {
+    padding: 1.5rem 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: clamp(14px, 1.5vw, 18px);
+    color: white;
+}
+
+.rank-cell-large {
+    font-family: 'Protest Strike', sans-serif;
+    font-size: clamp(18px, 2vw, 24px);
+    color: #FFA200;
+    text-shadow: 0 0 10px rgba(255, 162, 0, 0.8);
+    font-weight: 900;
+}
+
+.name-cell-large {
+    font-weight: 600;
+    color: white;
+    justify-content: flex-start;
+}
+
+.score-cell-large {
+    color: white;
+    justify-content: flex-start;
+}
+
+.category-btn {
     background: #FFA200;
     color: #0b0b0b;
     border: none;
@@ -297,81 +370,23 @@ body {
     font-weight: 900;
     cursor: pointer;
     transition: all 0.3s ease;
+    box-shadow: 0 0 10px rgba(255, 162, 0, 0.5);
 }
 
-.free-vote-btn:hover {
+.category-btn:hover {
     background: #FFD700;
     transform: scale(1.05);
-    box-shadow: 0 5px 15px rgba(255, 162, 0, 0.5);
-}
-
-/* TOP 200 LEADERBOARD */
-.top-200-leaderboard {
-    background: linear-gradient(135deg, #0b0b0b 0%, #1a0a0a 100%);
-    padding: 4rem 2rem;
-}
-
-.top-200-leaderboard h2 {
-    font-family: 'Protest Strike', sans-serif;
-    font-size: clamp(28px, 4vw, 48px);
-    color: #FFA200;
-    text-shadow: 0 0 15px rgba(255, 162, 0, 0.8);
-    margin-bottom: 3rem;
-    text-align: center;
-    font-weight: 900;
-}
-
-.leaderboard-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 1rem;
-    max-width: 1200px;
-    margin: 0 auto;
-}
-
-.leaderboard-item {
-    display: grid;
-    grid-template-columns: 60px 1fr 1fr;
-    gap: 1rem;
-    background: rgba(0, 0, 0, 0.6);
-    border: 2px solid #FFA200;
-    border-radius: 15px;
-    padding: 1rem;
-    align-items: center;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.leaderboard-item:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 10px 25px rgba(255, 162, 0, 0.3);
-}
-
-.leaderboard-item .rank {
-    font-family: 'Protest Strike', sans-serif;
-    font-size: clamp(16px, 2vw, 20px);
-    color: #FFA200;
-    text-shadow: 0 0 10px rgba(255, 162, 0, 0.8);
-    font-weight: 900;
-    text-align: center;
-}
-
-.leaderboard-item .name {
-    font-size: clamp(14px, 1.5vw, 18px);
-    color: white;
-    font-weight: 600;
-}
-
-.leaderboard-item .score {
-    font-size: clamp(12px, 1.2vw, 16px);
-    color: #FFA200;
-    text-align: right;
-    opacity: 0.9;
+    box-shadow: 0 5px 15px rgba(255, 162, 0, 0.7);
 }
 
 /* RESPONSIVE DESIGN */
 @media (max-width: 1024px) {
+    .finale-section {
+        padding: 3rem 1.5rem;
+    }
+
     .contestants-grid {
-        grid-template-columns: 1fr;
+        grid-template-columns: repeat(3, 1fr);
         gap: 2rem;
     }
 
@@ -380,22 +395,49 @@ body {
         grid-template-columns: 60px 1fr 100px 100px 60px 100px;
     }
 
+    .table-header-large,
+    .table-row-large {
+        grid-template-columns: 60px 1fr 1fr 1fr 100px;
+    }
+
     .header-cell,
-    .cell {
+    .cell,
+    .header-cell-large,
+    .cell-large {
         padding: 1rem 0.5rem;
         font-size: clamp(12px, 1.5vw, 16px);
+    }
+
+    .crown-icon img {
+        width: 450px;
     }
 }
 
 @media (max-width: 768px) {
+    .finale-section {
+        padding: 3rem 1rem;
+    }
+
+    .hero-content {
+        margin-bottom: 3rem;
+    }
+
+    .contestants-container,
+    .leaderboard-container {
+        margin-bottom: 3rem;
+    }
+
     .contestants-grid {
         grid-template-columns: 1fr;
-        gap: 1.5rem;
+        gap: 2rem;
     }
 
     .contestant-image {
-        width: 120px;
-        height: 120px;
+        height: 250px;
+    }
+
+    .crown-icon img {
+        width: 350px;
     }
 
     .table-header,
@@ -417,12 +459,32 @@ body {
         background: rgba(0, 0, 0, 0.4);
     }
 
-    .cell {
+    .table-header-large,
+    .table-row-large {
+        grid-template-columns: 1fr;
+    }
+
+    .table-header-large {
+        display: none;
+    }
+
+    .table-row-large {
+        display: flex;
+        flex-direction: column;
+        padding: 1rem;
+        margin-bottom: 1rem;
+        border-radius: 10px;
+        background: rgba(0, 0, 0, 0.4);
+    }
+
+    .cell,
+    .cell-large {
         padding: 0.5rem;
         justify-content: flex-start;
     }
 
-    .rank-cell {
+    .rank-cell,
+    .rank-cell-large {
         justify-content: center;
         margin-bottom: 1rem;
     }
@@ -431,65 +493,40 @@ body {
         justify-content: center;
         margin-bottom: 1rem;
     }
-
-    .leaderboard-grid {
-        grid-template-columns: 1fr;
-    }
-
-    .leaderboard-item {
-        grid-template-columns: 50px 1fr 1fr;
-        gap: 0.5rem;
-        padding: 0.8rem;
-    }
 }
 
 @media (max-width: 480px) {
+    .finale-section {
+        padding: 2rem 1rem;
+    }
+
     .contestant-image {
-        width: 100px;
-        height: 100px;
+        height: 200px;
     }
 
     .contestant-card {
-        padding: 1.5rem;
+        padding: 0;
     }
 
-    .hero-content h1 {
-        font-size: clamp(24px, 8vw, 36px);
+    .hero-content h1,
+    .leaderboard-container h2 {
+        font-size: clamp(32px, 10vw, 60px);
     }
 
     .crown-icon img {
-        width: 80px;
+        width: 280px;
     }
 
-    .leaderboard-item {
-        grid-template-columns: 40px 1fr 1fr;
-        padding: 0.6rem;
+    .hero-content {
+        margin-bottom: 2rem;
     }
-}
 
-/* ANIMATION EFFECTS */
-@keyframes pulse {
-    0%, 100% {
-        box-shadow: 0 0 30px rgba(255, 162, 0, 0.5);
+    .contestants-container,
+    .leaderboard-container {
+        margin-bottom: 2rem;
     }
-    50% {
-        box-shadow: 0 0 40px rgba(255, 162, 0, 0.8);
-    }
-}
 
-.contestant-card.first-place {
-    animation: pulse 2s ease-in-out infinite;
-}
-
-@keyframes glow {
-    0%, 100% {
-        text-shadow: 0 0 15px rgba(255, 162, 0, 0.8);
+    .contestants-grid {
+        gap: 1.5rem;
     }
-    50% {
-        text-shadow: 0 0 25px rgba(255, 162, 0, 1);
-    }
-}
-
-.hero-content h1 {
-    animation: glow 3s ease-in-out infinite;
 }

@@ -262,12 +262,13 @@ footer {
     align-items: center;
     justify-content: center;
     gap: 1.5rem;
-    padding: 2.4rem 1rem 3rem;
+    padding: 6.25rem 1rem 6.25rem; /* Extra vertical space to show more of the background image */
     text-align: center;
-    background: url('/static/images/tr-footer-bg.png') top center / cover no-repeat;
+    background: url('/static/images/tr-footer-bg.png') top center / cover no-repeat; /* fill area, reveal from top down */
     border-top: 1px solid rgba(255,255,255,0.08);
     color: #fff;
     overflow: hidden;
+    min-height: clamp(420px, 45vw, 640px); /* Responsive height to expose more of the image */
 }
 
 /* 20% black overlay for footer */
@@ -276,7 +277,7 @@ footer::before {
     position: absolute;
     top: 0; left: 0;
     width: 100%; height: 100%;
-    background: rgba(0,0,0,0.2); /* 20% black overlay */
+    background: rgba(0,0,0,0.12); /* lighter overlay to reveal more detail */
     z-index: 0;
 }
 footer > * {
@@ -284,13 +285,9 @@ footer > * {
     z-index: 1;
 }
 
-/* footer crown (large) */
-.footer-logo img {
-    display: block;
-    width: clamp(220px, 46vw, 760px);
-    height: auto;
-    margin: 0 auto;
-    filter: drop-shadow(0 8px 30px rgba(0,0,0,0.7));
+/* Footer logo container - hidden but structure maintained */
+.footer-logo {
+    display: none; /* Hide the crown completely */
 }
 
 /* social icons bigger */
@@ -338,7 +335,10 @@ footer > * {
     nav { padding: 0.85rem 0.9rem; }
     .nav-logo img { width: 88px; } /* slightly smaller on small screens */
     .mobile-profile img { width: 72px; height: 72px; border-radius: 10px; }
-    .footer-logo img { width: clamp(180px, 54vw, 420px); }
+    footer {
+        padding: 3.75rem 1rem 3.75rem; /* Taller on mobile as well */
+        min-height: clamp(320px, 60vw, 480px);
+    }
     .footer-links a img { width: clamp(44px, 12vw, 72px); }
     .footer-copyright p { font-size: clamp(13px, 2.6vw, 15.5px); }
 }

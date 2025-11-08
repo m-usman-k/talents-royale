@@ -7,20 +7,11 @@
 {% block content %}
     <link rel="stylesheet" href="{% static 'css/how-it-works.css' %}">
     
-    <section class="how-it-works-hero">
-        <div class="hero-background">
-            <img src="/static/images/tr-blue-bg.png" alt="How It Works Background"/>
-        </div>
-        
+    <section class="how-it-works-section" style="background-image: url('{% static "images/tr-blue-bg.png" %}');">
         <div class="hero-content">
-            <div class="crown-icon">
-                <img src="/static/images/tr-blue-crown.png" alt="Crown Icon">
-            </div>
-            <h1>HOW TALENT ROYALE WORKS</h1>
+            <h1>HOW TALENT <br>ROYALE WORKS</h1>
         </div>
-    </section>
 
-    <section class="steps-section">
         <div class="steps-container">
             <div class="step-item">
                 <div class="step-number">
@@ -101,11 +92,11 @@
                 </div>
             </div>
         </div>
-    </section>
 
-    <section class="cta-section">
-        <button class="cta-button" onclick="window.location.href='/arenas'">
-            Submit Your Talent
-        </button>
+        <div class="cta-container">
+            <button class="cta-button" onclick="window.location.href='/arenas'">
+                Submit Your Talent
+            </button>
+        </div>
     </section>
 {% endblock %}
