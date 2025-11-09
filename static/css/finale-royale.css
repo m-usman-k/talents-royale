@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Prosto+One&family=Protest+Strike&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Anton&display=swap');
 
 * {
     padding: 0;
@@ -167,77 +167,6 @@ body {
     padding: 2rem 0;
     position: relative;
     margin-bottom: 2rem;
-}
-
-.header-wrapper {
-    display: flex;
-    align-items: flex-end;
-    justify-content: center;
-    gap: 2rem;
-    flex-wrap: wrap;
-}
-
-.crown-icon {
-    margin-bottom: 0;
-    animation: crownFloat 4s ease-in-out infinite;
-}
-
-.crown-icon img {
-    width: 600px;
-    height: auto;
-    max-width: 100%;
-    filter: drop-shadow(0 0 30px rgba(255, 162, 0, 0.8));
-    transition: transform 0.3s ease;
-    animation: crownRotate 8s ease-in-out infinite, crownGlow 3s ease-in-out infinite;
-}
-
-.crown-icon img:hover {
-    transform: scale(1.15) rotate(5deg);
-    filter: drop-shadow(0 0 50px rgba(255, 162, 0, 1));
-    animation-play-state: paused;
-}
-
-@keyframes crownFloat {
-    0%, 100% {
-        transform: translateY(0px);
-    }
-    50% {
-        transform: translateY(-15px);
-    }
-}
-
-@keyframes crownRotate {
-    0%, 100% {
-        transform: rotate(0deg);
-    }
-    25% {
-        transform: rotate(-2deg);
-    }
-    75% {
-        transform: rotate(2deg);
-    }
-}
-
-@keyframes crownGlow {
-    0%, 100% {
-        filter: drop-shadow(0 0 30px rgba(255, 162, 0, 0.8));
-    }
-    50% {
-        filter: drop-shadow(0 0 50px rgba(255, 162, 0, 1)) drop-shadow(0 0 80px rgba(255, 215, 0, 0.6));
-    }
-}
-
-.hero-content h1 {
-    font-family: 'Prosto One', cursive;
-    color: #FFA200;
-    font-size: clamp(48px, 7vw, 150px);
-    margin: 0;
-    line-height: 0.85;
-    font-weight: normal;
-    letter-spacing: 0;
-    text-align: center;
-    text-shadow: 0 0 10px rgba(255, 162, 0, 0.6);
-    filter: drop-shadow(0 0 4px rgba(255, 162, 0, 0.4));
 }
 
 /* INFO BAR */
@@ -613,6 +542,45 @@ body {
     100% {
         transform: rotate(360deg);
     }
+}
+
+.contestant-card h1.neon-gold {
+    font-family: 'Impact', Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    text-transform: uppercase;
+    color: #FFD700;
+    margin: 0;
+    line-height: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    margin-bottom: 2rem;
+}
+
+h1.neon-gold .title-line {
+    display: block;
+    text-shadow: 
+        0 0 5px #FFD700,
+        0 0 10px #FFD700,
+        0 0 20px #FFD700,
+        0 0 40px #FFA500;
+    animation: neonPulse 2s ease-in-out infinite alternate;
+    line-height: 1;
+}
+
+h1.neon-gold .title-line:first-child {
+    font-size: 6rem;
+}
+
+h1.neon-gold .title-line:last-child {
+    font-size: 7rem;
+    margin-top: -0.5rem;
+    color: #FFA200;
+    text-shadow: 
+        0 0 5px #FFA200,
+        0 0 15px #FFA200,
+        0 0 25px #FF8C00;
 }
 
 .contestant-card h3 {
@@ -1103,6 +1071,138 @@ body {
     }
 }
 
+/* FINALE ROYALE TITLE STYLES */
+.top-section {
+    text-align: center;
+    margin: 2rem 0 4rem;
+    padding: 0 1rem;
+}
+
+.top-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+}
+
+.gold-crown-icon {
+    width: 120px;
+    height: 120px;
+    margin-bottom: 1rem;
+}
+
+.gold-crown-icon img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    filter: drop-shadow(0 0 15px rgba(255, 215, 0, 0.8));
+}
+
+.finale-title-content {
+    font-size: clamp(3rem, 9vw, 6rem);
+    color: #fff;
+    letter-spacing: 2px;
+    word-spacing: 5px;
+    text-align: center;
+    line-height: 1;
+    margin: 0;
+    text-shadow:
+        0 0 1px #fff,
+        0 0 2px #fff,
+        0 0 3px #ffd700,
+        0 0 5px #ffd700,
+        0 0 8px #ffd700;
+    -webkit-text-stroke: 1px #ffd700;
+    animation: neonPulse 3s ease-in-out infinite alternate;
+    position: relative;
+    z-index: 1;
+    padding-top: 0.5rem;
+}
+
+
+@keyframes neonPulse {
+    0% {
+        text-shadow:
+            0 0 1px #fff,
+            0 0 2px #fff,
+            0 0 3px #ffd700,
+            0 0 5px #ffd700,
+            0 0 8px #ffd700;
+        transform: translateY(0);
+    }
+    100% {
+        text-shadow:
+            0 0 2px #fff,
+            0 0 4px #fff,
+            0 0 6px #ffd700,
+            0 0 10px #ffd700,
+            0 0 15px #ffd700;
+        transform: translateY(-3px);
+    }
+}
+
+/* Crown and Title Styling */
+.top-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 2rem 0;
+    gap: 0.5rem;
+}
+
+.top-wrapper img {
+    width: 500px;
+    height: auto;
+    margin-bottom: 0.5rem;
+    filter: drop-shadow(0 0 8px rgba(255, 215, 0, 0.9));
+    transition: transform 0.3s ease-in-out;
+}
+
+.top-wrapper img:hover {
+    transform: scale(1.05);
+}
+
+@keyframes float {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-10px);
+    }
+}
+
+@keyframes float {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-10px);
+    }
+}
+
+@keyframes titleFloat {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-10px);
+    }
+}
+
+@keyframes titleGlowBack {
+    0%, 100% {
+        opacity: 0.5;
+        transform: translate(0, 0);
+    }
+    50% {
+        opacity: 0.8;
+        transform: translate(5px, 5px);
+    }
+}
+
 /* TOP 200 LEADERBOARD */
 .leaderboard-container h2 {
     font-family: 'Prosto One', cursive;
@@ -1132,28 +1232,6 @@ body {
     opacity: 0.5;
     animation: titleGlowBack 3s ease-in-out infinite;
     z-index: -1;
-}
-
-@keyframes titleFloat {
-    0%, 100% {
-        transform: translateY(0px);
-        filter: drop-shadow(0 0 8px #FFA200);
-    }
-    50% {
-        transform: translateY(-10px);
-        filter: drop-shadow(0 0 15px #FFA200) drop-shadow(0 0 25px rgba(255, 215, 0, 0.6));
-    }
-}
-
-@keyframes titleGlowBack {
-    0%, 100% {
-        opacity: 0.3;
-        transform: translate(0, 0);
-    }
-    50% {
-        opacity: 0.6;
-        transform: translate(3px, 3px);
-    }
 }
 
 .leaderboard-table-large {
@@ -1360,10 +1438,6 @@ body {
 @media (max-width: 1024px) {
     .finale-section {
         padding: 3rem 1.5rem;
-    }
-
-    .hero-content h1 {
-        font-size: clamp(40px, 6vw, 120px);
     }
 
     .crown-icon img {

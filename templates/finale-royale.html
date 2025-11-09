@@ -6,15 +6,14 @@
 
 {% block content %}
     <link rel="stylesheet" href="{% static 'css/finale-royale.css' %}">
+    <script src="{% static 'scripts/finale-animations.js' %}" defer></script>
     
     <section class="finale-section" style="background-image: url('{% static "images/tr-gold-bg.png" %}');">
-        <div class="hero-content">
-            <div class="header-wrapper">
-                <div class="crown-icon">
-                    <img src="{% static 'images/tr-gold-crown.png' %}" alt="Crown Icon">
-                </div>
-                <h1>FINALE<br>ROYALE</h1>
-            </div>
+        <div class="top-wrapper">
+            <img src="{% static 'images/tr-gold-crown.png' %}" alt="Crown Icon">
+            <h1 class="finale-title-content">
+                Finale Royale
+            </h1>
         </div>
 
         <div class="info-bar">
