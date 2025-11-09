@@ -7,95 +7,98 @@
 {% block content %}
     <link rel="stylesheet" href="{% static 'css/how-it-works.css' %}">
     
-    <section class="how-it-works-section" style="background-image: url('{% static "images/tr-blue-bg.png" %}');">
+    <section class="how-it-works-section">
         <div class="hero-content">
-            <h1>HOW TALENT <br>ROYALE WORKS</h1>
+            <h1><span class="title-part1">HOW TALENTS</span> <br><span class="title-part2">ROYALE WORKS</span></h1>
         </div>
 
-        <div class="steps-container">
-            <div class="step-item">
-                <div class="step-number">
-                    <span>1</span>
-                </div>
-                <div class="step-content">
-                    <h2>CHOOSE YOUR ARENA</h2>
-                    <ul>
-                        <li>Pick your tier</li>
-                        <li>Submit a 1-5 min video</li>
-                        <li>Show your best talent</li>
-                        <li>Each arena has 100 spots</li>
-                    </ul>
+        <div class="steps-grid">
+            <div class="step-card">
+                <div class="step-icon">🎮</div>
+                <h2>CHOOSE YOUR ARENA</h2>
+                <ul>
+                    <li>Pick Recruit ($15), Veteran ($25), or Champion ($35)</li>
+                    <li>Submit a 1-5 min. video</li>
+                    <li>Show your best talent</li>
+                    <li>Each Arena has 100 spots</li>
+                </ul>
+            </div>
+
+            <div class="step-card">
+                <div class="step-icon">💎</div>
+                <h2>UPGRADE YOUR TIER <span class="optional">(OPTIONAL)</span></h2>
+                <ul>
+                    <li>Access monthly perks</li>
+                    <li>Start at Recruit ($75/year)</li>
+                    <li>Elite Tier grants all access + entry to the 'Finale Royale'</li>
+                </ul>
+            </div>
+
+            <div class="step-card full-width">
+                <div class="step-icon">🛡️</div>
+                <h2>SUBMIT YOUR TALENT</h2>
+                <ul>
+                    <li>Upload an original talent-focused video</li>
+                    <li>Viewers vote for free</li>
+                    <li>Purchase votes to boost your rank</li>
+                </ul>
+                <div class="tier-table">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Tier</th>
+                                <th>Recruit $75/year</th>
+                                <th>Veteran $99/year</th>
+                                <th>Champion $149/year</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Recruit</td>
+                                <td>$75</td>
+                                <td>15 vote per month</td>
+                                <td>15 votes per month</td>
+                            </tr>
+                            <tr>
+                                <td>Veteran</td>
+                                <td>$99</td>
+                                <td>15 vote per month</td>
+                                <td>15 votes per month</td>
+                            </tr>
+                            <tr>
+                                <td>Champion</td>
+                                <td>$149</td>
+                                <td>15 vote per month</td>
+                                <td>15 votes per month</td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
             </div>
 
-            <div class="step-divider"></div>
-
-            <div class="step-item">
-                <div class="step-number">
-                    <span>2</span>
-                </div>
-                <div class="step-content">
-                    <h2>UPGRADE YOUR TIER</h2>
-                    <ul>
-                        <li>Access monthly perks</li>
-                        <li>Start at Recruit (75$/year)</li>
-                        <li>Elite tier grants all access</li>
-                        <li>• entry to 'Finale Royale'</li>
-                    </ul>
-                </div>
+            <div class="step-card">
+                <div class="step-icon">👍</div>
+                <h2>GET VOTES & RISE</h2>
+                <ul>
+                    <li>Viewers vote for free</li>
+                    <li>Purchase votes to boost your rank</li>
+                </ul>
             </div>
 
-            <div class="step-divider"></div>
-
-            <div class="step-item">
-                <div class="step-number">
-                    <span>3</span>
-                </div>
-                <div class="step-content">
-                    <h2>SUBMIT YOUR TALENT</h2>
-                    <ul>
-                        <li>Upload an original talent video</li>
-                        <li>Viewers vote for free</li>
-                        <li>Purchase votes to boost rank</li>
-                    </ul>
-                </div>
-            </div>
-
-            <div class="step-divider"></div>
-
-            <div class="step-item">
-                <div class="step-number">
-                    <span>4</span>
-                </div>
-                <div class="step-content">
-                    <h2>GET VOTES & RISE</h2>
-                    <ul>
-                        <li>Viewers vote for free</li>
-                        <li>Purchase votes to boost rank</li>
-                    </ul>
-                </div>
-            </div>
-
-            <div class="step-divider"></div>
-
-            <div class="step-item">
-                <div class="step-number">
-                    <span>5</span>
-                </div>
-                <div class="step-content">
-                    <h2>REACH FINALE ROYALE</h2>
-                    <ul>
-                        <li>Place in the top 3</li>
-                        <li>Enter the year-end tournament</li>
-                        <li>Top 3 compete for the title of "The Victor"</li>
-                    </ul>
-                </div>
+            <div class="step-card">
+                <div class="step-icon">🏆</div>
+                <h2>REACH THE FINALE ROYALE</h2>
+                <ul>
+                    <li>Place in the top 3</li>
+                    <li>Enter the year-end tournament</li>
+                    <li>Top 3 compete for the title of "The Victor"</li>
+                </ul>
             </div>
         </div>
 
         <div class="cta-container">
             <button class="cta-button" onclick="window.location.href='/arenas'">
-                Submit Your Talent
+                SUBMIT YOUR TALENT
             </button>
         </div>
     </section>

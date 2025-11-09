@@ -19,22 +19,8 @@ body {
     position: relative;
     min-height: 100vh;
     overflow: hidden;
-    background-repeat: no-repeat !important;
-    background-size: cover !important;
-    background-position: center center !important;
-    background-attachment: scroll;
+    background: linear-gradient(135deg, #1a0a2e 0%, #16213e 50%, #0f3460 100%);
     padding: 4rem 2rem;
-}
-
-.how-it-works-section::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.3);
-    z-index: 0;
 }
 
 .hero-content {
@@ -45,129 +31,136 @@ body {
     margin-bottom: 4rem;
 }
 
-.crown-icon {
-    margin-bottom: 2rem;
-}
-
-.crown-icon img {
-    width: 120px;
-    height: auto;
-    filter: drop-shadow(0 0 20px rgba(0, 229, 255, 0.8));
-    transition: transform 0.3s ease;
-}
-
-.crown-icon img:hover {
-    transform: scale(1.1);
-    filter: drop-shadow(0 0 30px rgba(0, 229, 255, 1));
-}
-
 .hero-content h1 {
     font-family: 'Prosto One', cursive;
-    color: transparent;
-    filter: drop-shadow(0 0 8px #FF00F6);
     font-size: clamp(48px, 7vw, 150px);
-    margin: 0;
-    line-height: 0.85;
-    -webkit-text-stroke: 2.5px #FF00F6;
     font-weight: normal;
     letter-spacing: 0;
+    margin: 0;
+    line-height: 0.85;
+    color: #FF00F6;
+    text-shadow: 0 0 20px rgba(255, 0, 246, 0.8);
 }
 
-/* STEPS CONTAINER */
-.steps-container {
-    max-width: 1000px;
-    margin: 0 auto;
+.title-part1,
+.title-part2 {
+    color: #FF00F6;
+    text-shadow: 0 0 20px rgba(255, 0, 246, 0.8);
+}
+
+/* STEPS GRID */
+.steps-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2rem;
+    max-width: 1200px;
+    margin: 0 auto 4rem auto;
     position: relative;
     z-index: 1;
-    padding: 2rem 0;
-    margin-bottom: 4rem;
 }
 
-.step-item {
-    display: flex;
-    align-items: flex-start;
-    gap: 2rem;
-    margin-bottom: 3rem;
+.step-card {
+    background: rgba(0, 0, 0, 0.4);
+    border: 2px solid #00E5FF;
+    border-radius: 15px;
     padding: 2rem;
-    background: rgba(0, 0, 0, 0.3);
-    border-radius: 25px;
-    border: 2px solid rgba(255, 162, 0, 0.3);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
+    position: relative;
 }
 
-.step-item:hover {
+.step-card:hover {
     transform: translateY(-5px);
-    box-shadow: 0 15px 35px rgba(255, 162, 0, 0.2);
-    border-color: rgba(255, 162, 0, 0.6);
+    box-shadow: 0 10px 30px rgba(0, 229, 255, 0.3);
+    border-color: #00E5FF;
 }
 
-.step-number {
-    flex-shrink: 0;
-    width: 80px;
-    height: 80px;
-    border: 3px solid #00E5FF;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: rgba(0, 229, 255, 0.1);
-    box-shadow: 0 0 20px rgba(0, 229, 255, 0.5);
+.step-card.full-width {
+    grid-column: 1 / -1;
 }
 
-.step-number span {
+.step-icon {
+    font-size: 48px;
+    margin-bottom: 1rem;
+    filter: drop-shadow(0 0 10px rgba(0, 229, 255, 0.8));
+}
+
+.step-card h2 {
     font-family: 'Protest Strike', sans-serif;
-    font-size: clamp(24px, 3vw, 36px);
+    font-size: clamp(20px, 3vw, 28px);
     color: white;
-    font-weight: 900;
-}
-
-.step-content {
-    flex: 1;
-}
-
-.step-content h2 {
-    font-family: 'Protest Strike', sans-serif;
-    font-size: clamp(24px, 3vw, 36px);
-    color: #FFA200;
-    text-shadow: 0 0 15px rgba(255, 162, 0, 0.8);
     margin-bottom: 1.5rem;
     font-weight: 900;
     letter-spacing: 1px;
 }
 
-.step-content ul {
+.optional {
+    font-size: 0.7em;
+    color: rgba(255, 255, 255, 0.7);
+    font-weight: 400;
+}
+
+.step-card ul {
     list-style: none;
     padding: 0;
 }
 
-.step-content li {
+.step-card li {
     color: white;
-    font-size: clamp(16px, 1.5vw, 20px);
+    font-size: clamp(14px, 1.5vw, 18px);
     margin-bottom: 0.8rem;
     padding-left: 1.5rem;
     position: relative;
     line-height: 1.6;
 }
 
-.step-content li::before {
-    content: '-';
+.step-card li::before {
+    content: '•';
     position: absolute;
     left: 0;
-    color: #FFA200;
+    color: #00E5FF;
     font-weight: bold;
     font-size: 1.2em;
 }
 
-.step-content li:last-child::before {
-    content: '•';
-    color: #00E5FF;
+/* TIER TABLE */
+.tier-table {
+    margin-top: 2rem;
+    overflow-x: auto;
 }
 
-.step-divider {
-    height: 2px;
-    background: linear-gradient(90deg, transparent, #FFA200, transparent);
-    margin: 2rem 0;
-    opacity: 0.6;
+.tier-table table {
+    width: 100%;
+    border-collapse: collapse;
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.tier-table thead {
+    background: rgba(0, 229, 255, 0.2);
+}
+
+.tier-table th,
+.tier-table td {
+    padding: 1rem;
+    text-align: left;
+    color: white;
+    font-size: clamp(12px, 1.2vw, 16px);
+    border-bottom: 1px solid rgba(0, 229, 255, 0.3);
+}
+
+.tier-table th {
+    font-weight: 700;
+    color: #00E5FF;
+    text-shadow: 0 0 10px rgba(0, 229, 255, 0.8);
+}
+
+.tier-table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+.tier-table tbody tr:hover {
+    background: rgba(0, 229, 255, 0.1);
 }
 
 /* CTA CONTAINER */
@@ -182,7 +175,7 @@ body {
 }
 
 .cta-button {
-    background: #F100F7;
+    background: linear-gradient(135deg, #FF00F6 0%, #B200B2 100%);
     color: white;
     border: none;
     border-radius: 15px;
@@ -192,15 +185,15 @@ body {
     font-weight: 900;
     cursor: pointer;
     transition: all 0.3s ease;
-    box-shadow: 0 0 20px rgba(241, 0, 247, 0.5);
+    box-shadow: 0 0 20px rgba(255, 0, 246, 0.5);
     text-transform: uppercase;
     letter-spacing: 1px;
 }
 
 .cta-button:hover {
     transform: translateY(-3px);
-    box-shadow: 0 10px 30px rgba(241, 0, 247, 0.7);
-    background: #d200d8;
+    box-shadow: 0 10px 30px rgba(255, 0, 246, 0.7);
+    background: linear-gradient(135deg, #B200B2 0%, #FF00F6 100%);
 }
 
 .cta-button:active {
@@ -213,8 +206,11 @@ body {
         padding: 3rem 1.5rem;
     }
 
-    .step-item {
+    .steps-grid {
         gap: 1.5rem;
+    }
+
+    .step-card {
         padding: 1.5rem;
     }
 }
@@ -224,43 +220,21 @@ body {
         padding: 3rem 1rem;
     }
 
-    .step-item {
-        flex-direction: column;
-        text-align: center;
-        gap: 1.5rem;
-        padding: 1.5rem;
-    }
-
-    .step-number {
-        width: 60px;
-        height: 60px;
-        margin: 0 auto;
-    }
-
-    .step-number span {
-        font-size: clamp(20px, 4vw, 28px);
-    }
-
-    .step-content h2 {
-        font-size: clamp(20px, 4vw, 28px);
-        margin-bottom: 1rem;
-    }
-
-    .step-content li {
-        font-size: clamp(14px, 2vw, 18px);
-        margin-bottom: 0.6rem;
-    }
-
     .hero-content {
         margin-bottom: 3rem;
     }
 
-    .hero-content h1 {
-        font-size: clamp(36px, 8vw, 70px);
+    .steps-grid {
+        grid-template-columns: 1fr;
+        gap: 2rem;
     }
 
-    .steps-container {
-        margin-bottom: 3rem;
+    .step-card.full-width {
+        grid-column: 1;
+    }
+
+    .step-icon {
+        font-size: 36px;
     }
 
     .cta-container {
@@ -275,66 +249,27 @@ body {
 
 @media (max-width: 480px) {
     .how-it-works-section {
-        padding: 3rem 1rem;
-    }
-
-    .step-item {
-        padding: 1rem;
-        margin-bottom: 2rem;
-    }
-
-    .step-number {
-        width: 50px;
-        height: 50px;
-    }
-
-    .step-number span {
-        font-size: clamp(18px, 5vw, 24px);
-    }
-
-    .step-content h2 {
-        font-size: clamp(18px, 5vw, 24px);
-    }
-
-    .step-content li {
-        font-size: clamp(12px, 2.5vw, 16px);
+        padding: 2rem 1rem;
     }
 
     .hero-content {
         margin-bottom: 2rem;
     }
 
-    .hero-content h1 {
-        font-size: clamp(32px, 10vw, 60px);
+    .step-card {
+        padding: 1rem;
     }
 
-    .steps-container {
-        margin-bottom: 2rem;
+    .step-icon {
+        font-size: 32px;
     }
 
-    .crown-icon img {
-        width: 60px;
+    .tier-table {
+        font-size: 12px;
     }
-}
 
-/* ANIMATION EFFECTS */
-@keyframes glow {
-    0%, 100% {
-        box-shadow: 0 0 20px rgba(0, 229, 255, 0.5);
+    .tier-table th,
+    .tier-table td {
+        padding: 0.5rem;
     }
-    50% {
-        box-shadow: 0 0 30px rgba(0, 229, 255, 0.8);
-    }
-}
-
-.step-number {
-    animation: glow 3s ease-in-out infinite;
-}
-
-.step-item:nth-child(odd) .step-number {
-    animation-delay: 0.5s;
-}
-
-.step-item:nth-child(even) .step-number {
-    animation-delay: 1s;
 }
