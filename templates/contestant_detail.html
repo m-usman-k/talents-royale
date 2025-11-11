@@ -63,63 +63,99 @@
                                             frameborder="0"
                                             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
                                             allowfullscreen
-                                            loading="lazy"></iframe>
+                                            loading="lazy"
+                                            referrerpolicy="strict-origin-when-cross-origin"></iframe>
                                 </div>
                             </div>
                             <script>
                                 (function() {
                                     const url = "{{ contestant.video_url }}";
-                                    let embedUrl = url;
+                                    let embedUrl = null;
                                     let videoId = null;
-                                    
-                                    // Convert YouTube URLs to embed format
-                                    if (url.includes('youtube.com/watch?v=')) {
-                                        videoId = url.split('v=')[1].split('&')[0];
-                                        embedUrl = 'https://www.youtube.com/embed/' + videoId + '?rel=0&modestbranding=1&autoplay=0';
-                                    } else if (url.includes('youtu.be/')) {
-                                        videoId = url.split('youtu.be/')[1].split('?')[0].split('&')[0];
-                                        embedUrl = 'https://www.youtube.com/embed/' + videoId + '?rel=0&modestbranding=1&autoplay=0';
-                                    } else if (url.includes('youtube.com/embed/')) {
-                                        // Already an embed URL, just add parameters
-                                        videoId = url.split('embed/')[1].split('?')[0];
-                                        embedUrl = 'https://www.youtube.com/embed/' + videoId + '?rel=0&modestbranding=1&autoplay=0';
-                                    } else if (url.includes('youtube.com/shorts/')) {
-                                        // YouTube Shorts
-                                        videoId = url.split('shorts/')[1].split('?')[0];
-                                        embedUrl = 'https://www.youtube.com/embed/' + videoId + '?rel=0&modestbranding=1&autoplay=0';
-                                    } else if (url.includes('vimeo.com/')) {
-                                        // Vimeo
-                                        videoId = url.split('vimeo.com/')[1].split('?')[0];
-                                        embedUrl = 'https://player.vimeo.com/video/' + videoId + '?title=0&byline=0&portrait=0';
-                                    } else if (url.includes('player.vimeo.com/video/')) {
-                                        // Already a Vimeo embed URL
-                                        embedUrl = url;
-                                    }
-                                    
-                                    // Clean up video ID (remove any trailing slashes or parameters)
-                                    if (videoId) {
-                                        videoId = videoId.replace(/[\/\?&].*$/, '');
-                                        if (embedUrl.includes('youtube.com/embed/')) {
-                                            embedUrl = 'https://www.youtube.com/embed/' + videoId + '?rel=0&modestbranding=1&autoplay=0&enablejsapi=1';
-                                        }
-                                    }
-                                    
                                     const iframe = document.getElementById('video-iframe');
                                     const videoWrapper = iframe ? iframe.closest('.video-wrapper') : null;
                                     
+                                    // Function to extract YouTube video ID
+                                    function extractYouTubeId(url) {
+                                        let match;
+                                        // youtube.com/watch?v=VIDEO_ID
+                                        match = url.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/|youtube\.com\/embed\/|youtube\.com\/shorts\/)([^&\n?#]+)/);
+                                        if (match && match[1]) {
+                                            return match[1].split('?')[0].split('&')[0].split('/')[0];
+                                        }
+                                        return null;
+                                    }
+                                    
+                                    // Function to extract Vimeo video ID
+                                    function extractVimeoId(url) {
+                                        let match = url.match(/(?:vimeo\.com\/|player\.vimeo\.com\/video\/)(\d+)/);
+                                        return match ? match[1] : null;
+                                    }
+                                    
+                                    // Parse URL and create embed URL
+                                    if (url.includes('youtube.com') || url.includes('youtu.be')) {
+                                        videoId = extractYouTubeId(url);
+                                        if (videoId) {
+                                            // Clean video ID
+                                            videoId = videoId.replace(/[^a-zA-Z0-9_-]/g, '');
+                                            embedUrl = 'https://www.youtube.com/embed/' + videoId + '?rel=0&modestbranding=1&autoplay=0&enablejsapi=1&origin=' + window.location.origin;
+                                        }
+                                    } else if (url.includes('vimeo.com')) {
+                                        const vimeoId = extractVimeoId(url);
+                                        if (vimeoId) {
+                                            embedUrl = 'https://player.vimeo.com/video/' + vimeoId + '?title=0&byline=0&portrait=0';
+                                        }
+                                    }
+                                    
+                                    // Set iframe source if we have a valid embed URL
                                     if (iframe && embedUrl) {
                                         iframe.src = embedUrl;
-                                        // Add error handler for iframe
-                                        iframe.onerror = function() {
-                                            if (videoWrapper) {
-                                                videoWrapper.innerHTML = '<div style="padding: 3rem; text-align: center; background: rgba(0, 0, 0, 0.5); border-radius: 15px;"><p style="color: #FFA200; font-size: 1.2rem; margin-bottom: 1rem;">Unable to embed video</p><a href="' + url + '" target="_blank" style="display: inline-block; padding: 1rem 2rem; background: #FFA200; color: white; text-decoration: none; border-radius: 10px; font-weight: 600; transition: all 0.3s ease;">Watch on YouTube</a></div>';
+                                        
+                                        // Monitor for load errors
+                                        iframe.addEventListener('load', function() {
+                                            // Check if iframe loaded successfully
+                                            try {
+                                                // If we can access the iframe content, it loaded
+                                                if (iframe.contentWindow) {
+                                                    console.log('Video iframe loaded successfully');
+                                                }
+                                            } catch (e) {
+                                                // Cross-origin restriction is normal, video should still work
+                                                console.log('Video iframe loaded (cross-origin check normal)');
                                             }
-                                        };
+                                        });
+                                        
+                                        // Handle iframe errors
+                                        iframe.addEventListener('error', function() {
+                                            showVideoError();
+                                        });
+                                        
+                                        // Check for YouTube error after a delay
+                                        if (embedUrl.includes('youtube.com')) {
+                                            setTimeout(function() {
+                                                try {
+                                                    // Try to detect if YouTube error occurred
+                                                    // This is a workaround since we can't directly check iframe content
+                                                    const iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
+                                                    if (iframeDoc && iframeDoc.body) {
+                                                        const bodyText = iframeDoc.body.innerText || '';
+                                                        if (bodyText.includes('Error') || bodyText.includes('153')) {
+                                                            showVideoError();
+                                                        }
+                                                    }
+                                                } catch (e) {
+                                                    // Cross-origin - can't check, but video should work if no error
+                                                }
+                                            }, 2000);
+                                        }
                                     } else {
                                         console.error('Could not parse video URL:', url);
-                                        // Fallback: show error message with link
+                                        showVideoError();
+                                    }
+                                    
+                                    function showVideoError() {
                                         if (videoWrapper) {
-                                            videoWrapper.innerHTML = '<div style="padding: 3rem; text-align: center; background: rgba(0, 0, 0, 0.5); border-radius: 15px;"><p style="color: #FFA200; font-size: 1.2rem; margin-bottom: 1rem;">Unable to embed video</p><a href="' + url + '" target="_blank" style="display: inline-block; padding: 1rem 2rem; background: #FFA200; color: white; text-decoration: none; border-radius: 10px; font-weight: 600; transition: all 0.3s ease;">Watch on YouTube</a></div>';
+                                            videoWrapper.innerHTML = '<div style="padding: 3rem; text-align: center; background: rgba(0, 0, 0, 0.7); border-radius: 15px; border: 2px solid #FFA200;"><p style="color: #FFA200; font-size: 1.3rem; margin-bottom: 0.5rem; font-weight: 600;">Unable to Embed Video</p><p style="color: rgba(255, 255, 255, 0.8); font-size: 1rem; margin-bottom: 1.5rem;">This video cannot be embedded. Click below to watch it on YouTube.</p><a href="' + url + '" target="_blank" style="display: inline-block; padding: 1rem 2rem; background: linear-gradient(135deg, #FFA200 0%, #FF5E00 100%); color: white; text-decoration: none; border-radius: 10px; font-weight: 600; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(255, 162, 0, 0.4);">Watch on YouTube →</a></div>';
                                         }
                                     }
                                 })();
