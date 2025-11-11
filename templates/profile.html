@@ -15,30 +15,35 @@
         <div class="profile-content">
             <div class="profile-header">
                 <div class="profile-avatar">
-                    <img src="/static/images/tr-profile-icon.png" alt="Profile Avatar">
+                    {% if user.profile_photo %}
+                        <img src="{{ user.profile_photo.url }}" alt="Profile Avatar">
+                    {% else %}
+                        <img src="/static/images/tr-profile-icon.png" alt="Profile Avatar">
+                    {% endif %}
                 </div>
                 <div class="profile-info">
                     <h1>@{{ user.username }}</h1>
-                    <h2>ELITE TIER</h2>
-                    <p>Member since {{ user.date_joined|date:"Y" }}</p>
+                    <h2>{% if highest_tier_arena %}{{ highest_tier_arena.get_tier_display|upper }} TIER{% else %}NO TIER{% endif %}</h2>
+                    <p>Member since {{ user.date_joined|date:"Y" }} • {{ user.tokens }} 🪙 Tokens</p>
+                    <a href="/purchase-tokens/" class="purchase-tokens-link">Buy More Tokens →</a>
                 </div>
             </div>
             
             <div class="profile-stats">
                 <div class="stat-card">
-                    <h3>210</h3>
+                    <h3>{{ total_votes|default:0 }}</h3>
                     <p>Total Votes</p>
                 </div>
                 <div class="stat-card">
-                    <h3>15</h3>
+                    <h3>{{ total_competitions|default:0 }}</h3>
                     <p>Competitions</p>
                 </div>
                 <div class="stat-card">
-                    <h3>3</h3>
+                    <h3>{{ wins|default:0 }}</h3>
                     <p>Wins</p>
                 </div>
                 <div class="stat-card">
-                    <h3>Rank #8</h3>
+                    <h3>{% if avg_rank > 0 %}Rank #{{ avg_rank }}{% else %}No Rank{% endif %}</h3>
                     <p>Leaderboard</p>
                 </div>
             </div>
@@ -50,6 +55,7 @@
             <button class="tab-button active" data-tab="overview">Overview</button>
             <button class="tab-button" data-tab="submissions">My Submissions</button>
             <button class="tab-button" data-tab="achievements">Achievements</button>
+            <a href="/voting-history" class="tab-button" style="text-decoration: none; display: inline-block; color: inherit;">Voting History</a>
             <button class="tab-button" data-tab="settings">Settings</button>
         </div>
 
@@ -58,118 +64,143 @@
                 <div class="overview-grid">
                     <div class="overview-card">
                         <h3>Current Arena</h3>
+                        {% if highest_tier_arena %}
                         <div class="arena-info">
-                            <img src="/static/images/tr-elite-tier.png" alt="Elite Tier">
+                            <img src="/static/images/tr-{{ highest_tier_arena.tier }}-tier.png" alt="{{ highest_tier_arena.get_tier_display }} Tier" onerror="this.src='/static/images/tr-recruit-tier.png'">
                             <div>
-                                <h4>ELITE ARENA</h4>
-                                <p>Top 3% of all competitors</p>
+                                <h4>{{ highest_tier_arena.get_tier_display|upper }} ARENA</h4>
+                                <p>{{ highest_tier_arena.name }}</p>
                             </div>
+                        </div>
+                        {% else %}
+                        <div class="arena-info">
+                            <p>No active arena. <a href="/arenas" style="color: #FFA200;">Join an arena to get started!</a></p>
+                        </div>
+                        {% endif %}
+                        <div style="margin-top: 1.5rem;">
+                            <a href="/arenas" style="display: inline-block; background: #FFA200; color: white; padding: 0.8rem 1.5rem; border-radius: 10px; text-decoration: none; font-weight: 600; transition: all 0.3s ease;">
+                                {% if user_submissions %}Submit New Entry{% else %}Submit Your Entry{% endif %}
+                            </a>
                         </div>
                     </div>
                     
                     <div class="overview-card">
                         <h3>Recent Activity</h3>
                         <div class="activity-list">
-                            <div class="activity-item">
-                                <span class="activity-icon">🏆</span>
-                                <div>
-                                    <p>Won Elite Arena Competition</p>
-                                    <small>2 days ago</small>
+                            {% if recent_activities %}
+                                {% for activity in recent_activities %}
+                                    <div class="activity-item">
+                                        <span class="activity-icon">{{ activity.icon }}</span>
+                                        <div>
+                                            <p>{{ activity.message }}</p>
+                                            <small>{{ activity.date|timesince }} ago</small>
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                            {% else %}
+                                <div class="activity-item">
+                                    <span class="activity-icon">📝</span>
+                                    <div>
+                                        <p>No recent activity</p>
+                                        <small>Start competing to see your activity here!</small>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="activity-item">
-                                <span class="activity-icon">📹</span>
-                                <div>
-                                    <p>Submitted new talent video</p>
-                                    <small>1 week ago</small>
-                                </div>
-                            </div>
-                            <div class="activity-item">
-                                <span class="activity-icon">⭐</span>
-                                <div>
-                                    <p>Reached Elite tier</p>
-                                    <small>2 weeks ago</small>
-                                </div>
-                            </div>
+                            {% endif %}
                         </div>
                     </div>
                     
                     <div class="overview-card">
                         <h3>Next Goal</h3>
+                        {% if next_goal %}
                         <div class="goal-info">
-                            <h4>Reach Finale Royale</h4>
-                            <p>Place in top 3 to enter the year-end tournament</p>
+                            <h4>{{ next_goal.title }}</h4>
+                            <p>{{ next_goal.description }}</p>
                             <div class="progress-bar">
-                                <div class="progress-fill" style="width: 75%"></div>
+                                <div class="progress-fill" style="width: {{ next_goal.progress }}%"></div>
                             </div>
-                            <small>75% complete</small>
+                            <small>{{ next_goal.progress }}% complete</small>
                         </div>
+                        {% else %}
+                        <div class="goal-info">
+                            <h4>No Active Goal</h4>
+                            <p>Start competing to set your next goal!</p>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 0%"></div>
+                            </div>
+                            <small>0% complete</small>
+                        </div>
+                        {% endif %}
                     </div>
                 </div>
             </div>
 
             <div class="tab-panel" id="submissions">
                 <div class="submissions-grid">
+                    {% for submission_data in user_submissions %}
+                    {% with submission=submission_data.contestant %}
                     <div class="submission-card">
                         <div class="submission-thumbnail">
-                            <img src="/static/images/tr-hero-bg.png" alt="Submission Thumbnail">
-                            <div class="play-button">▶</div>
+                            {% if submission.submission_type == 'image' and submission.image_file %}
+                                <img src="{{ submission.image_file.url }}" alt="{{ submission.title }}">
+                            {% elif submission.submission_type == 'video' and submission.video_file %}
+                                <img src="{{ submission.video_file.url }}" alt="{{ submission.title }}">
+                            {% elif submission.video_url %}
+                                <img src="/static/images/tr-hero-bg.png" alt="{{ submission.title }}">
+                                <div class="play-button" onclick="window.open('{{ submission.video_url }}', '_blank')">▶</div>
+                            {% else %}
+                                <img src="/static/images/tr-hero-bg.png" alt="{{ submission.title }}">
+                            {% endif %}
+                            {% if submission.submission_type == 'video' and submission.video_file %}
+                                <div class="play-button" onclick="window.open('{{ submission.video_file.url }}', '_blank')">▶</div>
+                            {% endif %}
                         </div>
                         <div class="submission-info">
-                            <h4>My Amazing Talent</h4>
-                            <p>Music Performance</p>
+                            <h4>{{ submission.title }}</h4>
+                            <p>{{ submission.arena.get_tier_display }} Arena</p>
                             <div class="submission-stats">
-                                <span>210 votes</span>
-                                <span>Rank #8</span>
+                                <span>{{ submission.votes }} votes</span>
+                                <span>Rank #{{ submission_data.rank }}</span>
                             </div>
                         </div>
                     </div>
-                    
-                    <div class="submission-card">
-                        <div class="submission-thumbnail">
-                            <img src="/static/images/tr-hero-bg.png" alt="Submission Thumbnail">
-                            <div class="play-button">▶</div>
-                        </div>
-                        <div class="submission-info">
-                            <h4>Dance Routine</h4>
-                            <p>Dance Performance</p>
-                            <div class="submission-stats">
-                                <span>165 votes</span>
-                                <span>Rank #12</span>
-                            </div>
-                        </div>
-                    </div>
+                    {% endwith %}
+                    {% empty %}
+                    <p style="color: white; text-align: center; grid-column: 1 / -1;">No submissions yet. <a href="/arenas" style="color: #FFA200;">Join an arena to submit your talent!</a></p>
+                    {% endfor %}
                 </div>
             </div>
 
             <div class="tab-panel" id="achievements">
                 <div class="achievements-grid">
-                    <div class="achievement-card earned">
-                        <div class="achievement-icon">🏆</div>
-                        <h4>Elite Competitor</h4>
-                        <p>Reached Elite tier</p>
+                    {% for achievement in achievements %}
+                    <div class="achievement-card {% if achievement.earned %}earned{% endif %}">
+                        <div class="achievement-icon">{{ achievement.icon }}</div>
+                        <h4>{{ achievement.name }}</h4>
+                        <p>{{ achievement.description }}</p>
                     </div>
-                    
-                    <div class="achievement-card earned">
-                        <div class="achievement-icon">⭐</div>
-                        <h4>Top Performer</h4>
-                        <p>Placed in top 10</p>
-                    </div>
-                    
-                    <div class="achievement-card">
-                        <div class="achievement-icon">👑</div>
-                        <h4>Finale Royale</h4>
-                        <p>Enter year-end tournament</p>
-                    </div>
+                    {% empty %}
+                    <p style="color: white; text-align: center; grid-column: 1 / -1;">No achievements yet. Start competing to earn achievements!</p>
+                    {% endfor %}
                 </div>
             </div>
 
             <div class="tab-panel" id="settings">
                 <div class="settings-container">
+                    <!-- Email Confirmation Notice -->
+                    {% if not user.email_confirmed %}
+                    <div style="background: rgba(255, 162, 0, 0.2); border: 2px solid #FFA200; border-radius: 10px; padding: 1.5rem; margin-bottom: 2rem;">
+                        <h3 style="color: #FFA200; margin-bottom: 1rem;">⚠️ Email Not Confirmed</h3>
+                        <p style="color: white; margin-bottom: 1rem;">Please confirm your email address to access all features.</p>
+                        <a href="/resend-confirmation/" style="background: #FFA200; color: white; padding: 0.8rem 1.5rem; border-radius: 8px; text-decoration: none; font-weight: 600; display: inline-block;">
+                            Resend Confirmation Email
+                        </a>
+                    </div>
+                    {% endif %}
+                    
                     <!-- Profile Settings -->
                     <div class="settings-form">
                         <h3>Profile Settings</h3>
-                        <form method="post">
+                        <form method="post" enctype="multipart/form-data">
                             {% csrf_token %}
                             <input type="hidden" name="update_settings" value="1">
                             
@@ -188,11 +219,17 @@
                             </div>
                             
                             <div class="form-group">
-                                <label for="{{ settings_form.email.id_for_label }}">Email</label>
-                                {{ settings_form.email }}
-                                {% if settings_form.email.errors %}
-                                    <div class="field-errors">{{ settings_form.email.errors }}</div>
+                                <label for="{{ settings_form.profile_photo.id_for_label }}">Profile Photo</label>
+                                {% if user.profile_photo %}
+                                    <div style="margin-bottom: 10px;">
+                                        <img src="{{ user.profile_photo.url }}" alt="Current Photo" style="width: 100px; height: 100px; border-radius: 50%; object-fit: cover; border: 2px solid #FFA200;">
+                                    </div>
                                 {% endif %}
+                                {{ settings_form.profile_photo }}
+                                {% if settings_form.profile_photo.errors %}
+                                    <div class="field-errors">{{ settings_form.profile_photo.errors }}</div>
+                                {% endif %}
+                                <small style="color: #FFA200; display: block; margin-top: 5px;">Upload a new profile photo (JPG, PNG, max 5MB)</small>
                             </div>
                             
                             <div class="form-group">
@@ -205,6 +242,66 @@
                             
                             <button type="submit" class="save-button">Update Profile</button>
                         </form>
+                    </div>
+                    
+                    <!-- Change Email -->
+                    <div class="settings-form">
+                        <h3>Change Email Address</h3>
+                        <div style="margin-bottom: 1rem; padding: 1rem; background: rgba(255, 162, 0, 0.1); border: 1px solid rgba(255, 162, 0, 0.3); border-radius: 10px;">
+                            <p style="color: white; margin-bottom: 0.5rem;"><strong>Current Email:</strong> {{ user.email }}</p>
+                            {% if user.email_confirmed %}
+                                <small style="color: #00E5FF;">✓ Email confirmed</small>
+                            {% else %}
+                                <small style="color: #FFA200;">⚠ Email not confirmed - Please check your inbox to confirm</small>
+                            {% endif %}
+                        </div>
+                        <form method="post">
+                            {% csrf_token %}
+                            <input type="hidden" name="change_email" value="1">
+                            
+                            {% if email_change_form.non_field_errors %}
+                                <div class="form-errors">
+                                    {{ email_change_form.non_field_errors }}
+                                </div>
+                            {% endif %}
+                            
+                            <div class="form-group">
+                                <label for="{{ email_change_form.new_email.id_for_label }}">New Email Address</label>
+                                {{ email_change_form.new_email }}
+                                {% if email_change_form.new_email.errors %}
+                                    <div class="field-errors">{{ email_change_form.new_email.errors }}</div>
+                                {% endif %}
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="{{ email_change_form.password.id_for_label }}">Confirm Password</label>
+                                {{ email_change_form.password }}
+                                {% if email_change_form.password.errors %}
+                                    <div class="field-errors">{{ email_change_form.password.errors }}</div>
+                                {% endif %}
+                                {% if email_change_form.password.help_text %}
+                                    <small style="color: #FFA200; display: block; margin-top: 5px;">{{ email_change_form.password.help_text }}</small>
+                                {% endif %}
+                            </div>
+                            
+                            <div style="background: rgba(255, 162, 0, 0.1); border: 1px solid rgba(255, 162, 0, 0.3); border-radius: 10px; padding: 1rem; margin-bottom: 1rem;">
+                                <p style="color: #FFA200; font-size: 14px; margin: 0;">
+                                    <strong>⚠ Important:</strong> After changing your email, you will be logged out and must confirm the new email address before you can log in again.
+                                </p>
+                            </div>
+                            
+                            <button type="submit" class="save-button" style="background: #FFA200;">Change Email Address</button>
+                        </form>
+                    </div>
+                    
+                    <!-- Logout -->
+                    <div class="settings-form">
+                        <h3>Account Actions</h3>
+                        <div style="text-align: center;">
+                            <a href="/logout" class="save-button" style="display: inline-block; text-decoration: none; background: #F100F7; padding: 1rem 2rem; border-radius: 10px; color: white; font-weight: 600; transition: all 0.3s ease;">
+                                Logout
+                            </a>
+                        </div>
                     </div>
                     
                     <!-- Password Change -->

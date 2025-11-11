@@ -6,6 +6,7 @@
 
 {% block content %}
     <link rel="stylesheet" href="{% static 'css/signin.css' %}">
+    <script src="{% static 'scripts/signin-animations.js' %}" defer></script>
     
     <section class="signin-hero">
         <div class="hero-background">
@@ -28,6 +29,25 @@
                         </div>
                     {% endif %}
                     
+                    {% if show_resend_option and unconfirmed_email %}
+                        <div class="email-confirmation-alert">
+                            <div class="alert-icon">✉️</div>
+                            <div class="alert-content">
+                                <h3>Email Not Confirmed</h3>
+                                <p>Please confirm your email address (<strong>{{ unconfirmed_email }}</strong>) before logging in.</p>
+                                <p class="alert-subtext">Check your inbox for the confirmation email, or click below to resend it.</p>
+                            </div>
+                            <form method="post" style="width: 100%; margin-top: 1rem;">
+                                {% csrf_token %}
+                                <input type="hidden" name="resend_confirmation" value="1">
+                                <input type="hidden" name="username" value="{{ username }}">
+                                <button type="submit" class="resend-confirmation-button">
+                                    <span>📧</span> Resend Confirmation Email
+                                </button>
+                            </form>
+                        </div>
+                    {% endif %}
+                    
                     <div class="form-group">
                         {{ form.username }}
                         {% if form.username.errors %}
@@ -45,7 +65,7 @@
                     <button type="submit" class="login-button">Login</button>
                     
                     <div class="forgot-password">
-                        <a href="#" class="forgot-link">Forgot Password?</a>
+                        <a href="{% url 'forgot_password' %}" class="forgot-link">Forgot Password?</a>
                     </div>
                     
                     <div class="signup-link">

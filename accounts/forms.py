@@ -1,7 +1,7 @@
 from django import forms 
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 
-from .models import CustomUser
+from .models import CustomUser, Contestant
 
 
 class SignupForm(UserCreationForm):
@@ -90,14 +90,6 @@ class LoginForm(AuthenticationForm):
     )
 
 class UserSettingsForm(forms.ModelForm):
-    email = forms.EmailField(
-        required=True,
-        widget=forms.EmailInput(attrs={
-            'class': 'form-input',
-            'placeholder': 'Email address'
-        })
-    )
-    
     username = forms.CharField(
         widget=forms.TextInput(attrs={
             'class': 'form-input',
@@ -116,17 +108,11 @@ class UserSettingsForm(forms.ModelForm):
 
     class Meta:
         model = CustomUser
-        fields = ['username', 'email', 'bio']
+        fields = ['username', 'bio', 'profile_photo']
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields['bio'].required = False
-
-    def clean_email(self):
-        email = self.cleaned_data.get('email')
-        if CustomUser.objects.filter(email=email).exclude(pk=self.instance.pk).exists():
-            raise forms.ValidationError("A user with this email already exists.")
-        return email
 
     def clean_username(self):
         username = self.cleaned_data.get('username')
@@ -222,3 +208,161 @@ class DeleteAccountForm(forms.Form):
         if not self.user.check_password(password):
             raise forms.ValidationError("Incorrect password.")
         return password
+
+class ForgotPasswordForm(forms.Form):
+    email = forms.EmailField(
+        required=True,
+        widget=forms.EmailInput(attrs={
+            'class': 'form-input',
+            'placeholder': 'Enter your email address'
+        })
+    )
+    
+    def clean_email(self):
+        email = self.cleaned_data.get('email')
+        if not CustomUser.objects.filter(email__iexact=email).exists():
+            # Don't reveal if email exists for security
+            pass
+        return email
+
+class EmailChangeForm(forms.Form):
+    new_email = forms.EmailField(
+        required=True,
+        widget=forms.EmailInput(attrs={
+            'class': 'form-input',
+            'placeholder': 'Enter new email address'
+        }),
+        label='New Email Address'
+    )
+    
+    password = forms.CharField(
+        required=True,
+        widget=forms.PasswordInput(attrs={
+            'class': 'form-input',
+            'placeholder': 'Enter your password to confirm'
+        }),
+        label='Confirm Password',
+        help_text='Enter your current password to confirm the email change'
+    )
+    
+    def __init__(self, user, *args, **kwargs):
+        self.user = user
+        super().__init__(*args, **kwargs)
+    
+    def clean_new_email(self):
+        new_email = self.cleaned_data.get('new_email')
+        if not new_email:
+            return new_email
+        
+        # Check if email is different from current
+        if new_email.lower() == self.user.email.lower():
+            raise forms.ValidationError("This is already your current email address.")
+        
+        # Check if email already exists
+        if CustomUser.objects.filter(email__iexact=new_email).exclude(pk=self.user.pk).exists():
+            raise forms.ValidationError("This email address is already in use by another account.")
+        
+        return new_email
+    
+    def clean_password(self):
+        password = self.cleaned_data.get('password')
+        if not self.user.check_password(password):
+            raise forms.ValidationError("Incorrect password. Please enter your current password.")
+        return password
+
+class ResetPasswordForm(forms.Form):
+    new_password1 = forms.CharField(
+        widget=forms.PasswordInput(attrs={
+            'class': 'form-input',
+            'placeholder': 'New password'
+        })
+    )
+    
+    new_password2 = forms.CharField(
+        widget=forms.PasswordInput(attrs={
+            'class': 'form-input',
+            'placeholder': 'Confirm new password'
+        })
+    )
+
+    def clean(self):
+        cleaned_data = super().clean()
+        new_password1 = cleaned_data.get('new_password1')
+        new_password2 = cleaned_data.get('new_password2')
+
+        if new_password1 and new_password2:
+            if new_password1 != new_password2:
+                raise forms.ValidationError("Passwords don't match.")
+            if len(new_password1) < 8:
+                raise forms.ValidationError("Password must be at least 8 characters long.")
+        return cleaned_data
+
+class ContestantSubmissionForm(forms.ModelForm):
+    submission_type = forms.ChoiceField(
+        choices=Contestant.SUBMISSION_TYPES,
+        widget=forms.RadioSelect(attrs={'class': 'submission-type-radio'}),
+        initial='video'
+    )
+    
+    title = forms.CharField(
+        max_length=200,
+        widget=forms.TextInput(attrs={
+            'class': 'form-input',
+            'placeholder': 'Enter your submission title'
+        })
+    )
+    
+    description = forms.CharField(
+        required=False,
+        widget=forms.Textarea(attrs={
+            'class': 'form-input',
+            'placeholder': 'Describe your talent submission...',
+            'rows': 4
+        })
+    )
+    
+    video_url = forms.URLField(
+        required=False,
+        widget=forms.URLInput(attrs={
+            'class': 'form-input',
+            'placeholder': 'Or paste a video URL (YouTube, Vimeo, etc.)'
+        })
+    )
+    
+    video_file = forms.FileField(
+        required=False,
+        widget=forms.FileInput(attrs={
+            'class': 'form-input',
+            'accept': 'video/*'
+        })
+    )
+    
+    image_file = forms.ImageField(
+        required=False,
+        widget=forms.FileInput(attrs={
+            'class': 'form-input',
+            'accept': 'image/*'
+        })
+    )
+
+    class Meta:
+        model = Contestant
+        fields = ['submission_type', 'title', 'description', 'video_url', 'video_file', 'image_file']
+    
+    def clean(self):
+        cleaned_data = super().clean()
+        submission_type = cleaned_data.get('submission_type')
+        video_url = cleaned_data.get('video_url')
+        video_file = cleaned_data.get('video_file')
+        image_file = cleaned_data.get('image_file')
+        
+        if submission_type == 'video':
+            if not video_url and not video_file:
+                raise forms.ValidationError("Please provide either a video URL or upload a video file.")
+            if video_url and video_file:
+                raise forms.ValidationError("Please provide either a video URL or a video file, not both.")
+        elif submission_type == 'image':
+            if not image_file:
+                raise forms.ValidationError("Please upload an image file.")
+        
+        return cleaned_data

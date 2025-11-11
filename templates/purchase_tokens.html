@@ -1,0 +1,118 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Purchase Tokens - Talents Royale{% endblock %}
+
+{% block content %}
+<link rel="stylesheet" href="{% static 'css/purchase-tokens.css' %}">
+<div class="purchase-tokens-container">
+    <div class="purchase-header">
+        <h1>Purchase Tokens</h1>
+        <p class="current-balance">Your current balance: <span class="token-count">{{ user_tokens }} 🪙</span></p>
+    </div>
+
+    {% if not stripe_publishable_key %}
+    <div class="payment-warning">
+        <p>⚠️ Payment system is not configured. Please contact support.</p>
+    </div>
+    {% else %}
+    
+    <div class="packages-grid">
+        {% for package in packages %}
+        <div class="package-card {% if package.popular %}popular{% endif %}">
+            {% if package.popular %}
+            <div class="popular-badge">MOST POPULAR</div>
+            {% endif %}
+            
+            <div class="package-header">
+                <h3>{{ package.name }}</h3>
+                <div class="package-tokens">{{ package.tokens }} 🪙</div>
+            </div>
+            
+            <div class="package-price">
+                <span class="price-amount">${{ package.price }}</span>
+            </div>
+            
+            <div class="package-value">
+                <span class="value-per-token">${{ package.price|floatformat:2 }} / {{ package.tokens }} tokens</span>
+                {% widthratio package.price package.tokens 1 as price_per_token %}
+                <span class="per-token">≈ ${{ price_per_token|floatformat:3 }} per token</span>
+            </div>
+            
+            <button class="purchase-btn" data-tokens="{{ package.tokens }}" data-price="{{ package.price }}">
+                Purchase Now
+            </button>
+        </div>
+        {% endfor %}
+    </div>
+
+    <div class="payment-info">
+        <p>🔒 Secure payment powered by Stripe</p>
+        <p>All payments are processed securely. Your payment information is never stored on our servers.</p>
+    </div>
+    {% endif %}
+</div>
+
+<!-- Loading overlay -->
+<div id="loadingOverlay" class="loading-overlay" style="display: none;">
+    <div class="loading-spinner"></div>
+    <p>Processing your payment...</p>
+</div>
+
+<script src="https://js.stripe.com/v3/"></script>
+<script>
+    const stripe = Stripe('{{ stripe_publishable_key }}');
+    const purchaseButtons = document.querySelectorAll('.purchase-btn');
+    const loadingOverlay = document.getElementById('loadingOverlay');
+
+    purchaseButtons.forEach(button => {
+        button.addEventListener('click', async function() {
+            const tokens = this.getAttribute('data-tokens');
+            const price = this.getAttribute('data-price');
+            
+            // Show loading
+            loadingOverlay.style.display = 'flex';
+            button.disabled = true;
+            
+            try {
+                const response = await fetch('/api/create-checkout-session/', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRFToken': '{{ csrf_token }}'
+                    },
+                    body: JSON.stringify({
+                        tokens: parseInt(tokens)
+                    })
+                });
+                
+                const data = await response.json();
+                
+                if (data.error) {
+                    alert('Error: ' + data.error);
+                    loadingOverlay.style.display = 'none';
+                    button.disabled = false;
+                    return;
+                }
+                
+                // Redirect to Stripe Checkout
+                const result = await stripe.redirectToCheckout({
+                    sessionId: data.sessionId
+                });
+                
+                if (result.error) {
+                    alert('Error: ' + result.error.message);
+                    loadingOverlay.style.display = 'none';
+                    button.disabled = false;
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                alert('An error occurred. Please try again.');
+                loadingOverlay.style.display = 'none';
+                button.disabled = false;
+            }
+        });
+    });
+</script>
+{% endblock %}
+

@@ -1,0 +1,149 @@
+{% extends "base.html" %}
+
+{% block title %}Submit Entry - Talents Royale{% endblock %}
+
+{% load static %}
+
+{% block content %}
+    <link rel="stylesheet" href="{% static 'css/signup.css' %}">
+    <script src="{% static 'scripts/signup-animations.js' %}" defer></script>
+    
+    <section class="signup-hero">
+        <div class="hero-background">
+            <img src="/static/images/tr-blue-bg.png" alt="Submit Entry Background"/>
+        </div>
+        
+        <div class="signup-container">
+            <div class="signup-content">
+                <div class="crown-icon">
+                    <img src="/static/images/tr-blue-crown.png" alt="Crown Icon">
+                </div>
+                <h1>Submit Entry</h1>
+                <p style="color: #FFA200; margin-bottom: 2rem; font-size: 1.2rem;">
+                    {{ arena.get_tier_display }} Arena • {{ token_cost }} 🪙 Tokens
+                </p>
+                <p style="color: white; margin-bottom: 2rem; opacity: 0.8;">
+                    You have {{ user_tokens }} tokens. {{ token_cost }} will be deducted upon submission.
+                </p>
+                
+                <form class="signup-form" method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    
+                    {% if form.non_field_errors %}
+                        <div class="form-errors">
+                            {{ form.non_field_errors }}
+                        </div>
+                    {% endif %}
+                    
+                    <div class="form-group">
+                        <label style="color: #FFA200; display: block; margin-bottom: 1rem; font-weight: 600; font-size: 1.1rem;">Submission Type</label>
+                        <div style="display: flex; gap: 2rem; justify-content: center; margin-bottom: 1rem;">
+                            <label style="color: white; cursor: pointer; display: flex; align-items: center; gap: 0.5rem; padding: 0.8rem 1.5rem; background: rgba(255, 162, 0, 0.1); border: 2px solid rgba(255, 162, 0, 0.3); border-radius: 12px; transition: all 0.3s ease;">
+                                <input type="radio" name="submission_type" value="video" {% if form.submission_type.value == 'video' or not form.submission_type.value %}checked{% endif %} style="width: 20px; height: 20px; accent-color: #FFA200;">
+                                <span style="font-weight: 500;">📹 Video</span>
+                            </label>
+                            <label style="color: white; cursor: pointer; display: flex; align-items: center; gap: 0.5rem; padding: 0.8rem 1.5rem; background: rgba(255, 162, 0, 0.1); border: 2px solid rgba(255, 162, 0, 0.3); border-radius: 12px; transition: all 0.3s ease;">
+                                <input type="radio" name="submission_type" value="image" {% if form.submission_type.value == 'image' %}checked{% endif %} style="width: 20px; height: 20px; accent-color: #FFA200;">
+                                <span style="font-weight: 500;">🖼️ Image</span>
+                            </label>
+                        </div>
+                        {% if form.submission_type.errors %}
+                            <div class="field-errors">{{ form.submission_type.errors }}</div>
+                        {% endif %}
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="{{ form.title.id_for_label }}" style="color: #FFA200; display: block; margin-bottom: 0.5rem; font-weight: 600;">Title *</label>
+                        {{ form.title }}
+                        {% if form.title.errors %}
+                            <div class="field-errors">{{ form.title.errors }}</div>
+                        {% endif %}
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="{{ form.description.id_for_label }}" style="color: #FFA200; display: block; margin-bottom: 0.5rem; font-weight: 600;">Description</label>
+                        {{ form.description }}
+                        {% if form.description.errors %}
+                            <div class="field-errors">{{ form.description.errors }}</div>
+                        {% endif %}
+                    </div>
+                    
+                    <div id="video-fields" class="submission-fields">
+                        <div class="form-group">
+                            <label for="{{ form.video_url.id_for_label }}" style="color: #FFA200; display: block; margin-bottom: 0.5rem; font-weight: 600;">Video URL (YouTube, Vimeo, etc.)</label>
+                            {{ form.video_url }}
+                            {% if form.video_url.errors %}
+                                <div class="field-errors">{{ form.video_url.errors }}</div>
+                            {% endif %}
+                            <small style="color: #FFA200; display: block; margin-top: 0.5rem; opacity: 0.8;">OR</small>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="{{ form.video_file.id_for_label }}" style="color: #FFA200; display: block; margin-bottom: 0.5rem; font-weight: 600;">Upload Video File</label>
+                            {{ form.video_file }}
+                            {% if form.video_file.errors %}
+                                <div class="field-errors">{{ form.video_file.errors }}</div>
+                            {% endif %}
+                            <small style="color: #FFA200; display: block; margin-top: 0.5rem; opacity: 0.8;">Max file size: 100MB</small>
+                        </div>
+                    </div>
+                    
+                    <div id="image-fields" class="submission-fields" style="display: none;">
+                        <div class="form-group">
+                            <label for="{{ form.image_file.id_for_label }}" style="color: #FFA200; display: block; margin-bottom: 0.5rem; font-weight: 600;">Upload Image *</label>
+                            {{ form.image_file }}
+                            {% if form.image_file.errors %}
+                                <div class="field-errors">{{ form.image_file.errors }}</div>
+                            {% endif %}
+                            <small style="color: #FFA200; display: block; margin-top: 0.5rem; opacity: 0.8;">JPG, PNG, or GIF. Max file size: 10MB</small>
+                        </div>
+                    </div>
+                    
+                    <button type="submit" class="signup-button">Submit Entry ({{ token_cost }} 🪙)</button>
+                    
+                    <div class="login-link">
+                        <p><a href="/arenas" class="login-link-text">← Back to Arenas</a></p>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const videoRadio = document.querySelector('input[value="video"]');
+            const imageRadio = document.querySelector('input[value="image"]');
+            const videoFields = document.getElementById('video-fields');
+            const imageFields = document.getElementById('image-fields');
+            const videoLabel = videoRadio.closest('label');
+            const imageLabel = imageRadio.closest('label');
+            
+            function toggleFields() {
+                if (videoRadio.checked) {
+                    videoFields.style.display = 'block';
+                    imageFields.style.display = 'none';
+                    videoLabel.style.background = 'rgba(255, 162, 0, 0.2)';
+                    videoLabel.style.borderColor = '#FFA200';
+                    videoLabel.style.boxShadow = '0 0 20px rgba(255, 162, 0, 0.4)';
+                    imageLabel.style.background = 'rgba(255, 162, 0, 0.1)';
+                    imageLabel.style.borderColor = 'rgba(255, 162, 0, 0.3)';
+                    imageLabel.style.boxShadow = 'none';
+                } else {
+                    videoFields.style.display = 'none';
+                    imageFields.style.display = 'block';
+                    imageLabel.style.background = 'rgba(255, 162, 0, 0.2)';
+                    imageLabel.style.borderColor = '#FFA200';
+                    imageLabel.style.boxShadow = '0 0 20px rgba(255, 162, 0, 0.4)';
+                    videoLabel.style.background = 'rgba(255, 162, 0, 0.1)';
+                    videoLabel.style.borderColor = 'rgba(255, 162, 0, 0.3)';
+                    videoLabel.style.boxShadow = 'none';
+                }
+            }
+            
+            videoRadio.addEventListener('change', toggleFields);
+            imageRadio.addEventListener('change', toggleFields);
+            toggleFields(); // Initial call
+        });
+    </script>
+{% endblock %}
+

@@ -1,0 +1,103 @@
+{% extends "base.html" %}
+
+{% block title %}My Voting History - Talents Royale{% endblock %}
+
+{% load static %}
+
+{% block content %}
+    <link rel="stylesheet" href="{% static 'css/profile.css' %}">
+    <link rel="stylesheet" href="{% static 'css/contestants.css' %}">
+    
+    <section class="profile-hero">
+        <div class="profile-background">
+            <img src="/static/images/tr-blue-bg.png" alt="Voting History Background"/>
+        </div>
+        
+        <div class="profile-content">
+            <div class="profile-header">
+                <div class="profile-info">
+                    <h1>My Voting History</h1>
+                    <p>{{ total_votes }} Total Votes • {{ free_votes }} Free • {{ paid_votes }} Paid</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="profile-main">
+        <div style="max-width: 1200px; margin: 0 auto; padding: 2rem;">
+            <div style="background: rgba(0, 0, 0, 0.7); border-radius: 20px; padding: 2rem; border: 2px solid #F100F7;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem; flex-wrap: wrap; gap: 1rem;">
+                    <h2 style="color: #FFA200; font-size: 2rem; margin: 0;">Votes Cast</h2>
+                    <a href="/profile" style="background: #FFA200; color: white; padding: 0.8rem 1.5rem; border-radius: 10px; text-decoration: none; font-weight: 600; transition: all 0.3s ease;">
+                        ← Back to Profile
+                    </a>
+                </div>
+
+                {% if votes %}
+                <div style="display: grid; gap: 1.5rem;">
+                    {% for vote in votes %}
+                    <div style="background: rgba(40, 20, 60, 0.6); border-radius: 15px; padding: 1.5rem; border: 2px solid rgba(255, 162, 0, 0.3); transition: all 0.3s ease; cursor: pointer;" 
+                         onclick="window.location.href='/contestant/{{ vote.contestant.id }}/'"
+                         onmouseover="this.style.borderColor='#FFA200'; this.style.transform='translateY(-5px)'; this.style.boxShadow='0 5px 20px rgba(255, 162, 0, 0.3)'"
+                         onmouseout="this.style.borderColor='rgba(255, 162, 0, 0.3)'; this.style.transform='translateY(0)'; this.style.boxShadow='none'">
+                        <div style="display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap;">
+                            <div style="position: relative;">
+                                {% if vote.contestant.user.profile_photo %}
+                                    <img src="{{ vote.contestant.user.profile_photo.url }}" alt="{{ vote.contestant.user.username }}" 
+                                         style="width: 80px; height: 80px; border-radius: 50%; object-fit: cover; border: 2px solid #FFA200; box-shadow: 0 0 15px rgba(255, 162, 0, 0.5);">
+                                {% else %}
+                                    <img src="{% static 'images/tr-profile-icon.png' %}" alt="{{ vote.contestant.user.username }}" 
+                                         style="width: 80px; height: 80px; border-radius: 50%; object-fit: cover; border: 2px solid #FFA200; box-shadow: 0 0 15px rgba(255, 162, 0, 0.5);">
+                                {% endif %}
+                            </div>
+                            <div style="flex: 1; min-width: 200px;">
+                                <h3 style="color: #FFA200; font-size: 1.3rem; margin: 0 0 0.5rem 0; font-family: 'Prosto One', cursive;">
+                                    {{ vote.contestant.user.username }}
+                                </h3>
+                                <p style="color: #00E5FF; font-size: 0.9rem; margin: 0.25rem 0;">
+                                    {{ vote.contestant.arena.get_tier_display }} Arena
+                                </p>
+                                <p style="color: white; font-size: 0.85rem; margin: 0.25rem 0; opacity: 0.8;">
+                                    {{ vote.contestant.title }}
+                                </p>
+                            </div>
+                            <div style="text-align: right; min-width: 150px;">
+                                <div style="display: flex; flex-direction: column; gap: 0.5rem;">
+                                    <div style="display: flex; align-items: center; gap: 0.5rem; justify-content: flex-end;">
+                                        {% if vote.is_free_vote %}
+                                            <span style="background: rgba(0, 229, 255, 0.2); color: #00E5FF; padding: 0.3rem 0.8rem; border-radius: 20px; font-size: 0.8rem; font-weight: 600; border: 1px solid #00E5FF;">
+                                                FREE VOTE
+                                            </span>
+                                        {% else %}
+                                            <span style="background: rgba(255, 162, 0, 0.2); color: #FFA200; padding: 0.3rem 0.8rem; border-radius: 20px; font-size: 0.8rem; font-weight: 600; border: 1px solid #FFA200;">
+                                                {{ vote.tokens_spent }} 🪙
+                                            </span>
+                                        {% endif %}
+                                    </div>
+                                    <p style="color: rgba(255, 255, 255, 0.6); font-size: 0.75rem; margin: 0;">
+                                        {{ vote.created_at|date:"M d, Y" }}<br>
+                                        {{ vote.created_at|date:"g:i A" }}
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+                {% else %}
+                <div style="text-align: center; padding: 4rem 2rem;">
+                    <div style="font-size: 4rem; margin-bottom: 1rem;">🗳️</div>
+                    <h3 style="color: #FFA200; font-size: 1.5rem; margin-bottom: 1rem;">No Votes Yet</h3>
+                    <p style="color: white; opacity: 0.8; margin-bottom: 2rem;">
+                        Start voting for contestants to see your voting history here!
+                    </p>
+                    <a href="/contestants" style="background: #FFA200; color: white; padding: 1rem 2rem; border-radius: 10px; text-decoration: none; font-weight: 600; display: inline-block;">
+                        Browse Contestants
+                    </a>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </section>
+{% endblock %}
+

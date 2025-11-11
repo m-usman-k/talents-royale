@@ -1,0 +1,233 @@
+{% extends "base.html" %}
+
+{% block title %}{{ contestant.user.username }} - Talents Royale{% endblock %}
+
+{% load static %}
+
+{% block content %}
+    <link rel="stylesheet" href="{% static 'css/contestant-detail.css' %}">
+    
+    <section class="contestant-detail-section">
+        <div class="contestant-detail-container">
+            <div class="contestant-detail-card">
+                <!-- Back Button -->
+                <button class="back-button" onclick="window.location.href='/contestants'">
+                    ← Back to Contestants
+                </button>
+
+                <!-- Contestant Profile Header -->
+                <div class="contestant-header">
+                    <div class="profile-photo-container">
+                        {% if contestant.user.profile_photo %}
+                            <img src="{{ contestant.user.profile_photo.url }}" alt="{{ contestant.user.username }}" class="profile-photo">
+                        {% else %}
+                            <img src="{% static 'images/tr-profile-icon.png' %}" alt="{{ contestant.user.username }}" class="profile-photo">
+                        {% endif %}
+                    </div>
+                    <div class="contestant-header-info">
+                        <h2 class="contestant-username">{{ contestant.user.username }}</h2>
+                        <p class="contestant-arena">{{ contestant.arena.get_tier_display }} Arena</p>
+                        <p class="contestant-votes">
+                            <span class="votes-count">{{ contestant.votes|floatformat:0 }}</span> votes
+                        </p>
+                        <div class="vote-section">
+                            {% if user.is_authenticated %}
+                                {% if has_voted %}
+                                    <button class="vote-button-detail" onclick="voteAgain({{ contestant.id }})">Vote Again (5 🪙)</button>
+                                {% else %}
+                                    <button class="vote-button-detail" onclick="voteContestant({{ contestant.id }})">Free Vote</button>
+                                {% endif %}
+                            {% else %}
+                                <button class="vote-button-detail" onclick="window.location.href='/login'">Login to Vote</button>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Submission Details -->
+                <div class="submission-section">
+                    <h3 class="submission-title">{{ contestant.title }}</h3>
+                    {% if contestant.description %}
+                        <p class="submission-description">{{ contestant.description }}</p>
+                    {% endif %}
+                </div>
+
+                <!-- Submission Media -->
+                <div class="media-container">
+                    {% if contestant.submission_type == 'video' %}
+                        {% if contestant.video_url %}
+                            <div class="video-wrapper">
+                                <div class="video-responsive">
+                                    <iframe id="video-iframe" 
+                                            src="" 
+                                            frameborder="0"
+                                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                                            allowfullscreen
+                                            loading="lazy"></iframe>
+                                </div>
+                            </div>
+                            <script>
+                                (function() {
+                                    const url = "{{ contestant.video_url }}";
+                                    let embedUrl = url;
+                                    let videoId = null;
+                                    
+                                    // Convert YouTube URLs to embed format
+                                    if (url.includes('youtube.com/watch?v=')) {
+                                        videoId = url.split('v=')[1].split('&')[0];
+                                        embedUrl = 'https://www.youtube.com/embed/' + videoId + '?rel=0&modestbranding=1&autoplay=0';
+                                    } else if (url.includes('youtu.be/')) {
+                                        videoId = url.split('youtu.be/')[1].split('?')[0].split('&')[0];
+                                        embedUrl = 'https://www.youtube.com/embed/' + videoId + '?rel=0&modestbranding=1&autoplay=0';
+                                    } else if (url.includes('youtube.com/embed/')) {
+                                        // Already an embed URL, just add parameters
+                                        videoId = url.split('embed/')[1].split('?')[0];
+                                        embedUrl = 'https://www.youtube.com/embed/' + videoId + '?rel=0&modestbranding=1&autoplay=0';
+                                    } else if (url.includes('youtube.com/shorts/')) {
+                                        // YouTube Shorts
+                                        videoId = url.split('shorts/')[1].split('?')[0];
+                                        embedUrl = 'https://www.youtube.com/embed/' + videoId + '?rel=0&modestbranding=1&autoplay=0';
+                                    } else if (url.includes('vimeo.com/')) {
+                                        // Vimeo
+                                        videoId = url.split('vimeo.com/')[1].split('?')[0];
+                                        embedUrl = 'https://player.vimeo.com/video/' + videoId + '?title=0&byline=0&portrait=0';
+                                    } else if (url.includes('player.vimeo.com/video/')) {
+                                        // Already a Vimeo embed URL
+                                        embedUrl = url;
+                                    }
+                                    
+                                    // Clean up video ID (remove any trailing slashes or parameters)
+                                    if (videoId) {
+                                        videoId = videoId.replace(/[\/\?&].*$/, '');
+                                        if (embedUrl.includes('youtube.com/embed/')) {
+                                            embedUrl = 'https://www.youtube.com/embed/' + videoId + '?rel=0&modestbranding=1&autoplay=0&enablejsapi=1';
+                                        }
+                                    }
+                                    
+                                    const iframe = document.getElementById('video-iframe');
+                                    const videoWrapper = iframe ? iframe.closest('.video-wrapper') : null;
+                                    
+                                    if (iframe && embedUrl) {
+                                        iframe.src = embedUrl;
+                                        // Add error handler for iframe
+                                        iframe.onerror = function() {
+                                            if (videoWrapper) {
+                                                videoWrapper.innerHTML = '<div style="padding: 3rem; text-align: center; background: rgba(0, 0, 0, 0.5); border-radius: 15px;"><p style="color: #FFA200; font-size: 1.2rem; margin-bottom: 1rem;">Unable to embed video</p><a href="' + url + '" target="_blank" style="display: inline-block; padding: 1rem 2rem; background: #FFA200; color: white; text-decoration: none; border-radius: 10px; font-weight: 600; transition: all 0.3s ease;">Watch on YouTube</a></div>';
+                                            }
+                                        };
+                                    } else {
+                                        console.error('Could not parse video URL:', url);
+                                        // Fallback: show error message with link
+                                        if (videoWrapper) {
+                                            videoWrapper.innerHTML = '<div style="padding: 3rem; text-align: center; background: rgba(0, 0, 0, 0.5); border-radius: 15px;"><p style="color: #FFA200; font-size: 1.2rem; margin-bottom: 1rem;">Unable to embed video</p><a href="' + url + '" target="_blank" style="display: inline-block; padding: 1rem 2rem; background: #FFA200; color: white; text-decoration: none; border-radius: 10px; font-weight: 600; transition: all 0.3s ease;">Watch on YouTube</a></div>';
+                                        }
+                                    }
+                                })();
+                            </script>
+                        {% elif contestant.video_file %}
+                            <div class="video-wrapper">
+                                <div class="video-responsive">
+                                    <video controls>
+                                        <source src="{{ contestant.video_file.url }}" type="video/mp4">
+                                        Your browser does not support the video tag.
+                                    </video>
+                                </div>
+                            </div>
+                        {% endif %}
+                    {% elif contestant.submission_type == 'image' %}
+                        {% if contestant.image_file %}
+                            <div class="image-wrapper">
+                                <img src="{{ contestant.image_file.url }}" alt="{{ contestant.title }}" class="submission-image">
+                            </div>
+                        {% endif %}
+                    {% endif %}
+                </div>
+
+                <!-- Additional Info -->
+                <div class="meta-info">
+                    <p class="meta-text">
+                        Submitted on {{ contestant.created_at|date:"F d, Y" }} at {{ contestant.created_at|date:"g:i A" }}
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+    function getCookie(name) {
+        let cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+            const cookies = document.cookie.split(';');
+            for (let i = 0; i < cookies.length; i++) {
+                const cookie = cookies[i].trim();
+                if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
+    
+    function voteContestant(contestantId) {
+        const csrftoken = getCookie('csrftoken');
+        fetch('/api/vote/', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': csrftoken
+            },
+            body: JSON.stringify({
+                contestant_id: contestantId,
+                use_tokens: false
+            })
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                alert(data.message);
+                location.reload();
+            } else {
+                alert(data.message);
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('An error occurred. Please try again.');
+        });
+    }
+
+    function voteAgain(contestantId) {
+        if (!confirm('Vote again for 5 tokens?')) {
+            return;
+        }
+        
+        const csrftoken = getCookie('csrftoken');
+        fetch('/api/vote/', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': csrftoken
+            },
+            body: JSON.stringify({
+                contestant_id: contestantId,
+                use_tokens: true
+            })
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                alert(data.message + ' Remaining tokens: ' + data.remaining_tokens);
+                location.reload();
+            } else {
+                alert(data.message);
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('An error occurred. Please try again.');
+        });
+    }
+    </script>
+{% endblock %}
+

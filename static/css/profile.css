@@ -95,6 +95,27 @@ body {
     font-size: clamp(16px, 2vw, 20px);
     color: white;
     opacity: 0.8;
+    margin-bottom: 1rem;
+}
+
+.purchase-tokens-link {
+    display: inline-block;
+    margin-top: 1rem;
+    padding: 10px 20px;
+    background: linear-gradient(135deg, #FFA200 0%, #FF8C00 100%);
+    color: #000;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: clamp(14px, 1.5vw, 18px);
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(255, 162, 0, 0.3);
+}
+
+.purchase-tokens-link:hover {
+    background: linear-gradient(135deg, #FF8C00 0%, #FF7F00 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(255, 162, 0, 0.5);
 }
 
 .profile-stats {

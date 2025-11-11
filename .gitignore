@@ -2,6 +2,7 @@
 .env
 
 # Folders
+/media
 /documents
 /migrations
 */migrations

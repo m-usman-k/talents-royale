@@ -6,29 +6,35 @@
 
 {% block content %}
     <link rel="stylesheet" href="{% static 'css/arenas.css' %}">
+    <script src="{% static 'scripts/arenas-animations.js' %}" defer></script>
     <section class="main-arena">
         <h2>CHOOSE YOUR ARENA<br>BEGIN YOUR RISE</h2>
         <p>Only 100 Leaderboard Spots Per Arena<br>Will You Claim One?</p>
 
         <div class="arena-cards">
+            {% for arena in arenas %}
             <div class="each-card">
-                <h4>Recruit<br>Arena</h4>
-                <h3>$15</h3>
-                <p>This is dummy text for now. This is dummy text for now. This is dummy text for now. This is dummy text for now.</p>
-                <button>JOIN ARENA</button>
+                <h4>{{ arena.get_tier_display }}<br>Arena</h4>
+                <h3>{{ arena.token_cost }} 🪙</h3>
+                <p>{{ arena.description }}</p>
+                {% if user.is_authenticated %}
+                    {% if arena.id in user_arenas %}
+                        <button disabled style="opacity: 0.6; cursor: not-allowed;">ALREADY JOINED</button>
+                    {% elif user.tokens < arena.token_cost %}
+                        <button disabled style="opacity: 0.6; cursor: not-allowed;">INSUFFICIENT TOKENS</button>
+                    {% else %}
+                        <button onclick="joinArena({{ arena.id }})" data-arena-id="{{ arena.id }}">JOIN ARENA</button>
+                    {% endif %}
+                {% else %}
+                    <button onclick="window.location.href='/login'">LOGIN TO JOIN</button>
+                {% endif %}
             </div>
-            <div class="each-card">
-                <h4>Veteran<br>Arena</h4>
-                <h3>$25</h3>
-                <p>This is dummy text for now. This is dummy text for now. This is dummy text for now. This is dummy text for now.</p>
-                <button>JOIN ARENA</button>
+            {% empty %}
+            <div style="grid-column: 1 / -1; text-align: center; color: white; padding: 2rem;">
+                <p style="font-size: 1.2rem; margin-bottom: 1rem;">No arenas available at the moment.</p>
+                <p style="opacity: 0.8;">Please check back later or contact an administrator.</p>
             </div>
-            <div class="each-card">
-                <h4>Champion<br>Arena</h4>
-                <h3>$55</h3>
-                <p>This is dummy text for now. This is dummy text for now. This is dummy text for now. This is dummy text for now.</p>
-                <button>JOIN ARENA</button>
-            </div>
+            {% endfor %}
         </div>
 
         <h2>CROWNED VICTOR EARNS UNLIMITED<br>ARENA ACCESS & HALL OF FAME STATUS</h2>
@@ -36,30 +42,81 @@
         <h2 class="mm-h2">PICK YOUR TIER<br>PLAY LIKE ROYALTY</h2>
         
         <div class="tier-cards">
-            <div class="tier-card blue-tier-card">
-                <img src="/static/images/tr-recruit-tier.png" alt="Recruit Tier Icon">
-                <h3>RECRUIT</h3>
-                <p>Start your journey in the Recruit tier. Perfect for newcomers to showcase their talent and begin their rise to royalty.</p>
-                <button>Join Tier</button>
+            {% for arena in arenas %}
+            <div class="tier-card {% if arena.tier == 'recruit' %}blue-tier-card{% elif arena.tier == 'veteran' %}black-tier-card{% elif arena.tier == 'champion' %}red-tier-card{% elif arena.tier == 'elite' %}golden-tier-card{% endif %}">
+                <img src="/static/images/tr-{{ arena.tier }}-tier.png" alt="{{ arena.get_tier_display }} Tier Icon" onerror="this.src='/static/images/tr-recruit-tier.png'">
+                <h3>{{ arena.get_tier_display|upper }}</h3>
+                <p>{{ arena.description }}</p>
+                {% if user.is_authenticated %}
+                    {% if arena.id in user_arenas %}
+                        <button disabled style="opacity: 0.6; cursor: not-allowed;">ALREADY JOINED</button>
+                    {% elif user.tokens < arena.token_cost %}
+                        <button disabled style="opacity: 0.6; cursor: not-allowed;">NEED {{ arena.token_cost }} TOKENS</button>
+                    {% else %}
+                        <button onclick="joinArena({{ arena.id }})" data-arena-id="{{ arena.id }}">Join Tier ({{ arena.token_cost }} 🪙)</button>
+                    {% endif %}
+                {% else %}
+                    <button onclick="window.location.href='/login'">LOGIN TO JOIN</button>
+                {% endif %}
             </div>
-            <div class="tier-card black-tier-card">
-                <img src="/static/images/tr-veteran-tier.png" alt="Veteran Tier Icon">
-                <h3>VETERAN</h3>
-                <p>Prove your skills in the Veteran tier. For those who have mastered the basics and are ready for greater challenges.</p>
-                <button>Join Tier</button>
+            {% empty %}
+            <div style="text-align: center; color: white; padding: 2rem;">
+                <p style="font-size: 1.2rem; margin-bottom: 1rem;">No tiers available at the moment.</p>
+                <p style="opacity: 0.8;">Please check back later or contact an administrator.</p>
             </div>
-            <div class="tier-card red-tier-card">
-                <img src="/static/images/tr-champion-tier.png" alt="Champion Tier Icon">
-                <h3>CHAMPION</h3>
-                <p>Compete with the best in the Champion tier. Reserved for elite performers who dominate their craft.</p>
-                <button>Join Tier</button>
-            </div>
-            <div class="tier-card golden-tier-card">
-                <img src="/static/images/tr-elite-tier.png" alt="Elite Tier Icon">
-                <h3>ELITE</h3>
-                <p>Reach the pinnacle in the Elite tier. The ultimate tier with exclusive access to Finale Royale and premium rewards.</p>
-                <button>Join Tier</button>
-            </div>
+            {% endfor %}
         </div>
     </section>
+
+    <script>
+    function getCookie(name) {
+        let cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+            const cookies = document.cookie.split(';');
+            for (let i = 0; i < cookies.length; i++) {
+                const cookie = cookies[i].trim();
+                if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
+    
+    function joinArena(arenaId) {
+        if (!confirm('Are you sure you want to join this arena? Tokens will be deducted.')) {
+            return;
+        }
+        
+        const csrftoken = getCookie('csrftoken');
+        fetch('/api/join-arena/', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': csrftoken
+            },
+            body: JSON.stringify({
+                arena_id: arenaId
+            })
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                if (data.redirect) {
+                    window.location.href = data.redirect;
+                } else {
+                    alert(data.message);
+                    location.reload();
+                }
+            } else {
+                alert(data.message);
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('An error occurred. Please try again.');
+        });
+    }
+    </script>
 {% endblock %}

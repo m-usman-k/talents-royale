@@ -325,6 +325,102 @@ body {
     box-shadow: 0 0 20px rgba(255, 162, 0, 0.4);
 }
 
+/* EMAIL CONFIRMATION ALERT */
+.email-confirmation-alert {
+    background: rgba(255, 162, 0, 0.1);
+    border: 2px solid rgba(255, 162, 0, 0.5);
+    border-radius: 15px;
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+    text-align: left;
+    box-shadow: 0 0 20px rgba(255, 162, 0, 0.3);
+    backdrop-filter: blur(10px);
+    animation: pulseGlow 2s ease-in-out infinite;
+}
+
+@keyframes pulseGlow {
+    0%, 100% {
+        box-shadow: 0 0 20px rgba(255, 162, 0, 0.3);
+        border-color: rgba(255, 162, 0, 0.5);
+    }
+    50% {
+        box-shadow: 0 0 30px rgba(255, 162, 0, 0.5);
+        border-color: rgba(255, 162, 0, 0.7);
+    }
+}
+
+.alert-icon {
+    font-size: 2.5rem;
+    text-align: center;
+    margin-bottom: 1rem;
+    filter: drop-shadow(0 0 10px rgba(255, 162, 0, 0.8));
+}
+
+.alert-content {
+    text-align: center;
+}
+
+.alert-content h3 {
+    color: #FFA200;
+    font-family: 'Protest Strike', sans-serif;
+    font-size: clamp(18px, 2.5vw, 22px);
+    margin-bottom: 0.8rem;
+    text-shadow: 0 0 10px rgba(255, 162, 0, 0.8);
+}
+
+.alert-content p {
+    color: rgba(255, 255, 255, 0.9);
+    font-size: clamp(14px, 1.8vw, 16px);
+    line-height: 1.6;
+    margin-bottom: 0.5rem;
+}
+
+.alert-content p strong {
+    color: #00E5FF;
+    text-shadow: 0 0 8px rgba(0, 229, 255, 0.6);
+}
+
+.alert-subtext {
+    color: rgba(255, 255, 255, 0.7) !important;
+    font-size: clamp(12px, 1.6vw, 14px) !important;
+    margin-top: 0.5rem;
+}
+
+.resend-confirmation-button {
+    width: 100%;
+    padding: 1.2rem 2rem;
+    background: #FFA200;
+    color: white;
+    border: none;
+    border-radius: 15px;
+    font-family: 'Protest Strike', sans-serif;
+    font-size: clamp(18px, 2.5vw, 24px);
+    font-weight: 900;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    box-shadow: 0 0 20px rgba(255, 162, 0, 0.4);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.resend-confirmation-button:hover {
+    background: #FFD700;
+    transform: translateY(-2px);
+    box-shadow: 0 10px 30px rgba(255, 162, 0, 0.6);
+}
+
+.resend-confirmation-button:active {
+    transform: translateY(0);
+}
+
+.resend-confirmation-button span {
+    font-size: 1.2rem;
+}
+
 /* RESEND CONFIRMATION STYLES */
 .resend-confirmation-link {
     text-align: center;

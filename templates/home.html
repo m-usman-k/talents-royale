@@ -6,6 +6,7 @@
 
 {% block content %}
     <link rel="stylesheet" href="{% static 'css/home.css' %}">
+    <script src="{% static 'scripts/home-animations.js' %}" defer></script>
     <hero>
         <img src="/static/images/tr-hero-bg.png" alt="Hero Image"/>
         <button onclick="window.location.href='/arenas'">
@@ -19,30 +20,23 @@
         <div class="arenas-info">
             <h2>PICK YOUR TIER<br>PLAY LIKE ROYALTY</h2>
             <div class="arena-cards">
-                <div class="arena-card blue-arena-card">
-                    <img src="/static/images/tr-recruit-tier.png" alt="Recruit Tier Icon">
-                    <h3>RECRUIT</h3>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-                    <button>Join Tier</button>
+                {% for arena in arenas %}
+                <div class="arena-card {% if arena.tier == 'recruit' %}blue-arena-card{% elif arena.tier == 'veteran' %}black-arena-card{% elif arena.tier == 'champion' %}red-arena-card{% elif arena.tier == 'elite' %}golden-arena-card{% endif %}">
+                    <img src="/static/images/tr-{{ arena.tier }}-tier.png" alt="{{ arena.get_tier_display }} Tier Icon" onerror="this.src='/static/images/tr-recruit-tier.png'">
+                    <h3>{{ arena.get_tier_display|upper }}</h3>
+                    <p>{{ arena.description }}</p>
+                    {% if user.is_authenticated %}
+                        <button onclick="window.location.href='/arenas'">Join Tier ({{ arena.token_cost }} 🪙)</button>
+                    {% else %}
+                        <button onclick="window.location.href='/login'">Login to Join</button>
+                    {% endif %}
                 </div>
-                <div class="arena-card black-arena-card">
-                    <img src="/static/images/tr-veteran-tier.png" alt="Veteran Tier Icon">
-                    <h3>VETERAN</h3>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-                    <button>Join Tier</button>
+                {% empty %}
+                <div style="grid-column: 1 / -1; text-align: center; color: white; padding: 2rem;">
+                    <p style="font-size: 1.2rem; margin-bottom: 1rem;">No arenas available at the moment.</p>
+                    <p style="opacity: 0.8;">Please check back later or contact an administrator.</p>
                 </div>
-                <div class="arena-card red-arena-card">
-                    <img src="/static/images/tr-champion-tier.png" alt="Champion Tier Icon">
-                    <h3>CHAMPION</h3>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-                    <button>Join Tier</button>
-                </div>
-                <div class="arena-card golden-arena-card">
-                    <img src="/static/images/tr-elite-tier.png" alt="Elite Tier Icon">
-                    <h3>ELITE</h3>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-                    <button>Join Tier</button>
-                </div>
+                {% endfor %}
             </div>
         </div>
 
