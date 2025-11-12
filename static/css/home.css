@@ -117,6 +117,8 @@ div.arena-card {
     background-color: rgba(0, 0, 0, 0.25);
     box-shadow: 0px 0px 18px rgba(255, 255, 255, 0.4);
     transition: transform 0.25s ease, box-shadow 0.25s ease;
+    justify-content: space-between;
+    min-height: 400px;
 }
 
 div.arena-card:hover {
@@ -152,7 +154,7 @@ div.arena-card > p {
 
 div.arena-card > button {
     width: 75%;
-    margin-top: 20px;
+    margin-top: auto;
     font-size: clamp(18px, 1.4vw, 24px);
     font-weight: 600;
     border: none;
@@ -161,6 +163,7 @@ div.arena-card > button {
     padding: 14px 0;
     cursor: pointer;
     transition: transform 0.2s ease, box-shadow 0.2s ease;
+    align-self: center;
 }
 
 div.arena-card > button:hover {

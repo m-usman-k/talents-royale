@@ -42,6 +42,15 @@ html, body {
     font-family: 'Poppins', sans-serif;
     text-align: center;
     backdrop-filter: blur(10px);
+    opacity: 1;
+    transform: translateY(0);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+.alert.fade-out {
+    opacity: 0;
+    transform: translateY(-20px);
+    pointer-events: none;
 }
 
 .alert-success {

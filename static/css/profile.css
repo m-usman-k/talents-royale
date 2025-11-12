@@ -288,6 +288,46 @@ body {
     opacity: 0.8;
 }
 
+.activity-pagination {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    margin-top: 1.5rem;
+    padding-top: 1rem;
+    border-top: 1px solid rgba(255, 162, 0, 0.2);
+}
+
+.activity-nav-btn {
+    padding: 0.6rem 1.2rem;
+    background: rgba(255, 162, 0, 0.2);
+    border: 2px solid rgba(255, 162, 0, 0.4);
+    border-radius: 10px;
+    color: #FFA200;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-family: 'Poppins', sans-serif;
+}
+
+.activity-nav-btn:hover:not(:disabled) {
+    background: rgba(255, 162, 0, 0.3);
+    border-color: #FFA200;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(255, 162, 0, 0.4);
+}
+
+.activity-nav-btn:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+}
+
+.activity-page-info {
+    color: #FFA200;
+    font-weight: 600;
+    font-size: 0.95rem;
+}
+
 .goal-info h4 {
     font-family: 'Protest Strike', sans-serif;
     font-size: clamp(18px, 2vw, 24px);

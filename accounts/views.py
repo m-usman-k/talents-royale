@@ -95,9 +95,33 @@ def arenas_view(request):
 def contestants_view(request):
     # Get active arenas and contestants
     arena_id = request.GET.get('arena', None)
+    period = request.GET.get('period', 'all')  # all, month, or YYYY-MM format
+    
+    # Base queryset
+    contestants_base = Contestant.objects.filter(is_active=True)
+    
+    # Apply period filter
+    if period and period != 'all' and len(period) == 7 and period[4] == '-':
+        # Specific month in YYYY-MM format
+        try:
+            year, month = map(int, period.split('-'))
+            from datetime import datetime
+            # Create timezone-aware datetime for start of month
+            now = timezone.now()
+            start_date = now.replace(year=year, month=month, day=1, hour=0, minute=0, second=0, microsecond=0)
+            # End of month
+            if month == 12:
+                end_date = now.replace(year=year + 1, month=1, day=1, hour=0, minute=0, second=0, microsecond=0)
+            else:
+                end_date = now.replace(year=year, month=month + 1, day=1, hour=0, minute=0, second=0, microsecond=0)
+            contestants_base = contestants_base.filter(created_at__gte=start_date, created_at__lt=end_date)
+        except (ValueError, TypeError):
+            pass  # Invalid format, ignore filter
+    # 'all' - no date filter
+    
     if arena_id:
         arena = get_object_or_404(Arena, id=arena_id, is_active=True)
-        contestants = Contestant.objects.filter(arena=arena, is_active=True).order_by('-votes', '-created_at')
+        contestants = contestants_base.filter(arena=arena).order_by('-votes', '-created_at')
         # Get top 3 contestants for specific arena
         top_contestants = list(contestants[:3])
         other_contestants = list(contestants[3:10])  # Next 7 for the list
@@ -109,20 +133,41 @@ def contestants_view(request):
         # Get top contestant from each arena (top 4 arenas)
         top_contestants = []
         for a in all_arenas[:4]:
-            top_from_arena = Contestant.objects.filter(arena=a, is_active=True).order_by('-votes', '-created_at').first()
+            top_from_arena = contestants_base.filter(arena=a).order_by('-votes', '-created_at').first()
             if top_from_arena:
                 top_contestants.append(top_from_arena)
         
         # Get remaining contestants (excluding the top ones already shown)
         top_contestant_ids = [c.id for c in top_contestants]
-        other_contestants = Contestant.objects.filter(
-            is_active=True
-        ).exclude(id__in=top_contestant_ids).order_by('-votes', '-created_at')[:20]
+        other_contestants = contestants_base.exclude(id__in=top_contestant_ids).order_by('-votes', '-created_at')[:20]
     
     user_tokens = request.user.tokens if request.user.is_authenticated else 0
     user_votes = {}
     if request.user.is_authenticated:
         user_votes = {v.contestant.id: True for v in Vote.objects.filter(user=request.user)}
+    
+    # Generate month options for current year
+    from datetime import datetime
+    import calendar
+    now = timezone.now()
+    current_year = now.year
+    current_month = now.month
+    
+    month_options = []
+    month_names = [calendar.month_name[i] for i in range(1, 13)]
+    
+    # Add all months up to and including current month
+    for month_num in range(1, current_month + 1):
+        month_str = f"{current_year}-{month_num:02d}"
+        month_label = month_names[month_num - 1]
+        if month_num == current_month:
+            month_label = f"This Month ({month_label})"
+        month_options.append({
+            'value': month_str,
+            'label': month_label,
+            'year': current_year,
+            'month': month_num,
+        })
     
     context = {
         'arena': arena,
@@ -131,6 +176,8 @@ def contestants_view(request):
         'other_contestants': other_contestants,
         'user_tokens': user_tokens,
         'user_votes': user_votes,
+        'selected_period': period,
+        'month_options': month_options,
     }
     return render(request, "contestants.html", context)
 

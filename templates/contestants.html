@@ -16,12 +16,32 @@
             </div>
             
             <div class="month-selector">
-                <select id="arenaDropdown" class="month-dropdown" onchange="window.location.href='?arena=' + this.value">
-                    <option value="">All Arenas</option>
-                    {% for a in arenas %}
-                        <option value="{{ a.id }}" {% if arena and arena.id == a.id %}selected{% endif %}>{{ a.get_tier_display }} Arena</option>
-                    {% endfor %}
-                </select>
+                <div style="display: flex; gap: 1rem; align-items: center; flex-wrap: wrap; justify-content: center;">
+                    <select id="arenaDropdown" class="month-dropdown" onchange="updateFilters()">
+                        <option value="">All Arenas</option>
+                        {% for a in arenas %}
+                            <option value="{{ a.id }}" {% if arena and arena.id == a.id %}selected{% endif %}>{{ a.get_tier_display }} Arena</option>
+                        {% endfor %}
+                    </select>
+                    <select id="periodDropdown" class="month-dropdown" onchange="updateFilters()">
+                        <option value="all" {% if selected_period == 'all' or not selected_period %}selected{% endif %}>All Time</option>
+                        {% for month_option in month_options %}
+                            <option value="{{ month_option.value }}" {% if selected_period == month_option.value %}selected{% endif %}>{{ month_option.label }}</option>
+                        {% endfor %}
+                    </select>
+                    <script>
+                        function updateFilters() {
+                            const arena = document.getElementById('arenaDropdown').value;
+                            const period = document.getElementById('periodDropdown').value;
+                            let url = '/contestants?';
+                            if (arena) url += 'arena=' + arena + '&';
+                            if (period && period !== 'all') url += 'period=' + period;
+                            if (url.endsWith('&')) url = url.slice(0, -1);
+                            if (url.endsWith('?')) url = url.slice(0, -1);
+                            window.location.href = url;
+                        }
+                    </script>
+                </div>
                 <p class="arena-rankings">{% if arena %}{{ arena.get_tier_display }} Arena Rankings{% else %}All Arena Rankings{% endif %}</p>
             </div>
         </div>
@@ -44,12 +64,12 @@
                         <p class="votes" id="votes-{{ contestant.id }}">{{ contestant.votes|floatformat:0 }} votes</p>
                         {% if user.is_authenticated %}
                             {% if contestant.id in user_votes %}
-                                <button class="vote-button" onclick="event.stopPropagation(); voteAgain({{ contestant.id }})" style="margin-top: 10px;">Vote Again (5 🪙)</button>
+                                <button class="vote-button" onclick="event.stopPropagation(); voteAgain({{ contestant.id }})">Vote Again (5 🪙)</button>
                             {% else %}
-                                <button class="vote-button" onclick="event.stopPropagation(); voteContestant({{ contestant.id }})" style="margin-top: 10px;">Free Vote</button>
+                                <button class="vote-button" onclick="event.stopPropagation(); voteContestant({{ contestant.id }})">Free Vote</button>
                             {% endif %}
                         {% else %}
-                            <button class="vote-button" onclick="event.stopPropagation(); window.location.href='/login'" style="margin-top: 10px;">Login to Vote</button>
+                            <button class="vote-button" onclick="event.stopPropagation(); window.location.href='/login'">Login to Vote</button>
                         {% endif %}
                     </div>
                 </div>

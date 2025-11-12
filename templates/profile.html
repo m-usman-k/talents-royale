@@ -86,10 +86,10 @@
                     
                     <div class="overview-card">
                         <h3>Recent Activity</h3>
-                        <div class="activity-list">
+                        <div class="activity-list" id="activity-list">
                             {% if recent_activities %}
                                 {% for activity in recent_activities %}
-                                    <div class="activity-item">
+                                    <div class="activity-item" data-index="{{ forloop.counter0 }}" {% if forloop.counter0 >= 3 %}style="display: none;"{% endif %}>
                                         <span class="activity-icon">{{ activity.icon }}</span>
                                         <div>
                                             <p>{{ activity.message }}</p>
@@ -107,6 +107,25 @@
                                 </div>
                             {% endif %}
                         </div>
+                        {% if recent_activities|length > 3 %}
+                        <div class="activity-pagination">
+                            <button class="activity-nav-btn" id="activity-prev" onclick="navigateActivity(-1)" disabled>
+                                ← Prev
+                            </button>
+                            <span class="activity-page-info" id="activity-page-info">1 / <span id="total-pages">{{ recent_activities|length|add:"-1"|floatformat:0|add:"1"|floatformat:0|add:"-3"|floatformat:0|add:"1"|floatformat:0 }}</span></span>
+                            <button class="activity-nav-btn" id="activity-next" onclick="navigateActivity(1)">
+                                Next →
+                            </button>
+                        </div>
+                        <script>
+                            (function() {
+                                const totalActivities = {{ recent_activities|length }};
+                                const itemsPerPage = 3;
+                                const totalPages = Math.ceil(totalActivities / itemsPerPage);
+                                document.getElementById('total-pages').textContent = totalPages;
+                            })();
+                        </script>
+                        {% endif %}
                     </div>
                     
                     <div class="overview-card">
@@ -439,6 +458,40 @@
             }
             
             return false;
+        }
+        
+        // Activity pagination
+        let currentActivityPage = 0;
+        const itemsPerPage = 3;
+        
+        function navigateActivity(direction) {
+            const items = document.querySelectorAll('.activity-item[data-index]');
+            const totalItems = items.length;
+            const totalPages = Math.ceil(totalItems / itemsPerPage);
+            
+            currentActivityPage += direction;
+            
+            // Clamp page number
+            if (currentActivityPage < 0) currentActivityPage = 0;
+            if (currentActivityPage >= totalPages) currentActivityPage = totalPages - 1;
+            
+            // Show/hide items
+            items.forEach((item, index) => {
+                const startIdx = currentActivityPage * itemsPerPage;
+                const endIdx = startIdx + itemsPerPage;
+                if (index >= startIdx && index < endIdx) {
+                    item.style.display = 'flex';
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+            
+            // Update buttons
+            document.getElementById('activity-prev').disabled = currentActivityPage === 0;
+            document.getElementById('activity-next').disabled = currentActivityPage >= totalPages - 1;
+            
+            // Update page info
+            document.getElementById('activity-page-info').innerHTML = `${currentActivityPage + 1} / ${totalPages}`;
         }
     </script>
 {% endblock %}
