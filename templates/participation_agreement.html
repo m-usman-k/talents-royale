@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+
+{% block title %}Participation Agreement - Talents Royale{% endblock %}
+
+{% load static %}
+
+{% block content %}
+    <link rel="stylesheet" href="{% static 'css/participation-agreement.css' %}">
+    
+    <section class="agreement-section">
+        <div class="hero-content">
+            <h1 class="agreement-title">
+                <span>Talents Royale</span>
+                <span>Participation Agreement</span>
+            </h1>
+        </div>
+
+        <div class="agreement-container">
+            <div class="agreement-content">
+                <div class="intro-text">
+                    <p>This Participation Agreement governs all individuals and entities engaging with Talents Royale, including performers, contractors, clients, and partners. By participating in any capacity, you agree to the following terms:</p>
+                </div>
+
+                <div class="agreement-section-block">
+                    <h2>1. Eligibility Requirements</h2>
+                    <p>Participation in Talents Royale is open to individuals of <strong>all ages</strong> and from <strong>any country</strong> worldwide. By entering, participants affirm that:</p>
+                    <ul>
+                        <li>They have the legal capacity to participate in accordance with the laws of their country of residence.</li>
+                        <li>If under the age of 18, they have obtained <strong>verifiable consent</strong> from a parent or legal guardian.</li>
+                        <li>They agree to abide by all platform rules, including video submission guidelines, voting protocols, and community standards.</li>
+                        <li>They understand that all disputes will be governed by the laws of the <strong>State of Georgia, USA</strong>, and resolved in <strong>Henry County</strong>.</li>
+                        <li>They are responsible for any <strong>tax obligations, customs duties, or legal restrictions</strong> in their home country related to participation or prize receipt.</li>
+                    </ul>
+                </div>
+
+                <div class="agreement-section-block">
+                    <h2>2. Performance Expectations</h2>
+                    <p>Participants must follow tier-based performance guidelines, including video duration limits, content standards, and submission protocols. All acts must reflect the values of Talents Royale and comply with safety, decency, and platform rules.</p>
+                </div>
+
+                <div class="agreement-section-block">
+                    <h2>3. Code of Conduct</h2>
+                    <p>Talents Royale is committed to fostering a safe, inclusive, and respectful environment for all participants, judges, and audience members. By participating, you agree to uphold the following standards:</p>
+                    <ul>
+                        <li><strong>Respectful Behavior:</strong> Treat all individuals—online and offline—with dignity and professionalism. Harassment, bullying, hate speech, or discriminatory remarks based on race, gender, religion, nationality, disability, or identity will not be tolerated.</li>
+                    </ul>
+                </div>
+
+                <div class="agreement-footer">
+                    <p class="legal-note">This agreement is legally binding. By participating in Talents Royale, you acknowledge that you have read, understood, and agree to be bound by these terms and conditions.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}
+

@@ -70,6 +70,10 @@ def get_email_error_message(error):
     return f"Email error: {error_str}\n\nSee docs/EMAIL_SETUP.md or docs/GMAIL_SETUP.md for setup instructions."
 
 
+def participation_agreement_view(request):
+    """Display the Participation Agreement page"""
+    return render(request, "participation_agreement.html")
+
 def home_view(request):
     arenas = Arena.objects.filter(is_active=True)[:4]
     context = {

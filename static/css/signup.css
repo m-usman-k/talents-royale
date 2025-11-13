@@ -488,3 +488,109 @@ textarea.form-input:hover {
     text-align: center;
     font-weight: 600;
 }
+
+/* AGREEMENT CHECKBOX */
+.agreement-group {
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+}
+
+.agreement-label {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    color: rgba(255, 255, 255, 0.9);
+    font-size: clamp(14px, 1.8vw, 16px);
+    line-height: 1.6;
+}
+
+.agreement-checkbox {
+    width: 22px;
+    height: 22px;
+    min-width: 22px;
+    cursor: pointer;
+    border: 2px solid #ffffff;
+    border-radius: 4px;
+    background: rgba(20, 20, 30, 0.8);
+    transition: all 0.3s ease;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    position: relative;
+    display: inline-block;
+    vertical-align: middle;
+    margin: 0;
+    flex-shrink: 0;
+}
+
+.agreement-checkbox::after {
+    content: '✓';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: #ffffff;
+    font-weight: bold;
+    font-size: 16px;
+    line-height: 1;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    visibility: hidden;
+}
+
+.agreement-checkbox:checked {
+    background: #00ff00;
+    border-color: #00ff00;
+    box-shadow: 0 0 15px rgba(0, 255, 0, 0.6);
+}
+
+.agreement-checkbox:checked::after {
+    opacity: 1;
+    visibility: visible;
+    color: #ffffff;
+    text-shadow: 0 0 3px rgba(0, 0, 0, 0.5);
+}
+
+.agreement-checkbox:hover {
+    border-color: #FFA200;
+    box-shadow: 0 0 10px rgba(255, 162, 0, 0.4);
+}
+
+.agreement-checkbox:focus {
+    outline: none;
+    border-color: #00E5FF;
+    box-shadow: 0 0 20px rgba(0, 229, 255, 0.5);
+}
+
+.agreement-text {
+    display: block;
+    user-select: none;
+    color: rgba(255, 255, 255, 0.9);
+    font-size: clamp(14px, 1.8vw, 16px);
+    line-height: 1.6;
+    margin-left: 0;
+}
+
+.agreement-link {
+    color: #F100F7;
+    text-decoration: underline;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    text-shadow: 0 0 10px rgba(241, 0, 247, 0.5);
+}
+
+.agreement-link:hover {
+    color: #FFA200;
+    text-shadow: 0 0 15px rgba(255, 162, 0, 0.8);
+    text-decoration: none;
+}
+
+.agreement-link:focus {
+    outline: 2px solid #00E5FF;
+    outline-offset: 2px;
+    border-radius: 2px;
+}

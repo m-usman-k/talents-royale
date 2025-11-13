@@ -33,6 +33,14 @@ class SignupForm(UserCreationForm):
             'class': 'form-input'
         })
     )
+    
+    agree_to_terms = forms.BooleanField(
+        required=True,
+        widget=forms.CheckboxInput(attrs={
+            'class': 'agreement-checkbox'
+        }),
+        label='I agree to the Participation Agreement'
+    )
 
     class Meta:
         model = CustomUser
@@ -74,6 +82,12 @@ class SignupForm(UserCreationForm):
             raise forms.ValidationError("This username is reserved and cannot be used.")
         
         return username
+    
+    def clean_agree_to_terms(self):
+        agree_to_terms = self.cleaned_data.get('agree_to_terms')
+        if not agree_to_terms:
+            raise forms.ValidationError("You must agree to the Participation Agreement to create an account.")
+        return agree_to_terms
 
 class LoginForm(AuthenticationForm):
     username = forms.CharField(

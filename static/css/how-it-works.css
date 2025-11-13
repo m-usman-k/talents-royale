@@ -610,6 +610,41 @@ body {
     transform: translateY(-1px);
 }
 
+/* AGREEMENT LINK CONTAINER */
+.agreement-link-container {
+    text-align: center;
+    position: relative;
+    z-index: 1;
+    padding: 2rem 0;
+    margin-top: 2rem;
+}
+
+.agreement-link-text {
+    color: rgba(255, 255, 255, 0.8);
+    font-size: clamp(14px, 1.8vw, 18px);
+    line-height: 1.6;
+}
+
+.agreement-link-inline {
+    color: #00E5FF;
+    text-decoration: underline;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    text-shadow: 0 0 10px rgba(0, 229, 255, 0.5);
+}
+
+.agreement-link-inline:hover {
+    color: #FFA200;
+    text-shadow: 0 0 15px rgba(255, 162, 0, 0.8);
+    text-decoration: none;
+}
+
+.agreement-link-inline:focus {
+    outline: 2px solid #00E5FF;
+    outline-offset: 2px;
+    border-radius: 2px;
+}
+
 /* RESPONSIVE DESIGN */
 @media (max-width: 1024px) {
     .how-it-works-section {

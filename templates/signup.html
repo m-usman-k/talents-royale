@@ -57,6 +57,18 @@
                         {% endif %}
                     </div>
                     
+                    <div class="form-group agreement-group">
+                        <label class="agreement-label">
+                            {{ form.agree_to_terms }}
+                        </label>
+                        <span class="agreement-text">
+                            I agree to the <a href="{% url 'participation_agreement' %}" target="_blank" class="agreement-link">Participation Agreement</a>
+                        </span>
+                        {% if form.agree_to_terms.errors %}
+                            <div class="field-errors">{{ form.agree_to_terms.errors }}</div>
+                        {% endif %}
+                    </div>
+                    
                     <button type="submit" class="signup-button">Sign Up</button>
                     
                     <div class="login-link">

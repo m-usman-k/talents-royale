@@ -5,7 +5,7 @@ from .views import howitworks_view, finaleroyale_view
 from .views import home_view, arenas_view, profile_view
 from .views import vote_contestant, join_arena, submit_entry, contestant_detail, voting_history, confirm_email, resend_confirmation
 from .views import purchase_tokens, create_checkout_session, payment_success, payment_cancel, stripe_webhook
-from .views import forgot_password_view, reset_password_view
+from .views import forgot_password_view, reset_password_view, participation_agreement_view
 
 urlpatterns = [
     path("", home_view, name="home"),
@@ -13,6 +13,7 @@ urlpatterns = [
     path("contestants", contestants_view, name="contestants"),
     path("how-it-works", howitworks_view, name="howitworks"),
     path("finale-royale", finaleroyale_view, name="finaleroyale"),
+    path("participation-agreement", participation_agreement_view, name="participation_agreement"),
     path("login", signin_view, name="login"),
     path("signup", signup_view, name="signup"),
     path("logout", logout_view, name="logout"),
